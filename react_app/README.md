@@ -1,3 +1,9 @@
+INDICAZIONI DEL GRUPPO:
+-PER AGGIORNARE LA PROPRIA REPOSITORY -> git pull origin main
+-PER AGGIORNARE LA REPOSITORY DI GRUPPO -> https://medium.com/@avivamazurek/how-to-update-a-github-repository-from-your-local-drive-e765eb48a691
+
+
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
