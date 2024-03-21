@@ -6,7 +6,7 @@
  */
 
 import React from 'react';
-import type {A} from 'react';
+import type {A} from 'amsajsjasj';
 import {
   SafeAreaView,
   ScrollView,
