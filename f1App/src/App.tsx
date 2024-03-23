@@ -8,6 +8,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 
 const Stack = createNativeStackNavigator();
 
+//List of the imported *file*.tsx, to use as parameters for navigation
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
@@ -16,12 +17,13 @@ export type RootStackParamList = {
 };
 
 
-//Variabile utile al passaggio di parametri tra screen e lo spostamento tra essi
+//Setting RootStackNavigation, a variable that stores in it the navigation properties between the screen
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
 
 /*STARTING SCREEN component*/
 export const StartingScreen = () => {
-  const navigation = useNavigation<RootStackNavigationProp>();//utilizzo parametri nel navigator
+  //Starting the navigation inside the components with the properties already explained
+  const navigation = useNavigation<RootStackNavigationProp>();
   return (
     <View style={styles.starting_container}>
       {/*Making the startingScreen clickable. By clicking it the user will get redirected to the HomePage.
