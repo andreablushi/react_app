@@ -27,7 +27,7 @@ export const StartingScreen = () => {
   return (
     <View style={styles.starting_container}>
       {/*Making the startingScreen clickable. By clicking it the user will get redirected to the HomePage.
-        By using replace instead of navigate we can make sure the user can't come back to the starting screen*/}
+        By using navigation.replace instead of navigate we can make sure the user can't come back to the starting screen*/}
       <TouchableOpacity onPress={() => navigation.replace('HomePage')} >
       <Image source={require('../img/starting-image.jpg')} style={styles.starting_image} />
       </TouchableOpacity>
