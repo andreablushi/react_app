@@ -27,7 +27,7 @@ export const StartingScreen = () => {
   return (//Struttura di Starting Screen che setta l'immagine a tutto schermo con possibilità di tocco
     <View style={styles.starting_container}>
       <TouchableOpacity onPress={() => navigation.navigate('HomePage')} >
-      <Image source={require('./img/starting-image.jpg')} style={styles.starting_image} />
+      <Image source={require('../img/starting-image.jpg')} style={styles.starting_image} />
       </TouchableOpacity>
     </View>
   );
