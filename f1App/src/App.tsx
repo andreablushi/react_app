@@ -5,6 +5,7 @@ import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-nat
 import HomePage from './HomePage';
 import Schedule from './Schedule';
 import { StackNavigationProp } from '@react-navigation/stack';
+import RaceResult from './RaceResult';
 
 const Stack = createNativeStackNavigator();
 
@@ -46,6 +47,7 @@ const App = () => {
         
         {/*Here instead, the header will take you to the homePage*/}
         <Stack.Screen name='Schedule' component={Schedule} />
+        <Stack.Screen name='RaceResult' component={RaceResult}/>
       </Stack.Navigator>
     </NavigationContainer>
   );

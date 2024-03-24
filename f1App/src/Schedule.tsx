@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import {
   Button,
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
@@ -12,7 +13,9 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-type Race = {
+
+
+export type Race = {
   round: number,
   raceName: string
   Circuit: {
@@ -30,7 +33,8 @@ type Props = {
   race: Race
 }
 
-function RaceSchedule(props: Props): React.JSX.Element {
+
+function RaceSchedule(props: Props,): React.JSX.Element {
   // import prop
   const isDarkMode = props.darkMode;
   const race = props.race;
@@ -46,25 +50,24 @@ function RaceSchedule(props: Props): React.JSX.Element {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
     color: isDarkMode ? '#bfbfbf' : '#262626',
   };
-  
+
   return (
-    <View style={[styles.raceScheduleContainer, {flex: 1, marginVertical: 7}]}>
-      <View style={{shadowColor: 'black', elevation: 3, shadowOffset: {height: 2, width: 2}, shadowRadius: 3, shadowOpacity: 1}}>
-        <Image source={require('../Formula1-Images-API/public/countries/italy.png')} style={[{resizeMode:'contain',  width: 60, height:60,  flex: 1}]}></Image>
-      </View>
-      <View style={[{marginHorizontal: 10, flex: 12},]}>
-        <Text style={[styles.sectionDescription, styles.highlight, backgroundStyle, {fontSize: 16} ]}>Round {race.round}</Text>
-        <Text style={[styles.sectionDescription, backgroundStyle]}>{race.raceName}</Text>
-        <Text style={[styles.sectionDescription, backgroundStyle]}>{race.Circuit.circuitName}</Text>
-      </View>
-      <Text style={[{textAlign: 'right', flex: 5, marginRight: 10},  styles.sectionDescription, styles.highlight, backgroundStyle,]}>{date}</Text>
-      
-  </View>
+      <View style={[styles.raceScheduleContainer, {flex: 1, paddingVertical: 7}]}>
+        <View>
+          <Image source={require('../Formula1-Images-API/public/countries/italy.png')} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
+        </View>
+        <View style={[{marginHorizontal: 10, flex: 12},]}>
+          <Text style={[styles.sectionDescription, styles.highlight, backgroundStyle, {fontSize: 16} ]}>Round {race.round}</Text>
+          <Text style={[styles.sectionDescription, backgroundStyle]}>{race.raceName}</Text>
+          <Text style={[styles.sectionDescription, backgroundStyle]}>{race.Circuit.circuitName}</Text>
+        </View>
+        <Text style={[{textAlign: 'right', flex: 5, marginRight: 10},  styles.sectionDescription, styles.highlight, backgroundStyle,]}>{date}</Text>
+    </View>
   );
 };
 
   
-function Schedule(): React.JSX.Element {
+function Schedule({navigation}): React.JSX.Element {
   // hooks
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   const [race, setRace] = useState<Race[]>([]);
@@ -87,7 +90,7 @@ function Schedule(): React.JSX.Element {
       const response = await fetch(apiUrl);
       const data = await response.json();
       setRace(data.MRData.RaceTable.Races);
-      console.log("retrieving data");
+      console.log("retrieving races");
     } catch (error){
       console.error(error);
     } finally {
@@ -115,9 +118,9 @@ function Schedule(): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
-            {race.map( race => <View key={race.round}>
-              <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
-            </View>)}
+            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year})}}>
+                <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
+            </Pressable>)}
           </ScrollView>
           
           <Button onPress={switchTheme} title='switch theme'></Button>
