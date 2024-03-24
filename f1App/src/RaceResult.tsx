@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { Button, Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Race } from "./Schedule";
+import { Colors } from "react-native/Libraries/NewAppScreen";
 import Styles from "../stylesheets/Styles"
 
 type Result = {
@@ -30,6 +31,7 @@ type Result = {
 
 type Props = {
   result: Result
+  darkMode: boolean
 }
 
 export default function RaceResult ({ route }) {
@@ -39,7 +41,14 @@ export default function RaceResult ({ route }) {
   const [loading, setLoading] = useState<boolean>(true);
   const {race}: {race:Race} = route.params;
   const {season} = route.params;
+  const {isDarkMode} = route.params;
   const apiUrl = "https://ergast.com/api/f1/" + season + "/" + race.round + "/results.json";
+
+   // dark theme 
+   const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    color: isDarkMode ? 'white' : 'black',
+  };
 
   // fetch results
   const getResults =  async() => {
@@ -62,20 +71,20 @@ export default function RaceResult ({ route }) {
 
   return (
     <SafeAreaView>
-      <View>
-        <View>
-          <Text>round {race.round}</Text>
-          <Text>{race.raceName}</Text>
-          <Text>{race.Circuit.circuitName}</Text>
-          <Text>{race.date}</Text>
+      <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingTop: 10}, backgroundStyle ]}>
+        <View style={[backgroundStyle, {flex: 2.1}]}>
+          <Text style={backgroundStyle}>round {race.round}</Text>
+          <Text style={backgroundStyle}>{race.raceName}</Text>
+          <Text style={backgroundStyle}>{race.Circuit.circuitName}</Text>
+          <Text style={backgroundStyle}>{race.date}</Text>
         </View>
-        <View>
+        <View style={[backgroundStyle, {flex: 1}]}>
           <Image source={require("../Formula1-Images-API/public/countries/italy.png")}></Image>
         </View>
       </View>
       <ScrollView>
         {results.map( result => <Pressable key={result.position}>
-          <Driver result={result}></Driver>
+          <Driver result={result} darkMode={isDarkMode}></Driver>
         </Pressable>)}
       </ScrollView>  
     </SafeAreaView>
@@ -86,17 +95,24 @@ function Driver(props: Props) {
   const result = props.result;
   const driver = result.Driver;
   const team = result.Constructor;
+  const isDarkMode = props.darkMode
   const time = result.status.toLowerCase() === "finished" ? result.Time.time : "DNF (" + result.status + ")";
 
+  // dark theme
+  const backgroundStyle = {
+    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
+    color: isDarkMode ? '#bfbfbf' : '#262626',
+  };
+
   return (
-    <View style={Styles.driverResultWrapper}>
-      <Text style={Styles.positionResult}>{result.position}</Text>
-      <Image style={Styles.driverPictureResult} source={require("../Formula1-Images-API/public/drivers/leclerc_front.png")}></Image>
-      <View style={Styles.driverResult}>
-        <Text style={Styles.driverTextResult}>{driver.givenName} {driver.familyName}</Text>
-        <Text style={Styles.teamTextResult}>{team.name}</Text>
+    <View style={[Styles.driverResultWrapper, backgroundStyle]}>
+      <Text style={[Styles.positionResult, backgroundStyle]}>{result.position}</Text>
+      <Image style={[Styles.driverPictureResult, ]} source={require("../Formula1-Images-API/public/drivers/leclerc_front.png")}></Image>
+      <View style={[Styles.driverResult, backgroundStyle]}>
+        <Text style={[Styles.driverTextResult, backgroundStyle]}>{driver.givenName} {driver.familyName}</Text>
+        <Text style={[Styles.teamTextResult, backgroundStyle]}>{team.name}</Text>
       </View>
-      <Text style={Styles.timeResult}>{time}</Text>
+      <Text style={[Styles.timeResult, backgroundStyle]}>{time}</Text>
     </View>
   )
 }

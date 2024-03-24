@@ -118,7 +118,7 @@ function Schedule({navigation}): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
-            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year})}}>
+            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: darkMode})}}>
                 <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
             </Pressable>)}
           </ScrollView>
