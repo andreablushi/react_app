@@ -13,6 +13,7 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import { Dark, Light } from '../stylesheets/Theme';
 
 
 export type Race = {
@@ -36,7 +37,7 @@ type Props = {
 
 function RaceSchedule(props: Props,): React.JSX.Element {
   // import prop
-  const isDarkMode = props.darkMode;
+  const theme = props.darkMode ? Dark : Light;
   const race = props.race;
 
   // date formatting
@@ -45,23 +46,18 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const year = race.date.slice(0, 4);
   const date = day + "/" + month + "/" + year;
 
-  // dark theme
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    color: isDarkMode ? '#bfbfbf' : '#262626',
-  };
 
   return (
-      <View style={[styles.raceScheduleContainer, {flex: 1, paddingVertical: 7}]}>
+      <View style={[styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
         <View>
           <Image source={require('../Formula1-Images-API/public/countries/italy.png')} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
-        <View style={[{marginHorizontal: 10, flex: 12},]}>
-          <Text style={[styles.sectionDescription, styles.highlight, backgroundStyle, {fontSize: 16} ]}>Round {race.round}</Text>
-          <Text style={[styles.sectionDescription, backgroundStyle]}>{race.raceName}</Text>
-          <Text style={[styles.sectionDescription, backgroundStyle]}>{race.Circuit.circuitName}</Text>
+        <View style={[{paddingHorizontal: 10, flex: 12},]}>
+          <Text style={[styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
+          <Text style={[styles.sectionDescription, theme.card]}>{race.raceName}</Text>
+          <Text style={[styles.sectionDescription, theme.card]}>{race.Circuit.circuitName}</Text>
         </View>
-        <Text style={[{textAlign: 'right', flex: 5, marginRight: 10},  styles.sectionDescription, styles.highlight, backgroundStyle,]}>{date}</Text>
+        <Text style={[{textAlign: 'right', flex: 5, paddingRight: 10},  styles.sectionDescription, styles.highlight, theme.card,]}>{date}</Text>
     </View>
   );
 };
@@ -74,15 +70,10 @@ function Schedule({navigation}): React.JSX.Element {
   const [loading, setLoading] = useState(true);
 
   // control variables
-  const isDarkMode = darkMode;
+  const theme = darkMode ? Dark : Light;
   let year = 2023;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
 
-  // dark theme 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    color: isDarkMode ? 'white' : 'black',
-  };
 
   // data fetching
   const getRace =  async() => {
@@ -109,11 +100,11 @@ function Schedule({navigation}): React.JSX.Element {
   }
   
   return (
-      <SafeAreaView style={[backgroundStyle, {flex: 11}]}>
-        <View style={[{backgroundColor: backgroundStyle.backgroundColor}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: backgroundStyle.color}]}>Schedule</Text>
+      <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
+        <View style={[{backgroundColor: theme.title_bar.backgroundColor}, styles.topBar]}>
+          <Text style={[styles.topBarText, {color: theme.title_bar.color}]}>Schedule</Text>
           <View style={{marginLeft: 20, flex: 1,}}>
-            <Text style={[styles.topBarYear, {color: backgroundStyle.color}]}>Year: {year}</Text>
+            <Text style={[styles.topBarYear, {color: theme.title_bar.color}]}>Year: {year}</Text>
           </View>
         </View>
         <View style={[{flex: 10}]}>
@@ -169,7 +160,7 @@ const styles = StyleSheet.create({
     fontWeight: '600'
   },
   raceScheduleContainer: { 
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
     flexDirection: 'row',
     flex: .1,
     alignItems: 'center',
