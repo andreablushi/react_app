@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import HomePage from './HomePage';
 import Schedule from './Schedule';
+import Drivers from './Driver_standings';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RaceResult from './RaceResult';
 
@@ -14,6 +15,7 @@ export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
   Schedule: undefined;
+  Drivers: undefined;
   // Aggiungere screen qua
 };
 
@@ -47,7 +49,11 @@ const App = () => {
         
         {/*Here instead, the header will take you to the homePage*/}
         <Stack.Screen name='Schedule' component={Schedule} />
+<<<<<<< Updated upstream
         <Stack.Screen name='RaceResult' component={RaceResult}/>
+=======
+        <Stack.Screen name='Drivers' component={Drivers} />
+>>>>>>> Stashed changes
       </Stack.Navigator>
     </NavigationContainer>
   );
