@@ -48,8 +48,8 @@ const App = () => {
         <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
         
         {/*Here instead, the header will take you to the homePage*/}
-        <Stack.Screen name='Schedule' component={Schedule} />
-        <Stack.Screen name='RaceResult' component={RaceResult}/>
+        <Stack.Screen name='Schedule' component={Schedule}  options={{ headerShown: false }}/>
+        <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false }}/>
         <Stack.Screen name='Drivers' component={Drivers} />
       </Stack.Navigator>
     </NavigationContainer>

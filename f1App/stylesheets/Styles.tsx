@@ -45,7 +45,8 @@ const Styles = StyleSheet.create({
     paddingRight: 5,
     textAlignVertical: 'center',
     fontWeight: '500'
-  }
+  }, 
+  
 });
 
 export default Styles;

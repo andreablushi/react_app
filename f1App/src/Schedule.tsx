@@ -63,14 +63,14 @@ function RaceSchedule(props: Props,): React.JSX.Element {
 };
 
   
-function Schedule({navigation}): React.JSX.Element {
+function Schedule({navigation, route}): React.JSX.Element {
   // hooks
-  const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   const [race, setRace] = useState<Race[]>([]);
   const [loading, setLoading] = useState(true);
 
   // control variables
-  const theme = darkMode ? Dark : Light;
+  const {isDarkMode} = route.params;
+  const theme = isDarkMode ? Dark : Light;
   let year = 2023;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
 
@@ -93,11 +93,6 @@ function Schedule({navigation}): React.JSX.Element {
   useEffect(() => {
     getRace();
   }, []);
-
-  // theme manager
-  const switchTheme= () => {
-    darkMode ? setDarkMode(false) : setDarkMode(true);
-  }
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
@@ -109,12 +104,10 @@ function Schedule({navigation}): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
-            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: darkMode})}}>
-                <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
+            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: isDarkMode})}}>
+                <RaceSchedule darkMode={isDarkMode} race={race}></RaceSchedule>
             </Pressable>)}
           </ScrollView>
-          
-          <Button onPress={switchTheme} title='switch theme'></Button>
         </View>
       </SafeAreaView>
   );

@@ -45,6 +45,10 @@ export default function RaceResult ({ route }) {
   const {isDarkMode} = route.params;
   const apiUrl = "https://ergast.com/api/f1/" + season + "/" + race.round + "/results.json";
   const theme = isDarkMode ? Dark : Light;
+  const day = race.date.slice(8, 10);
+  const month = race.date.slice(5, 7);
+  const year = race.date.slice(0, 4);
+  const date = day + "/" + month + "/" + year;
    
 
   
@@ -70,15 +74,15 @@ export default function RaceResult ({ route }) {
 
   return (
     <SafeAreaView style={{backgroundColor: theme.title_bar.backgroundColor, flex: 1}}>
-      <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingTop: 10,}, theme.title_bar ]}>
-        <View style={[theme.title_bar, {flex: 2.1}]}>
-          <Text style={theme.title_bar}>round {race.round}</Text>
-          <Text style={theme.title_bar}>{race.raceName}</Text>
-          <Text style={theme.title_bar}>{race.Circuit.circuitName}</Text>
-          <Text style={theme.title_bar}>{race.date}</Text>
+      <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingVertical: 10,}, theme.title_bar ]}>
+        <View style={[theme.title_bar, {flex: 3}]}>
+          <Text style={[theme.title_bar, {fontSize: 18, fontWeight: '700'}]}>Round {race.round}</Text>
+          <Text style={[theme.title_bar, {fontSize: 16}]}>{race.raceName}</Text>
+          <Text style={[theme.title_bar, {fontSize: 16}]}>{race.Circuit.circuitName}</Text>
+          <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{date}</Text>
         </View>
         <View style={[theme.title_bar, {flex: 1}]}>
-          <Image source={require("../Formula1-Images-API/public/countries/italy.png")}></Image>
+          <Image source={require("../Formula1-Images-API/public/countries/italy.png")} style={{ resizeMode: 'contain', flex: 1}}></Image>
         </View>
       </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
