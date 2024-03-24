@@ -14,7 +14,8 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 import { Dark, Light } from '../stylesheets/Theme';
-
+import { HomePageNavigationProp } from './HomePage';
+import { useNavigation } from '@react-navigation/native';
 
 export type Race = {
   round: number,
@@ -63,18 +64,21 @@ function RaceSchedule(props: Props,): React.JSX.Element {
 };
 
   
-function Schedule({navigation, route}): React.JSX.Element {
+function Schedule({route}: any): React.JSX.Element {
+
   // hooks
   const [race, setRace] = useState<Race[]>([]);
   const [loading, setLoading] = useState(true);
+  const navigation = useNavigation<HomePageNavigationProp>();
+
+  // route
+  const {isDarkMode} = route.params;
 
   // control variables
-  const {isDarkMode} = route.params;
   const theme = isDarkMode ? Dark : Light;
   let year = 2023;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
-
-
+  
   // data fetching
   const getRace =  async() => {
     try {
@@ -93,6 +97,11 @@ function Schedule({navigation, route}): React.JSX.Element {
   useEffect(() => {
     getRace();
   }, []);
+
+  // methods
+  const goToRaceResult = () => {
+    
+  }
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
@@ -104,8 +113,10 @@ function Schedule({navigation, route}): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
-            {race.map( race => <Pressable key={race.round} onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: isDarkMode})}}>
-                <RaceSchedule darkMode={isDarkMode} race={race}></RaceSchedule>
+            {race.map( race => <Pressable key={race.round}
+              onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: isDarkMode})}}
+            >
+              <RaceSchedule darkMode={isDarkMode} race={race}></RaceSchedule>
             </Pressable>)}
           </ScrollView>
         </View>

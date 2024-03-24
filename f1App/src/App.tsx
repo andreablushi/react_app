@@ -3,7 +3,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import HomePage from './HomePage';
-import Schedule from './Schedule';
+import Schedule, { Race } from './Schedule';
 import Drivers from './Driver_standings';
 import { StackNavigationProp } from '@react-navigation/stack';
 import RaceResult from './RaceResult';
@@ -16,6 +16,11 @@ export type RootStackParamList = {
   HomePage: undefined;
   Schedule: { isDarkMode: boolean };
   Drivers: undefined;
+  RaceResult: {
+    isDarkMode: boolean
+    season: number
+    race: Race
+  }
   // Aggiungere screen qua ( con i loro parametri)
 };
 

@@ -7,7 +7,7 @@ import { Dark, Light } from '../stylesheets/Theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
-type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
+export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const HomePage = () => {
   //I "create" the same navigation by taking HomePageNavigationProp which for now is a copy of
@@ -24,11 +24,6 @@ const HomePage = () => {
   //-----------------------------
 
 
-  //const navigation = useNavigation<HomePageNavigationProp>();
-  // NB: Ho commentato questa riga sopra perchè non riuscivo a capire come passare i parametri
-  // con questa implementazione di navigation, non dovrei aver rotto nulla, se si è rotto qualcosa
-  // a causa di questa modifica dimmelo che rimetto come prima 
-  // - Zeno
 
   const goToSchedule = () => {
     navigation.navigate("Schedule", {isDarkMode: darkMode})
