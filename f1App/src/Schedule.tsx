@@ -76,7 +76,7 @@ function Schedule({route}: any): React.JSX.Element {
 
   // control variables
   const theme = isDarkMode ? Dark : Light;
-  let year = 2023;
+  let year = 2024;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
   
   // data fetching

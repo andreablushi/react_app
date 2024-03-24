@@ -2,10 +2,10 @@ import React from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
-import HomePage from './HomePage';
-import Schedule, { Race } from './Schedule';
-import Drivers from './Driver_standings';
 import { StackNavigationProp } from '@react-navigation/stack';
+import HomePage from './HomePage';
+import Schedule from './Schedule';
+import Drivers from './DriverStandings';
 import RaceResult from './RaceResult';
 
 const Stack = createNativeStackNavigator();
