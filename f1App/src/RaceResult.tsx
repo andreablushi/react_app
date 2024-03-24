@@ -69,8 +69,8 @@ export default function RaceResult ({ route }) {
   }, []);
 
   return (
-    <SafeAreaView style={{backgroundColor: theme.title_bar.backgroundColor}}>
-      <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingTop: 10}, theme.title_bar ]}>
+    <SafeAreaView style={{backgroundColor: theme.title_bar.backgroundColor, flex: 1}}>
+      <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingTop: 10,}, theme.title_bar ]}>
         <View style={[theme.title_bar, {flex: 2.1}]}>
           <Text style={theme.title_bar}>round {race.round}</Text>
           <Text style={theme.title_bar}>{race.raceName}</Text>
@@ -81,11 +81,13 @@ export default function RaceResult ({ route }) {
           <Image source={require("../Formula1-Images-API/public/countries/italy.png")}></Image>
         </View>
       </View>
-      <ScrollView style={{backgroundColor: theme.title_bar.backgroundColor}}>
-      {results.map( result => <Pressable key={result.position}>
-          <Driver result={result} darkMode={isDarkMode}></Driver>
-        </Pressable>)}
-      </ScrollView>  
+      <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
+        <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
+        {results.map( result => <Pressable key={result.position}>
+            <Driver result={result} darkMode={isDarkMode}></Driver>
+          </Pressable>)}
+        </ScrollView>
+      </View> 
     </SafeAreaView>
   );
 };
