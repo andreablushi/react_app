@@ -2,14 +2,18 @@ import React, { useState } from 'react';
 import { View, Text, Button, StyleSheet, useColorScheme } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList } from './App'; // Importa RootParamList da App.tsx
+import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
 import { Dark, Light } from '../stylesheets/Theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 
 type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-const HomePage = ({ navigation }) => {
+const HomePage = () => {
+  //I "create" the same navigation by taking HomePageNavigationProp which for now is a copy of
+  //NativeStackNavigationProp from App.tsx
+  const navigation = useNavigation<HomePageNavigationProp>();
+  
   //------ theme manager --------
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   const theme = darkMode ? Dark : Light;
@@ -27,7 +31,7 @@ const HomePage = ({ navigation }) => {
   // - Zeno
 
   const goToSchedule = () => {
-    navigation.navigate('Schedule');
+    navigation.navigate("Schedule", {isDarkMode: darkMode})
   };
   const goToDrivers = () => {
     navigation.navigate('Drivers');
@@ -36,7 +40,7 @@ const HomePage = ({ navigation }) => {
   return (
     <SafeAreaView style={[styles.container, theme.card]}>
       <Text style={[styles.title, theme.card]}>Welcome to the Homepage</Text>
-      <Button title="Go to Schedule" onPress={() => {navigation.navigate("Schedule", {isDarkMode: darkMode})}} /> 
+      <Button title="Go to Schedule" onPress={goToSchedule} /> 
       <Button title="Go to Drivers" onPress={goToDrivers} />
       <Button onPress={switchTheme} title='switch theme'></Button>
       <Text style={[theme.card, {fontSize: 18}]}>Current theme: {darkMode ? "Dark" : "Light"}</Text>

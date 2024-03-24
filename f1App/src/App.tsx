@@ -14,9 +14,9 @@ const Stack = createNativeStackNavigator();
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
-  Schedule: undefined;
+  Schedule: { isDarkMode: boolean };
   Drivers: undefined;
-  // Aggiungere screen qua
+  // Aggiungere screen qua ( con i loro parametri)
 };
 
 
