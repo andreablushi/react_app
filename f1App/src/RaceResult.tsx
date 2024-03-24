@@ -70,7 +70,7 @@ export default function RaceResult ({ route }) {
   }, []);
 
   return (
-    <SafeAreaView>
+    <SafeAreaView style={{backgroundColor: backgroundStyle.backgroundColor}}>
       <View style={[{flexDirection: 'row', paddingHorizontal: 20, paddingTop: 10}, backgroundStyle ]}>
         <View style={[backgroundStyle, {flex: 2.1}]}>
           <Text style={backgroundStyle}>round {race.round}</Text>
@@ -82,8 +82,8 @@ export default function RaceResult ({ route }) {
           <Image source={require("../Formula1-Images-API/public/countries/italy.png")}></Image>
         </View>
       </View>
-      <ScrollView>
-        {results.map( result => <Pressable key={result.position}>
+      <ScrollView style={{backgroundColor: backgroundStyle.backgroundColor}}>
+      {results.map( result => <Pressable key={result.position}>
           <Driver result={result} darkMode={isDarkMode}></Driver>
         </Pressable>)}
       </ScrollView>  
