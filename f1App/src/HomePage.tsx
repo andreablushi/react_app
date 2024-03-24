@@ -12,11 +12,15 @@ const HomePage = () => {
   const goToSchedule = () => {
     navigation.navigate('Schedule');
   };
+  const goToDrivers = () => {
+    navigation.navigate('Drivers');
+  };
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Welcome to the Homepage</Text>
       <Button title="Go to Schedule" onPress={goToSchedule} />
+      <Button title="Go to Drivers" onPress={goToDrivers} />
     </View>
   );
 };
