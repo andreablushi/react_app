@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Styles from '../stylesheets/Styles';
 import {
   Button,
   Image,
@@ -13,7 +14,6 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
-
 /*Defining the type DRIVER
     Pos:          Position, in the driver rankings
     Driver:       Name and Surname of the driver
@@ -44,18 +44,16 @@ function Driver(props: Props): React.JSX.Element {
   };
   
   return (
-    <View style={[styles.itemContainer, {flex: 1, marginVertical: 7}]}>
-      <View style={{shadowColor: 'black', elevation: 3, shadowOffset: {height: 2, width: 2}, shadowRadius: 3, shadowOpacity: 1}}>
+    <View style={Styles.driverResultWrapper}>
+      <Text style={Styles.positionResult}>{result.position}</Text>
+      <Image style={Styles.driverPictureResult} source={require("../Formula1-Images-API/public/drivers/leclerc_front.png")}></Image>
+      <View style={Styles.driverResult}>
+        <Text style={Styles.driverTextResult}>{driver.givenName} {driver.familyName}</Text>
+        <Text style={Styles.teamTextResult}>{team.name}</Text>
       </View>
-      <View style={[{marginHorizontal: 10, flex: 12},]}>
-        <Text style={[styles.sectionDescription, styles.highlight, backgroundStyle, {fontSize: 16} ]}>{race.round}</Text>
-        <Text style={[styles.sectionDescription, backgroundStyle]}>{race.raceName}</Text>
-        <Text style={[styles.sectionDescription, backgroundStyle]}>{race.Circuit.circuitName}</Text>
-      </View>
-      <Text style={[{textAlign: 'right', flex: 5, marginRight: 10},  styles.sectionDescription, styles.highlight, backgroundStyle,]}>{date}</Text>
-      
-  </View>
-  );
+      <Text style={Styles.timeResult}>{time}</Text>
+    </View>
+  )
 };
 
   
