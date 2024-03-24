@@ -49,11 +49,8 @@ const App = () => {
         
         {/*Here instead, the header will take you to the homePage*/}
         <Stack.Screen name='Schedule' component={Schedule} />
-<<<<<<< Updated upstream
         <Stack.Screen name='RaceResult' component={RaceResult}/>
-=======
         <Stack.Screen name='Drivers' component={Drivers} />
->>>>>>> Stashed changes
       </Stack.Navigator>
     </NavigationContainer>
   );
