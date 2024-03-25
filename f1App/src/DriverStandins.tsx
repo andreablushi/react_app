@@ -17,8 +17,6 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-//import { getImageUrl } from './utils/image-util';
-
 /*Defining the type driverStandings
     position: Position, in the driver rankings
     Points: Number of point, in the current season
