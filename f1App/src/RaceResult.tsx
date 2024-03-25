@@ -42,7 +42,9 @@ export default function RaceResult ({route}: any) {
   //hooks
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
+  const [failed, setFailed] = useState<boolean>(false);
   const navigation = useNavigation<HomePageNavigationProp>();
+  
 
   // route
   const {race}: {race:Race} = route.params;
@@ -62,11 +64,11 @@ export default function RaceResult ({route}: any) {
   // fetch results
   const getResults =  async() => {
     try {
+      console.log("retrieving results");
       const response = await fetch(apiUrl);
       const data = await response.json();
-      let filteredArrayValues = data.MRData.RaceTable.Races[0].Results;
-      setResults(filteredArrayValues);
-      console.log("retrieving results");
+      let filteredArrayValues = data.MRData.RaceTable.Races[0];
+      filteredArrayValues == undefined ? setFailed(true) : setResults(filteredArrayValues.Results);
     } catch (error){
       console.error(error);
     } finally {

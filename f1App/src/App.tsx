@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import HomePage from './HomePage';
-import Schedule from './Schedule';
+import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import RaceResult from './RaceResult';
 

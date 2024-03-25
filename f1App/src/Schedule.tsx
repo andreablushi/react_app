@@ -40,18 +40,18 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   // import prop
   const theme = props.darkMode ? Dark : Light;
   const race = props.race;
+  
 
   // date formatting
   const day = race.date.slice(8, 10);
   const month = race.date.slice(5, 7);
   const year = race.date.slice(0, 4);
   const date = day + "/" + month + "/" + year;
-
-
+ 
   return (
       <View style={[styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
         <View>
-          <Image source={require('../Formula1-Images-API/public/countries/italy.png')} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
+          <Image source={require("../Formula1-Images-API/public/countries/italy.png")} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
         <View style={[{paddingHorizontal: 10, flex: 12},]}>
           <Text style={[styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
@@ -99,8 +99,8 @@ function Schedule({route}: any): React.JSX.Element {
   }, []);
 
   // methods
-  const goToRaceResult = () => {
-    
+  const getCountryImage = (country: string) => {
+    return ("../Formula1-Images-API/public/countries/" + country + ".png")
   }
   
   return (

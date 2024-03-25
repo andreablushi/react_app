@@ -17,7 +17,7 @@ import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
 
-import { getImageUrl } from './utils/image-util';
+//import { getImageUrl } from './utils/image-util';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
@@ -64,7 +64,7 @@ function DriverElement(props: Props): React.JSX.Element {
       {/*Position of the driver*/}
       <Text style={[Styles.positionResult, theme.card]}>{driver_standing.position}</Text>
       {/*Image of the driver*/}
-      <Image style={Styles.driverPictureResult} src={getImageUrl("drivers/"+driver.familyName)} />
+      
       <View style={[Styles.driverResult, theme.card]}>
         <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
         <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
