@@ -1,32 +1,34 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, Button, StyleSheet, useColorScheme } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
 import { Dark, Light } from '../stylesheets/Theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { globalThemeControl } from './App';
+
 
 
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
 const HomePage = () => {
+
+    // -------- THEME -------------------------------------------------------------
+    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+    const switchTheme= () => {
+      globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+      globalThemeControl.changeTheme()
+    }
+    const theme = darkMode ? Dark : Light;
+    //-----------------------------------------------------------------------------
+
+
   //I "create" the same navigation by taking HomePageNavigationProp which for now is a copy of
   //NativeStackNavigationProp from App.tsx
   const navigation = useNavigation<HomePageNavigationProp>();
   
-  //------ theme manager --------
-  const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
-  const theme = darkMode ? Dark : Light;
-
-  const switchTheme= () => {
-    darkMode ? setDarkMode(false) : setDarkMode(true);
-  }
-  //-----------------------------
-
-
-
   const goToSchedule = () => {
-    navigation.navigate("Schedule", {isDarkMode: darkMode})
+    navigation.navigate("Schedule")
   };
   const goToDrivers = () => {
     navigation.navigate('Drivers');

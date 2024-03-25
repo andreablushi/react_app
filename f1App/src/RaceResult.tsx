@@ -6,6 +6,7 @@ import Styles from "../stylesheets/Styles"
 import { Light, Dark } from "../stylesheets/Theme";
 import { useNavigation } from "@react-navigation/native";
 import { HomePageNavigationProp } from "./HomePage";
+import { globalThemeControl } from "./App";
 
 type Result = {
   number: number // driver number
@@ -38,6 +39,17 @@ type Props = {
 }
 
 export default function RaceResult ({route}: any) {
+
+
+  // -------- THEME -------------------------------------------------------------
+  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  
+  const switchTheme= () => {
+    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+    globalThemeControl.changeTheme()
+  }
+  const theme = darkMode ? Dark : Light;
+  //-----------------------------------------------------------------------------
   
   //hooks
   const [results, setResults] = useState<Result[]>([]);
@@ -49,11 +61,10 @@ export default function RaceResult ({route}: any) {
   // route
   const {race}: {race:Race} = route.params;
   const {season} = route.params;
-  const {isDarkMode} = route.params;
+  
 
   // control variables
   const apiUrl = "https://ergast.com/api/f1/" + season + "/" + race.round + "/results.json";
-  const theme = isDarkMode ? Dark : Light;
 
   // date formatting
   const day = race.date.slice(8, 10);
@@ -97,7 +108,7 @@ export default function RaceResult ({route}: any) {
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
         <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
         {results.map( result => <Pressable key={result.position}>
-            <Driver result={result} darkMode={isDarkMode}></Driver>
+            <Driver result={result} darkMode={darkMode}></Driver>
           </Pressable>)}
         </ScrollView>
       </View> 

@@ -16,6 +16,7 @@ import {
 import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
+import { globalThemeControl } from './App';
 
 export type Race = {
   round: number,
@@ -37,11 +38,13 @@ type Props = {
 
 
 function RaceSchedule(props: Props,): React.JSX.Element {
-  // import prop
-  const theme = props.darkMode ? Dark : Light;
-  const race = props.race;
-  
 
+  // import prop
+  const race = props.race;
+  const darkMode = props.darkMode
+  const theme = darkMode ? Dark : Light;
+  
+  
   // date formatting
   const day = race.date.slice(8, 10);
   const month = race.date.slice(5, 7);
@@ -66,16 +69,26 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   
 function Schedule({route}: any): React.JSX.Element {
 
+
+  // -------- THEME -------------------------------------------------------------
+  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  
+  
+
+  const switchTheme= () => {
+    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+    globalThemeControl.changeTheme()
+  }
+  const theme = darkMode ? Dark : Light;
+  //-----------------------------------------------------------------------------
+
   // hooks
   const [race, setRace] = useState<Race[]>([]);
   const [loading, setLoading] = useState(true);
   const navigation = useNavigation<HomePageNavigationProp>();
 
-  // route
-  const {isDarkMode} = route.params;
-
+  
   // control variables
-  const theme = isDarkMode ? Dark : Light;
   let year = 2024;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
   
@@ -93,10 +106,9 @@ function Schedule({route}: any): React.JSX.Element {
     }
   };
 
-  // fetch data at the start of the page
   useEffect(() => {
     getRace();
-  }, []);
+  }, [])
 
   // methods
   const getCountryImage = (country: string) => {
@@ -114,9 +126,9 @@ function Schedule({route}: any): React.JSX.Element {
         <View style={[{flex: 10}]}>
           <ScrollView>
             {race.map( race => <Pressable key={race.round}
-              onPress={() => {navigation.navigate("RaceResult", {race: race, season: year, isDarkMode: isDarkMode})}}
+              onPress={() => {navigation.navigate("RaceResult", {race: race, season: year})}}
             >
-              <RaceSchedule darkMode={isDarkMode} race={race}></RaceSchedule>
+              <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
             </Pressable>)}
           </ScrollView>
         </View>
