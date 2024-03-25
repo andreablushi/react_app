@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
+import ImagesDB from "../utils/ImagesDB";
 import {
   Button,
   Image,
@@ -56,13 +57,19 @@ function DriverElement(props: Props): React.JSX.Element {
   const driver = driver_standing.Driver;
   const team = driver_standing.Constructors;
 
-  //TO DO: FINDING A WAY TO USE DINAMIC IMAGES
+  /*Given the familyName of the driver, return the image from the imahesDB json file*/
+  const getImageSource = (name: string) => {
+    const imageObject = ImagesDB[0]["drivers-side"].find(driver => driver.name === name);
+    return imageObject ? imageObject.src : null;
+  };
+
   return (
     <View style={[Styles.driverResultWrapper, theme.card]}>
       {/*Position of the driver*/}
-      <Text style={[Styles.positionResult, theme.card]}>{driver_standing.position}</Text>
+      <Text style={[Styles.positionResult, theme.card]}>{driver_standing.position}°</Text>
       {/*Image of the driver*/}
-      
+      <Image source={getImageSource(driver.familyName)} style={{ resizeMode: 'contain', flex: 1}} />
+
       <View style={[Styles.driverResult, theme.card]}>
         <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
         <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
