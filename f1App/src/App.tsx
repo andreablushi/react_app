@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
@@ -11,13 +11,27 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 
+// Global theme controller 
+export class globalThemeControl {
+  static theme = false;
+
+  public static changeTheme() {
+    console.log("switching theme, now: " + globalThemeControl.theme ? "Dark": "Light")
+    globalThemeControl.theme ? globalThemeControl.theme = false : globalThemeControl.theme = true;
+  }
+
+  public static getTheme() {
+    console.log(globalThemeControl.theme ? "Dark": "Light")
+    return globalThemeControl.theme;
+  }
+}
+
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
-  Schedule: { isDarkMode: boolean };
+  Schedule: undefined;
   Drivers: undefined;
   RaceResult: {
-    isDarkMode: boolean
     season: number
     race: Race
   }
@@ -63,7 +77,7 @@ const NavigationBar = () => {
       <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
         <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
       </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Schedule', {isDarkMode: true})}>
+      <TouchableOpacity onPress={() => navigation.navigate('Schedule')}>
         <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
       </TouchableOpacity>
       <TouchableOpacity onPress={() => navigation.navigate('Drivers')}>
@@ -74,6 +88,19 @@ const NavigationBar = () => {
 };
 
 const App = () => {
+  // -------- THEME -------------------------------------------------------------
+  useEffect(() => {
+    setDarkMode(globalThemeControl.getTheme())
+  }, [])
+
+  const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
+  const switchTheme= () => {
+    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+    globalThemeControl.changeTheme()
+  }
+  //-----------------------------------------------------------------------------
+
+
   return (
     <NavigationContainer>
       <Stack.Navigator>
@@ -114,3 +141,4 @@ const styles = StyleSheet.create({
     tintColor: 'white',
   },
 });
+
