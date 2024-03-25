@@ -1,5 +1,13 @@
-/*To fix:
-    driver bearman has only side images 
+/*  
+    To use:
+        define a list of json elements, similar to the one specified for the drivers.
+        It should comprend an ID, which can be used to refer to a precise element (as ex: drivers familyName dor the drivers)
+        and an src, the rrquire with the image url.
+
+        You should also implement a function, similar to the getImageSource from the DriverStandings
+
+    To fix:
+        driver bearman has only side images 
 */
 
 const ImagesDB = [
