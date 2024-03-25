@@ -1,16 +1,16 @@
-import React from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
+import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import RaceResult from './RaceResult';
+import { SafeAreaView } from 'react-native-safe-area-context';
 
 const Stack = createNativeStackNavigator();
 
-//List of the imported *file*.tsx, to use as parameters for navigation
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
@@ -21,50 +21,75 @@ export type RootStackParamList = {
     season: number
     race: Race
   }
-  // Aggiungere screen qua ( con i loro parametri)
 };
 
-
-//Setting RootStackNavigation, a variable that stores in it the navigation properties between the screen
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
 
-/*STARTING SCREEN component*/
 export const StartingScreen = () => {
-  //Starting the navigation inside the components with the properties already explained
   const navigation = useNavigation<RootStackNavigationProp>();
+  
   return (
     <View style={styles.starting_container}>
-      {/*Making the startingScreen clickable. By clicking it the user will get redirected to the HomePage.
-        By using navigation.replace instead of navigate we can make sure the user can't come back to the starting screen*/}
-      <TouchableOpacity onPress={() => navigation.replace('HomePage')} >
-      <Image source={require('../img/starting-image.jpg')} style={styles.starting_image} />
+      <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
+        <Image source={require('../img/starting-image.jpg')} style={styles.starting_image} />
       </TouchableOpacity>
     </View>
   );
 };
 
-/*Structure for the navigation system of the app*/
+const NavigationBar = () => {
+  const navigation = useNavigation<RootStackNavigationProp>();
+  const [isStartingScreen, setIsStartingScreen] = useState(false);
+
+  useFocusEffect(
+    React.useCallback(() => {
+      // Check if the current screen is the StartingScreen
+      const unsubscribe = navigation.addListener('focus', () => {
+        setIsStartingScreen(true);
+      });
+
+      return unsubscribe;
+    }, [])
+  );
+
+  // If the current screen is the StartingScreen, do not render the NavigationBar
+  if (isStartingScreen) {
+    return null;
+  }
+
+  
+  return (
+    <SafeAreaView style={styles.navigationBar}>
+      <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
+        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Schedule', {isDarkMode: true})}>
+        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
+      </TouchableOpacity>
+      <TouchableOpacity onPress={() => navigation.navigate('Drivers')}>
+        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
+      </TouchableOpacity>
+    </SafeAreaView>
+  );
+};
+
 const App = () => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/*We are setting the headerShown to false, to hide the bar in the top of the screen for the navigation*/}
-        <Stack.Screen name="StartingScreen" component={StartingScreen}  options={{ headerShown: false }} />
+        <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false }} />
         <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
-        
-        {/*Here instead, the header will take you to the homePage*/}
-        <Stack.Screen name='Schedule' component={Schedule}  options={{ headerShown: false }}/>
+        <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false }}/>
         <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false }}/>
         <Stack.Screen name='Drivers' component={Drivers} />
       </Stack.Navigator>
+      <NavigationBar/>
     </NavigationContainer>
   );
 };
 
 export default App;
 
-
-//Styles used only for the starting screen
 const styles = StyleSheet.create({
   starting_container: {
     flex: 1,
@@ -72,9 +97,20 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   starting_image: {
-    width: Dimensions.get('window').width, // Width of the image is setted to the width of the screen
-    height: Dimensions.get('window').height, // Height of the image is setted to the height of the screen
-    resizeMode: 'cover', // resize the image to cover the whole screen
+    width: Dimensions.get('window').width,
+    height: Dimensions.get('window').height,
+    resizeMode: 'cover',
+  },
+  navigationBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    paddingVertical: 10,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
   },
 });
-
