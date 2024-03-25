@@ -45,6 +45,18 @@ const Styles = StyleSheet.create({
     textAlignVertical: 'center',
     fontWeight: '500'
   }, 
+  navigationBar: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    backgroundColor: 'red',
+    paddingVertical: 10,
+  },
+  icon: {
+    width: 24,
+    height: 24,
+    tintColor: 'white',
+  },
   
 });
 
