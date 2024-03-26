@@ -12,6 +12,8 @@
 
 const ImagesDB = 
 {
+  "driverNotFound": require("../img/driverNotFound.png"),
+  "notfound": require("../img/notfound.png"),
   "drivers-side": [
     {
       "name": "Albon",

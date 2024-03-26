@@ -9,12 +9,14 @@ import Drivers from './DriverStandings';
 import RaceResult from './RaceResult';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ImagesDB from '../utils/ImagesDB';
+import { Dark, Light } from '../stylesheets/Theme';
+import { FadeFromBottomAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const Stack = createNativeStackNavigator();
 
 // Global theme controller 
 export class globalThemeControl {
-  static theme = false;
+  static theme = true;
 
   public static changeTheme() {
     console.log("switching theme, now: " + globalThemeControl.theme ? "Dark": "Light")
@@ -22,20 +24,24 @@ export class globalThemeControl {
   }
 
   public static getTheme() {
-    console.log(globalThemeControl.theme ? "Dark": "Light")
+    // console.log(globalThemeControl.theme ? "Dark": "Light")
     return globalThemeControl.theme;
+  }
+
+  public static setTheme(darkMode: boolean) {
+    globalThemeControl.theme = darkMode
   }
 }
 
 export class imageSource {
   public static getDriverSide(name: string) {
     const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
-    return imageObject ? imageObject.src : null;
+    return imageObject ? imageObject.src : ImagesDB.driverNotFound;
   };
 
   public static getFlag(nation: string) {
     const imageObject = ImagesDB['flags'].find(flag => flag.nation.toLowerCase() === nation.toLowerCase());
-    return imageObject ? imageObject.src : null;
+    return imageObject ? imageObject.src : ImagesDB.notfound;
   };
 }
 
@@ -102,29 +108,35 @@ const NavigationBar = () => {
 
 const App = () => {
   // -------- THEME -------------------------------------------------------------
-  useEffect(() => {
-    setDarkMode(globalThemeControl.getTheme())
-  }, [])
-
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
+  globalThemeControl.setTheme(darkMode);
+  useEffect(() => {
+    const refresh = setInterval(() => {
+      setDarkMode(globalThemeControl.getTheme())
+    }, 1000);
+    return () => clearInterval(refresh)
+  }, [globalThemeControl.theme])
+ 
   const switchTheme= () => {
     globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
     globalThemeControl.changeTheme()
   }
+  const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
 
-
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false }} />
-        <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
-        <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false }}/>
-        <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false }}/>
-        <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
-      </Stack.Navigator>
-      <NavigationBar/>
-    </NavigationContainer>
+    <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false }} />
+          <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
+          <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false}}/>
+          <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false}}/>
+          <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
+        </Stack.Navigator>
+        <NavigationBar/>
+      </NavigationContainer>
+    </View>
   );
 };
 

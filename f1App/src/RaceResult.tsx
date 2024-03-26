@@ -60,6 +60,7 @@ export default function RaceResult ({route}: any) {
 
   // control variables
   const apiUrl = "https://ergast.com/api/f1/" + season + "/" + race.round + "/results.json";
+  const country = race.Circuit.Location.country;
 
   // date formatting
   const day = race.date.slice(8, 10);
@@ -97,7 +98,7 @@ export default function RaceResult ({route}: any) {
           <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{date}</Text>
         </View>
         <View style={[theme.title_bar, {flex: 1}]}>
-          <Image source={imageSource.getDriverSide("leclerc")} style={{ resizeMode: 'contain', flex: 1}}></Image>
+          <Image source={imageSource.getFlag(country)} style={{ resizeMode: 'contain', flex: 1}}></Image>
         </View>
       </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
