@@ -3,15 +3,19 @@ import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navig
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { Dark, Light } from '../stylesheets/Theme';
+import { FadeFromBottomAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
+
+//Our Component
 import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import DriverInfo from './DriverInfo';
+import { NavigationBar } from './NavigationBar';
 import RaceResult from './RaceResult';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
-import { Dark, Light } from '../stylesheets/Theme';
-import { FadeFromBottomAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const Stack = createNativeStackNavigator();
 
@@ -51,6 +55,7 @@ export type RootStackParamList = {
   HomePage: undefined;
   Schedule: undefined;
   Drivers: undefined;
+  Teams: undefined;
   RaceResult: {
     season: number
     race: Race
@@ -74,42 +79,6 @@ export const StartingScreen = () => {
   );
 };
 
-const NavigationBar = () => {
-  const navigation = useNavigation<RootStackNavigationProp>();
-  const [isStartingScreen, setIsStartingScreen] = useState(false);
-
-  useFocusEffect(
-    React.useCallback(() => {
-      // Check if the current screen is the StartingScreen
-      const unsubscribe = navigation.addListener('focus', () => {
-        setIsStartingScreen(true);
-      });
-
-      return unsubscribe;
-    }, [])
-  );
-
-  // If the current screen is the StartingScreen, do not render the NavigationBar
-  if (isStartingScreen) {
-    return null;
-  }
-
-  
-  return (
-    <SafeAreaView style={styles.navigationBar}>
-      <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Schedule')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Drivers')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-    </SafeAreaView>
-  );
-};
-
 const App = () => {
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
@@ -130,6 +99,7 @@ const App = () => {
 
   return (
     <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
+      <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false }} />
@@ -138,9 +108,11 @@ const App = () => {
           <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false}}/>
           <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
           <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false }}/>
+          <Stack.Screen name='Teams' component={Teams} options={{headerShown: false}}/>
         </Stack.Navigator>
-        <NavigationBar/>
+        
       </NavigationContainer>
+      </SafeAreaProvider>
     </View>
   );
 };

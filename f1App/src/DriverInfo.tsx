@@ -16,6 +16,7 @@ import {
 } from 'react-native';
 
 import { globalThemeControl, imageSource } from './App';
+import { NavigationBar } from './NavigationBar';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
