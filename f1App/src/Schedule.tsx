@@ -43,6 +43,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const race = props.race;
   const darkMode = props.darkMode
   const theme = darkMode ? Dark : Light;
+  const country = race.Circuit.Location.country;
   
   
   // date formatting
@@ -54,7 +55,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   return (
       <View style={[styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
         <View>
-          <Image source={imageSource.getDriverSide("Leclerc")} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
+          <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
         <View style={[{paddingHorizontal: 10, flex: 12},]}>
           <Text style={[styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
