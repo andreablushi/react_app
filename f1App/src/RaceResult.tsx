@@ -97,7 +97,7 @@ export default function RaceResult ({route}: any) {
           <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{date}</Text>
         </View>
         <View style={[theme.title_bar, {flex: 1}]}>
-          <Image source={imageSource.getDriverSide("Leclerc")} style={{ resizeMode: 'contain', flex: 1}}></Image>
+          <Image source={imageSource.getDriverSide("leclerc")} style={{ resizeMode: 'contain', flex: 1}}></Image>
         </View>
       </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
@@ -124,7 +124,7 @@ function Driver(props: Props) {
   return (
     <View style={[Styles.driverResultWrapper, theme.card]}>
       <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
-      <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide("Leclerc")}></Image>
+      <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card]}>
         <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
         <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
