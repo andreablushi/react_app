@@ -32,6 +32,11 @@ export class imageSource {
     const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
     return imageObject ? imageObject.src : null;
   };
+
+  public static getFlag(nation: string) {
+    const imageObject = ImagesDB['flags'].find(flag => flag.nation.toLowerCase() === nation.toLowerCase());
+    return imageObject ? imageObject.src : null;
+  };
 }
 
 export type RootStackParamList = {

@@ -185,6 +185,92 @@ const ImagesDB =
     },
   ],
   "circuits": [
+  ],
+  "flags": [
+    {
+      "nation": "australia",
+      "src": require("../img/countries/australia.png"),
+    },
+    {
+      "nation": "austria",
+      "src": require("../img/countries/austria.png"),
+    },
+    {
+      "nation": "azerbaijan",
+      "src": require("../img/countries/azerbaijan.png"),
+    },
+    {
+      "nation": "bahrain",
+      "src": require("../img/countries/bahrain.png"),
+    },
+    {
+      "nation": "belgium",
+      "src": require("../img/countries/belgium.png"),
+    },
+    {
+      "nation": "brazil",
+      "src": require("../img/countries/brazil.png"),
+    },
+    {
+      "nation": "canada",
+      "src": require("../img/countries/canada.png"),
+    },
+    {
+      "nation": "france",
+      "src": require("../img/countries/france.png"),
+    },
+    {
+      "nation": "hungary",
+      "src": require("../img/countries/hungary.png"),
+    },
+    {
+      "nation": "italy",
+      "src": require("../img/countries/italy.png"),
+    },
+    {
+      "nation": "japan",
+      "src": require("../img/countries/japan.png"),
+    },
+    {
+      "nation": "mexico",
+      "src": require("../img/countries/mexico.png"),
+    },
+    {
+      "nation": "monaco",
+      "src": require("../img/countries/monaco.png"),
+    },
+    {
+      "nation": "netherlands",
+      "src": require("../img/countries/netherlands.png"),
+    },
+    {
+      "nation": "qatar",
+      "src": require("../img/countries/qatar.png"),
+    },
+    {
+      "nation": "saudi arabia",
+      "src": require("../img/countries/saudi arabia.png"),
+    },
+    {
+      "nation": "singapore",
+      "src": require("../img/countries/singapore.png"),
+    },
+    {
+      "nation": "spain",
+      "src": require("../img/countries/spain.png"),
+    },
+    {
+      "nation": "uae",
+      "src": require("../img/countries/uae.png"),
+    },
+    {
+      "nation": "uk",
+      "src": require("../img/countries/uk.png"),
+    },
+    {
+      "nation": "usa",
+      "src": require("../img/countries/usa.png"),
+    },
   ]
 };
 
