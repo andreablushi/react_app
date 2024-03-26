@@ -72,8 +72,6 @@ function Schedule({route}: any): React.JSX.Element {
 
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-  
-  
 
   const switchTheme= () => {
     globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);

@@ -43,11 +43,6 @@ export default function RaceResult ({route}: any) {
 
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-  
-  const switchTheme= () => {
-    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
-    globalThemeControl.changeTheme()
-  }
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
   

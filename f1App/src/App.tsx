@@ -29,7 +29,7 @@ export class globalThemeControl {
 
 export class imageSource {
   public static getDriverSide(name: string) {
-    const imageObject = ImagesDB[0]['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
+    const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
     return imageObject ? imageObject.src : null;
   };
 }
@@ -116,7 +116,7 @@ const App = () => {
         <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
         <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false }}/>
         <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false }}/>
-        <Stack.Screen name='Drivers' component={Drivers} />
+        <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
       </Stack.Navigator>
       <NavigationBar/>
     </NavigationContainer>

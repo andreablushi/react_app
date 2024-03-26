@@ -17,6 +17,7 @@ import {
 import {
   Colors,
 } from 'react-native/Libraries/NewAppScreen';
+import { globalThemeControl, imageSource } from './App';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
@@ -39,10 +40,10 @@ type driverStandings = {
     givenName: string, 
     familyName: string,
   }
-  Constructors: {
+  Constructors: [{
     constructorId: string;
     name: string;
-  }
+  }]
 }
 
 type Props = {
@@ -53,48 +54,36 @@ type Props = {
 function DriverElement(props: Props): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
-  const driver_standing = props.driver_standing;
-  const driver = driver_standing.Driver;
-  const team = driver_standing.Constructors;
-
-  /*Given the familyName of the driver, return the image from the imahesDB json file*/
-  const getImageSource = (name: string) => {
-    const imageObject = ImagesDB[0]["drivers-side"].find(driver => driver.name === name);
-    return imageObject ? imageObject.src : null;
-  };
-
+  const result= props.driver_standing;
+  const driver = result.Driver;
+  const team = result.Constructors[0];
+  
   return (
     <View style={[Styles.driverResultWrapper, theme.card]}>
-      {/*Position of the driver*/}
-      <Text style={[Styles.positionResult, theme.card]}>{driver_standing.position}°</Text>
-      {/*Image of the driver*/}
-      <Image source={getImageSource(driver.familyName)} style={{ resizeMode: 'contain', flex: 1}} />
-
-      <View style={[Styles.driverResult, theme.card]}>
-        <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
-        <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
-      </View>
-      <Text style={[Styles.timeResult, theme.card]}>{driver_standing.points}</Text>
+    <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
+    <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
+    <View style={[Styles.driverResult, theme.card]}>
+      <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
+      <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
     </View>
+    <Text style={[Styles.timeResult, theme.card]}>{result.points}</Text>
+  </View>
   )
 };
 
 
 /*Main function of this page*/
 function Driver_standings({navigation, route}: any): React.JSX.Element {
-  const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
+  // -------- THEME -------------------------------------------------------------
+  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const theme = darkMode ? Dark : Light;
+  //-----------------------------------------------------------------------------
+ 
   //Hook for the fetch of the data
   const [driver_standings, setDriverStanding] = useState<driverStandings[]>([]);
   //Hook for the loading state, setted to true
   const [loading, setLoading] = useState(true);
 
-  //Settings for the dark theme
-  const isDarkMode = darkMode; 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-    color: isDarkMode ? 'white' : 'black',
-  };
-  
   //Api url, fetching the driverStanding from the current season
   const apiUrl = "http://ergast.com/api/f1/current/driverStandings.json";
 
@@ -103,7 +92,6 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
     try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      console.log(data); // Log the entire data object
       setDriverStanding(data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
       console.log("retrieving data");
     } catch (error){
@@ -119,9 +107,9 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   }, []);
 
   return (
-      <SafeAreaView style={[backgroundStyle, {flex: 11}]}>
-        <View style={[{backgroundColor: backgroundStyle.backgroundColor}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: backgroundStyle.color}]}>Driver Standings</Text>
+      <SafeAreaView style={[theme.card, {flex: 11}]}>
+        <View style={[{backgroundColor: theme.card.backgroundColor}, styles.topBar]}>
+          <Text style={[styles.topBarText, {color: theme.card.color}]}>Driver Standings</Text>
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the driver standings will be shown:
@@ -129,8 +117,8 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
             - By clicking on the element, the user will get redirected to the single driver info
           */}
           <ScrollView>
-            {driver_standings.map( driver_standings => <Pressable key={driver_standings.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings.Driver.familyName, isDarkMode: isDarkMode})}}>
-                <DriverElement darkMode={isDarkMode} driver_standing={driver_standings}></DriverElement>
+            {driver_standings.map( driver_standings => <Pressable key={driver_standings.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings.Driver.familyName})}}>
+                <DriverElement darkMode={darkMode} driver_standing={driver_standings}></DriverElement>
             </Pressable>)}
           </ScrollView>
         </View>
