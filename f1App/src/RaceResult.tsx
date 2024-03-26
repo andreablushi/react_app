@@ -7,6 +7,7 @@ import { Light, Dark } from "../stylesheets/Theme";
 import { useNavigation } from "@react-navigation/native";
 import { HomePageNavigationProp } from "./HomePage";
 import { globalThemeControl, imageSource } from "./App";
+import { NavigationBar } from "./NavigationBar";
 
 type Result = {
   number: number // driver number
@@ -108,6 +109,7 @@ export default function RaceResult ({route}: any) {
           </Pressable>)}
         </ScrollView>
       </View> 
+      <NavigationBar/>
     </SafeAreaView>
   );
 };

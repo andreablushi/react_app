@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
+import { NavigationBar } from './NavigationBar';
 import {
   Image,
   Pressable,
@@ -115,6 +116,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
             </Pressable>)}
           </ScrollView>
         </View>
+        <NavigationBar/>
       </SafeAreaView>
   );
 }

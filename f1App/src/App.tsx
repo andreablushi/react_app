@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react';
 import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, Pressable } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, Pressable } from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
+
+//Our Components
 import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
+import Teams from './TeamStandings';
 import RaceResult from './RaceResult';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import ImagesDB from '../utils/ImagesDB';
 import { Dark, Light } from '../stylesheets/Theme';
-import { FadeFromBottomAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
 
 const Stack = createNativeStackNavigator();
 
@@ -50,6 +51,7 @@ export type RootStackParamList = {
   HomePage: undefined;
   Schedule: undefined;
   Drivers: undefined;
+  Teams:undefined;
   RaceResult: {
     season: number
     race: Race
@@ -70,41 +72,7 @@ export const StartingScreen = () => {
   );
 };
 
-const NavigationBar = () => {
-  const navigation = useNavigation<RootStackNavigationProp>();
-  const [isStartingScreen, setIsStartingScreen] = useState(false);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      // Check if the current screen is the StartingScreen
-      const unsubscribe = navigation.addListener('focus', () => {
-        setIsStartingScreen(true);
-      });
-
-      return unsubscribe;
-    }, [])
-  );
-
-  // If the current screen is the StartingScreen, do not render the NavigationBar
-  if (isStartingScreen) {
-    return null;
-  }
-
-  
-  return (
-    <SafeAreaView style={styles.navigationBar}>
-      <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Schedule')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-      <TouchableOpacity onPress={() => navigation.navigate('Drivers')}>
-        <Image source={require('../img/icon/homepage.png')} style={styles.icon} />
-      </TouchableOpacity>
-    </SafeAreaView>
-  );
-};
 
 const App = () => {
   // -------- THEME -------------------------------------------------------------
@@ -133,8 +101,8 @@ const App = () => {
           <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false}}/>
           <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false}}/>
           <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
+          <Stack.Screen name='Teams' component={Teams} options={{ headerShown: false}}/>
         </Stack.Navigator>
-        <NavigationBar/>
       </NavigationContainer>
     </View>
   );
@@ -152,18 +120,6 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
     resizeMode: 'cover',
-  },
-  navigationBar: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-    backgroundColor: 'red',
-    paddingVertical: 10,
-  },
-  icon: {
-    width: 24,
-    height: 24,
-    tintColor: 'white',
   },
 });
 

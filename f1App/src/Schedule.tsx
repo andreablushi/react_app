@@ -17,6 +17,7 @@ import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
 import { globalThemeControl, imageSource } from './App';
+import { NavigationBar } from './NavigationBar';
 
 export type Race = {
   round: number,
@@ -126,6 +127,7 @@ function Schedule({route}: any): React.JSX.Element {
             </Pressable>)}
           </ScrollView>
         </View>
+        <NavigationBar/>
       </SafeAreaView>
   );
 }
