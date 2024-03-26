@@ -107,11 +107,6 @@ function Schedule({route}: any): React.JSX.Element {
   useEffect(() => {
     getRace();
   }, [])
-
-  // methods
-  const getCountryImage = (country: string) => {
-    return ("../Formula1-Images-API/public/countries/" + country + ".png")
-  }
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
