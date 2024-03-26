@@ -6,6 +6,7 @@ import { StackNavigationProp } from '@react-navigation/stack';
 import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
+import DriverInfo from './DriverInfo';
 import RaceResult from './RaceResult';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import ImagesDB from '../utils/ImagesDB';
@@ -53,7 +54,10 @@ export type RootStackParamList = {
   RaceResult: {
     season: number
     race: Race
-  }
+  };
+  DriverInfo:{
+    driver: string
+  };
 };
 
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -133,6 +137,7 @@ const App = () => {
           <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false}}/>
           <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false}}/>
           <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
+          <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false }}/>
         </Stack.Navigator>
         <NavigationBar/>
       </NavigationContainer>

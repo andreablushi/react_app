@@ -29,8 +29,9 @@ type driverStandings = {
   position: number;
   points: number;
   Driver: {
-    givenName: string, 
-    familyName: string,
+    driverId: string;
+    givenName: string; 
+    familyName: string;
   }
   Constructors: [{
     constructorId: string;
@@ -110,7 +111,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
             - By clicking on the element, the user will get redirected to the single driver info
           */}
           <ScrollView>
-            {driver_standings_data.map( driver_standings_data => <Pressable key={driver_standings_data.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings_data.Driver.familyName})}}>
+            {driver_standings_data.map( driver_standings_data => <Pressable key={driver_standings_data.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings_data.Driver.driverId})}}>
                 <DriverElement darkMode={darkMode} driver_standing={driver_standings_data}></DriverElement>
             </Pressable>)}
           </ScrollView>
