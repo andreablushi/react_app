@@ -1,22 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
-import ImagesDB from "../utils/ImagesDB";
 import {
-  Button,
   Image,
   Pressable,
   SafeAreaView,
   ScrollView,
-  StyleSheet,
   Text,
-  useColorScheme,
   View,
 } from 'react-native';
 
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
 import { globalThemeControl, imageSource } from './App';
 
 /*Defining the type driverStandings
@@ -33,7 +26,6 @@ import { globalThemeControl, imageSource } from './App';
 
 */
 type driverStandings = {
-  
   position: number;
   points: number;
   Driver: {
@@ -45,7 +37,7 @@ type driverStandings = {
     name: string;
   }]
 }
-
+/*Type props, used for passing the parameters to the DriverElement function*/
 type Props = {
   darkMode: boolean
   driver_standing: driverStandings
@@ -72,6 +64,7 @@ function DriverElement(props: Props): React.JSX.Element {
 };
 
 
+
 /*Main function of this page*/
 function Driver_standings({navigation, route}: any): React.JSX.Element {
   // -------- THEME -------------------------------------------------------------
@@ -80,7 +73,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   //-----------------------------------------------------------------------------
  
   //Hook for the fetch of the data
-  const [driver_standings, setDriverStanding] = useState<driverStandings[]>([]);
+  const [driver_standings_data, setDriverStanding] = useState<driverStandings[]>([]);
   //Hook for the loading state, setted to true
   const [loading, setLoading] = useState(true);
 
@@ -108,8 +101,8 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
 
   return (
       <SafeAreaView style={[theme.card, {flex: 11}]}>
-        <View style={[{backgroundColor: theme.card.backgroundColor}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: theme.card.color}]}>Driver Standings</Text>
+        <View style={[{backgroundColor: theme.card.backgroundColor}, Styles.topBar]}>
+          <Text style={[Styles.topBarText, {color: theme.card.color}]}>Driver Standings</Text>
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the driver standings will be shown:
@@ -117,61 +110,12 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
             - By clicking on the element, the user will get redirected to the single driver info
           */}
           <ScrollView>
-            {driver_standings.map( driver_standings => <Pressable key={driver_standings.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings.Driver.familyName})}}>
-                <DriverElement darkMode={darkMode} driver_standing={driver_standings}></DriverElement>
+            {driver_standings_data.map( driver_standings_data => <Pressable key={driver_standings_data.position} onPress={() => {navigation.navigate("DriverInfo", {driver: driver_standings_data.Driver.familyName})}}>
+                <DriverElement darkMode={darkMode} driver_standing={driver_standings_data}></DriverElement>
             </Pressable>)}
           </ScrollView>
         </View>
       </SafeAreaView>
   );
 }
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    fontSize: 14,
-    fontWeight: '400',
-    
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-  topBarText: {
-    flex: 1,
-    fontSize: 30,
-    textAlignVertical: 'center',
-    marginHorizontal: 10,
-    fontWeight: '700',
-    color: 'white'
-    
-  }, topBar: {
-    height: 70,  
-    flex:1,
-    flexDirection: 'row'
-
-  },
-  topBarYear : {
-    flex: 1,
-    textAlignVertical: 'center',
-    textAlign: 'right',
-    paddingRight: 20,
-    fontSize: 20,
-    fontWeight: '600'
-  },
-  itemContainer: { 
-    marginHorizontal: 10,
-    flexDirection: 'row',
-    flex: .1,
-    alignItems: 'center',
-  }, 
-
-});
-
 export default Driver_standings;

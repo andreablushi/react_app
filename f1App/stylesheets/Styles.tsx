@@ -57,7 +57,21 @@ const Styles = StyleSheet.create({
     height: 24,
     tintColor: 'white',
   },
-  
+  topBarText: {
+    flex: 1,
+    fontSize: 30,
+    textAlignVertical: 'center',
+    marginHorizontal: 10,
+    fontWeight: '700',
+    color: 'white'
+    
+  },
+  topBar: {
+    height: 70,  
+    flex:1,
+    flexDirection: 'row'
+
+  },
 });
 
 export default Styles;
