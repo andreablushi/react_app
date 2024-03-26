@@ -81,7 +81,7 @@ function DriverElement(props: Props): React.JSX.Element {
 
 
 /*Main function of this page*/
-function Driver_standings({navigation, route}): React.JSX.Element {
+function Driver_standings({navigation, route}: any): React.JSX.Element {
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   //Hook for the fetch of the data
   const [driver_standings, setDriverStanding] = useState<driverStandings[]>([]);

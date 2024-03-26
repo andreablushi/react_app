@@ -8,6 +8,7 @@ import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import RaceResult from './RaceResult';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import ImagesDB from '../utils/ImagesDB';
 
 const Stack = createNativeStackNavigator();
 
@@ -24,6 +25,13 @@ export class globalThemeControl {
     console.log(globalThemeControl.theme ? "Dark": "Light")
     return globalThemeControl.theme;
   }
+}
+
+export class imageSource {
+  public static getDriverSide(name: string) {
+    const imageObject = ImagesDB[0]['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
+    return imageObject ? imageObject.src : null;
+  };
 }
 
 export type RootStackParamList = {

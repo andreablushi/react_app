@@ -16,7 +16,7 @@ import {
 import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
-import { globalThemeControl } from './App';
+import { globalThemeControl, imageSource } from './App';
 
 export type Race = {
   round: number,
@@ -54,7 +54,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   return (
       <View style={[styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
         <View>
-          <Image source={require("../Formula1-Images-API/public/countries/italy.png")} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
+          <Image source={imageSource.getDriverSide("Leclerc")} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
         <View style={[{paddingHorizontal: 10, flex: 12},]}>
           <Text style={[styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
