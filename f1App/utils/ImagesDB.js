@@ -249,7 +249,7 @@ const ImagesDB =
     },
     {
       "nation": "saudi arabia",
-      "src": require("../img/countries/saudi arabia.png"),
+      "src": require("../img/countries/saudi_arabia.png"),
     },
     {
       "nation": "singapore",
@@ -270,6 +270,14 @@ const ImagesDB =
     {
       "nation": "usa",
       "src": require("../img/countries/usa.png"),
+    },
+    {
+      "nation": "United States",
+      "src": require("../img/countries/usa.png"),
+    },
+    {
+      "nation": "china",
+      "src": require("../img/countries/china.png"),
     },
   ]
 };
