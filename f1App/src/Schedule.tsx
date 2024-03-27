@@ -89,7 +89,7 @@ function Schedule({route}: any): React.JSX.Element {
 
   
   // control variables
-  let year = 1972;
+  let year = 2023;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
   
   // data fetching

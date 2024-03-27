@@ -111,6 +111,7 @@ export default function DriverInfo ({route}: any) {
     };
 
         return(
+          <SafeAreaView style={[{flex: 1}, theme.card]}>
             <ScrollView>
                 <Driver_Basic_Info darkMode = {darkMode} DriverInfo={driver_info}></Driver_Basic_Info>
                 {/* <ConstructorComponent><ConstructorComponent/> */}
@@ -118,5 +119,6 @@ export default function DriverInfo ({route}: any) {
 
                 {/* CURRENT SEASON PLACEMENT */}
             </ScrollView>
+            </SafeAreaView>
         );
 };

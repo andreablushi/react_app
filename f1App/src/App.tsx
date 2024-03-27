@@ -102,16 +102,17 @@ const App = () => {
       <SafeAreaProvider>
       <NavigationContainer>
         <Stack.Navigator>
-          <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false }} />
-          <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false }} />
-          <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false}}/>
-          <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false}}/>
-          <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false }}/>
-          <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false }}/>
-          <Stack.Screen name='Teams' component={Teams} options={{headerShown: false}}/>
+          <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false, animation: "fade" }} />
+          <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "fade" }} />
+          <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false, animation: "fade"}}/>
+          <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false, animation: "fade"}}/>
+          <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "fade" }}/>
+          <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
+          <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
         </Stack.Navigator>
         
       </NavigationContainer>
+      
       </SafeAreaProvider>
     </View>
   );
