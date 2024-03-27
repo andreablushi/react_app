@@ -281,6 +281,48 @@ const ImagesDB =
       "nation": "china",
       "src": require("../img/countries/china.png"),
     },
+  ],
+  "team_icon": [
+    {
+      "team_name": "alpine",
+      "src": require("../img/teams_icon/alpine.png"),
+    },
+    {
+      "team_name": "aston_martin",
+      "src": require("../img/teams_icon/aston_martin.png"),
+    },
+    {
+      "team_name": "ferrari",
+      "src": require("../img/teams_icon/ferrari.png"),
+    },
+    {
+      "team_name": "hass",
+      "src": require("../img/teams_icon/hass.png"),
+    },
+    {
+      "team_name": "mclaren",
+      "src": require("../img/teams_icon/mclaren.png"),
+    },
+    {
+      "team_name": "mercedes",
+      "src": require("../img/teams_icon/mercedes.png"),
+    },
+    {
+      "team_name": "rb",
+      "src": require("../img/teams_icon/rb.png"),
+    },
+    {
+      "team_name": "red_bull",
+      "src": require("../img/teams_icred_bullnce.png"),
+    },
+    {
+      "team_name": "sauber",
+      "src": require("../img/teams_icon/sauber.png"),
+    },
+    {
+      "team_name": "williams",
+      "src": require("../img/teams_icon/williams.png"),
+    },
   ]
 };
 

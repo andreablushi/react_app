@@ -18,50 +18,89 @@ import {
 import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 
-/*Defining the type driverStandings
-    position: Position, in the driver rankings
-    Points: Number of point, in the current season
-    Driver: {
-      givenName: first name
-      familyName: last name
-    }
-    Constructor: {
-      constructorId: id of the team of the driver
-      name: name of the team
-    }
-
-*/
 type DriverInfo = {
+
     permanentNumber: number
     givenName: string
     familyName: string
     dateOfBirth: string
     nationality: string
 }
+
+type Contructor = {
+  constructorId: String
+  name: string
+}
+
 /*Type props, used for passing the parameters to the DriverElement function*/
 type Props = {
   darkMode: boolean
   DriverInfo: DriverInfo
+  driverId: string
 }
 
+function Driver_Team_Component(prop: Props) : React.JSX.Element{
+  
+  //Setting the parameters
+  const theme = prop.darkMode ? Dark : Light;
+  const driver_id = prop.driverId
+  
+  //Hook to fetch the team data needed
+  const [teamData, setTeamData] = useState<Contructor | null>(null);
+  const [loading, setLoading] = useState(true);
+  console.log(driver_id)
+  const apiUrl = "http://ergast.com/api/f1/2024/drivers/"+driver_id+"/constructors.json"
+
+  const getData =  async() => {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      setTeamData(data.MRData.ConstructorTable.Constructors[0]);
+    } catch (error){
+      console.error(error);
+    } finally {
+      //Only once having successufuly completed the fetch instruction, it will set the loading state to false
+      setLoading(false);
+    }
+  };
+  //Fetching the data once the element get's loaded
+  useEffect(() => {
+    getData();
+  }, []);
+  console.log(teamData?.constructorId)
+  return(
+    <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
+            <View style={[theme.title_bar, {flex: 3}]}>
+            <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Pilota del team:</Text>
+            <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData?.name}</Text>
+            </View>
+            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+                <Image source={imageSource.getDriverSide(driver_id)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
+            </View>
+        </View>
+  );
+};
+
+
+
 /*Gives the main information of the driver, along with their image*/
-function Driver_Basic_Info(prop: Props) : React.JSX.Element{
+function Driver_Basic_Info_Component(prop: Props) : React.JSX.Element{
     
     const theme = prop.darkMode ? Dark : Light;
     //Getting the driver_id from the param. It is the id of the driver wich will be shown on the page
-    const driver_id = prop.DriverInfo
+    const driver = prop.DriverInfo
     
     return (
         <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
             <View style={[theme.title_bar, {flex: 3}]}>
-            <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver_id.givenName}</Text>
-            <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver_id.familyName}</Text>
-            <Text style={[theme.title_bar, {fontSize: 22}]}>{driver_id.permanentNumber}</Text>
-            <Text style={[theme.title_bar, {fontSize: 16}]}>{driver_id.nationality}</Text>
-            <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{driver_id.dateOfBirth}</Text>
+            <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
+            <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
+            <Text style={[theme.title_bar, {fontSize: 22}]}>{driver.permanentNumber}</Text>
+            <Text style={[theme.title_bar, {fontSize: 16}]}>{driver.nationality}</Text>
+            <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{driver.dateOfBirth}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getDriverSide(driver_id.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
+                <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
             </View>
         </View>
     );
@@ -72,11 +111,10 @@ export default function DriverInfo ({route}: any) {
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
     const theme = darkMode ? Dark : Light;
     //-----------------------------------------------------------------------------
-
     //Getting driver_id from route
     const { driver: driver_id } = route.params;
     
-    const [driver_info_data, setDriverStanding] = useState<DriverInfo | null>(null);
+    const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo | null>(null);
     //Hook for the loading state, setted to true
     const [loading, setLoading] = useState(true);
     
@@ -88,7 +126,7 @@ export default function DriverInfo ({route}: any) {
       try {
         const response = await fetch(apiUrl);
         const data = await response.json();
-        setDriverStanding(data.MRData.DriverTable.Drivers[0]);
+        setDriver_Info_Data(data.MRData.DriverTable.Drivers[0]);
       } catch (error){
         console.error(error);
       } finally {
@@ -113,8 +151,8 @@ export default function DriverInfo ({route}: any) {
         return(
           <SafeAreaView style={[{flex: 1}, theme.card]}>
             <ScrollView>
-                <Driver_Basic_Info darkMode = {darkMode} DriverInfo={driver_info}></Driver_Basic_Info>
-                {/* <ConstructorComponent><ConstructorComponent/> */}
+                <Driver_Basic_Info_Component darkMode = {darkMode} DriverInfo={driver_info} driverId=''></Driver_Basic_Info_Component>
+                <Driver_Team_Component darkMode = {darkMode} DriverInfo={driver_info} driverId = {driver_id}></Driver_Team_Component>
                 {/* <DriversStats><DriversStats/> */}
 
                 {/* CURRENT SEASON PLACEMENT */}

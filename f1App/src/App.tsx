@@ -37,7 +37,7 @@ export class globalThemeControl {
     globalThemeControl.theme = darkMode
   }
 }
-
+  // -------- Images -------------------------------------------------------------
 export class imageSource {
   public static getDriverSide(name: string) {
     const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
@@ -48,8 +48,13 @@ export class imageSource {
     const imageObject = ImagesDB['flags'].find(flag => flag.nation.toLowerCase() === nation.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   };
-}
 
+  public static getTeamBadge(team_id: string){
+    const imageObject = ImagesDB['team_icon'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
+    return imageObject ? imageObject.src : ImagesDB.notfound;
+  }
+}
+  //-------------------------------------------------------------------------------
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
