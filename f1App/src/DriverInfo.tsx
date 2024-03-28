@@ -1,6 +1,7 @@
 /* TO DO:
-    http://ergast.com/api/f1/2024/drivers/<driver_id>/constructors: get the team of the driver
-    https://ergast.com/api/f1/2024/drivers/alonso/results: get the current season placement
+    IMPLEMENT ALL API CALLS in the main method:
+    make the team clickable, redirecting to the teaminfo page
+    https://ergast.com/api/f1/2024/drivers/alonso/results: get the current season placements
 */
 
 import React, { useEffect, useState } from 'react';
@@ -71,11 +72,11 @@ function Driver_Team_Component(prop: Props) : React.JSX.Element{
   return(
     <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
             <View style={[theme.title_bar, {flex: 3}]}>
-            <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Pilota del team:</Text>
+            <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Team:</Text>
             <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData?.name}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getDriverSide(driver_id)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
+                <Image source={imageSource.getTeamBadge("red_bull")} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
             </View>
         </View>
   );

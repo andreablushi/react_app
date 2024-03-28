@@ -313,7 +313,7 @@ const ImagesDB =
     },
     {
       "team_name": "red_bull",
-      "src": require("../img/teams_icred_bullnce.png"),
+      "src": require("../img/teams_icon/red_bull.png"),
     },
     {
       "team_name": "sauber",
