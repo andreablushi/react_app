@@ -1,39 +1,115 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import React, { useEffect, useState } from 'react';
+import Styles from "../stylesheets/Styles";
+import { Light, Dark } from "../stylesheets/Theme";
 import { NavigationBar } from './NavigationBar';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import {
+  Image,
+  Pressable,
+  SafeAreaView,
+  ScrollView,
+  Text,
+  View,
+} from 'react-native';
 
+import { globalThemeControl, imageSource } from './App';
 
-const TeamStandings = () => {
+/*Defining the type driverStandings
+    position: Position, in the driver rankings
+    Points: Number of point, in the current season
+    Constructor: {
+      constructorId: id of the team of the driver
+      name: name of the team
+    }
 
+*/
+type teamStandings = {
+  position: number;
+  points: number;
+  Constructors: {
+    constructorId: string;
+    name: string;
+  }
+}
+/*Type props, used for passing the parameters to the DriverElement function*/
+type Props = {
+  darkMode: boolean
+  team_standing: teamStandings
+}
 
-    return (
-        <SafeAreaView style={[styles.safeAreaView]}>
-      <View style={[styles.container, ]}>
-          <Text style={[styles.title]}>Welcome to the Team Standings</Text>
-      </View>
-      <NavigationBar/>{/* Imported the navigation bar from the NavigationBar.tsx component as it's defined*/}
-    </SafeAreaView>
-        
-    );
+function TeamElement(props: Props): React.JSX.Element {
+  // import prop, to improve readability
+  const theme = props.darkMode ? Dark : Light;
+  const result = props.team_standing;
+  const team = result.Constructors  ;
+
+  
+  return (
+    <View style={[Styles.driverResultWrapper, theme.card]}>
+    <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
+    <Image style={[Styles.driverPictureResult, ]} source={imageSource.getTeamBadge(team.constructorId)}></Image>
+    <View style={[Styles.driverResult, theme.card]}>
+      <Text style={[Styles.driverTextResult, theme.card]}>{team.name} {team.constructorId}</Text>
+    </View>
+    <Text style={[Styles.timeResult, theme.card]}>{result.points}</Text>
+  </View>
+  )
 };
 
-const styles = StyleSheet.create({
-    safeAreaView: {
-      flex: 1,
-    },
-    container: {
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      paddingHorizontal: 20,
-    },
-    title: {
-      fontSize: 24,
-      fontWeight: 'bold',
-      color: 'black',
-      textAlign: 'center',
-      marginBottom: 20,
-    },
-  });
-export default TeamStandings;
+
+
+/*Main function of this page*/
+function Team_standings({navigation, route}: any): React.JSX.Element {
+  // -------- THEME -------------------------------------------------------------
+  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const theme = darkMode ? Dark : Light;
+  //-----------------------------------------------------------------------------
+ 
+  //Hook for the fetch of the data
+  const [constructorStandings, setConstructorStandings] = useState<teamStandings[]>([]);
+  //Hook for the loading state, setted to true
+  const [loading, setLoading] = useState(true);
+
+  //Api url, fetching the driverStanding from the current season
+  const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
+
+  //Fetching the drivers data from the api
+  const getData =  async() => {
+    try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      const standings = data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
+      setConstructorStandings(standings);
+      console.log("retrieving data");
+    } catch (error){
+      console.error(error);
+    } finally {
+      //Only once having successufuly completed the fetch instruction, it will set the loading state to false
+      setLoading(false);
+    }
+  };
+  //Fetching the data once the page gets loaded
+  useEffect(() => {
+    getData();
+  }, []);
+
+  return (
+      <SafeAreaView style={[theme.card, {flex: 11}]}>
+        <View style={[{backgroundColor: theme.card.backgroundColor}, Styles.topBar]}>
+          <Text style={[Styles.topBarText, {color: theme.card.color}]}>Constructor Standings</Text>
+        </View>
+        <View style={[{flex: 10}]}>
+          {/*Creating the section where the driver standings will be shown:
+            - For evry position, it will call the DriverElement funcion, for getting the element (name, image, points...) for the single driver
+            - By clicking on the element, the user will get redirected to the single driver info
+          */}
+          <ScrollView>
+            {constructorStandings.map( constructorStandings => <Pressable key={constructorStandings.position} onPress={() => {navigation.navigate("TeamInfo", {})}}>
+                <TeamElement darkMode={darkMode} team_standing={constructorStandings}></TeamElement>
+            </Pressable>)}
+          </ScrollView>
+        </View>
+        <NavigationBar/>
+      </SafeAreaView>
+  );
+}
+export default Team_standings;
