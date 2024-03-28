@@ -34,7 +34,7 @@ type Contructor = {
 }
 
 /*Type props, used for passing the parameters to the DriverElement function*/
-type Props = {
+type DriverProps = {
   darkMode: boolean
   DriverInfo: DriverInfo
   driverId: string
@@ -76,7 +76,7 @@ function Driver_Team_Component(prop: Props) : React.JSX.Element{
             <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData?.name}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getTeamBadge("red_bull")} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
+                <Image source={imageSource.getTeamBadge(teamData?.constructorId)} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
             </View>
         </View>
   );
@@ -85,7 +85,7 @@ function Driver_Team_Component(prop: Props) : React.JSX.Element{
 
 
 /*Gives the main information of the driver, along with their image*/
-function Driver_Basic_Info_Component(prop: Props) : React.JSX.Element{
+function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     
     const theme = prop.darkMode ? Dark : Light;
     //Getting the driver_id from the param. It is the id of the driver wich will be shown on the page
@@ -107,6 +107,7 @@ function Driver_Basic_Info_Component(prop: Props) : React.JSX.Element{
     );
 };
 
+/* Main function of this page*/
 export default function DriverInfo ({route}: any) {
     // -------- THEME -------------------------------------------------------------
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
