@@ -39,18 +39,28 @@ export class globalThemeControl {
 }
   // -------- Images -------------------------------------------------------------
 export class imageSource {
+  
+  //Return the image of the driver, given the driver id
   public static getDriverSide(name: string) {
     const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.driverNotFound;
   };
 
+  //Return the flag of the nation, given the nation
   public static getFlag(nation: string) {
     const imageObject = ImagesDB['flags'].find(flag => flag.nation.toLowerCase() === nation.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   };
 
+  //Return the teamIcon, given the team id
   public static getTeamBadge(team_id: string){
     const imageObject = ImagesDB['team_icon'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
+    return imageObject ? imageObject.src : ImagesDB.notfound;
+  }
+
+  //Return the teamCar, given the team id
+  public static getTamCar(team_id: string){
+    const imageObject = ImagesDB['team_car'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   }
 }
