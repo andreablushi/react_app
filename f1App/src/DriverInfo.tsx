@@ -32,6 +32,7 @@ type Contructor = {
 }
 
 type DriverResult = {
+  round: number
   Circuit: {
     circuitName: string
     circuitId: string
@@ -89,13 +90,13 @@ function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
   //Creating the element
   return (
     <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
-      <View>
+      <View style={[Styles.driverResultWrapper, theme.card]}>
+        <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
         <Image source={imageSource.getFlag(circuit.Location.country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
       </View>
-      <View style={[{paddingHorizontal: 10, flex: 12},]}>
-        <Text style={[Styles.sectionDescription, theme.card]}>{race.Circuit.circuitName}</Text>
-        <Text style={[Styles.sectionDescription, theme.card]}>Position: {result.position}</Text>
-        <Text style={[Styles.sectionDescription, theme.card]}>Points: {result.points}</Text>
+      <View>
+        <Text style={[Styles.sectionDescription, theme.card]}>Round: {race.round}</Text>
+        <Text style={[Styles.sectionDescription, theme.card]}>Points earned: {result.points}</Text>
       </View>
   </View>
 );
@@ -191,7 +192,7 @@ export default function DriverInfo ({route}: any) {
             <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info} />
             <Driver_Team_Component darkMode={darkMode} team={team_info} />
             {
-              seasonResults.map( result => 
+              seasonResults.reverse().map( result => 
               <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
             } 
           </ScrollView>
