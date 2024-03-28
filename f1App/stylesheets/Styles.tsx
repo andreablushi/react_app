@@ -72,6 +72,10 @@ const Styles = StyleSheet.create({
     flexDirection: 'row'
 
   },
+  loadingText:{
+    fontWeight: '500', 
+    color: '#a1a1a1'
+  }
 });
 
 export default Styles;

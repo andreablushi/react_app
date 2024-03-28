@@ -1,5 +1,4 @@
 /* TO DO:
-    IMPLEMENT ALL API CALLS in the main method:
     make the team clickable, redirecting to the teaminfo page
     https://ergast.com/api/f1/2024/drivers/alonso/results: get the current season placements
 */
@@ -8,8 +7,8 @@ import React, { useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
 import {
+  ActivityIndicator,
   Image,
-  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -20,7 +19,6 @@ import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 
 type DriverInfo = {
-
     permanentNumber: number
     givenName: string
     familyName: string
@@ -33,50 +31,40 @@ type Contructor = {
   name: string
 }
 
-/*Type props, used for passing the parameters to the DriverElement function*/
+type DriverResult = {
+  Circuit:{
+    circuitName: string
+  }
+  Results:{
+    position: number
+    points: number
+  }
+}
+
+/*Type props, used for passing the parameters to the function*/
 type DriverProps = {
   darkMode: boolean
   DriverInfo: DriverInfo
-  driverId: string
+}
+type TeamProps = {
+  darkMode: boolean
+  team: Contructor
 }
 
-function Driver_Team_Component(prop: Props) : React.JSX.Element{
-  
+/*Returns an element containing the driver team info and the logo image.*/
+function Driver_Team_Component(prop: TeamProps) : React.JSX.Element{
   //Setting the parameters
   const theme = prop.darkMode ? Dark : Light;
-  const driver_id = prop.driverId
+  const teamData = prop.team
   
-  //Hook to fetch the team data needed
-  const [teamData, setTeamData] = useState<Contructor | null>(null);
-  const [loading, setLoading] = useState(true);
-  console.log(driver_id)
-  const apiUrl = "http://ergast.com/api/f1/2024/drivers/"+driver_id+"/constructors.json"
-
-  const getData =  async() => {
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setTeamData(data.MRData.ConstructorTable.Constructors[0]);
-    } catch (error){
-      console.error(error);
-    } finally {
-      //Only once having successufuly completed the fetch instruction, it will set the loading state to false
-      setLoading(false);
-    }
-  };
-  //Fetching the data once the element get's loaded
-  useEffect(() => {
-    getData();
-  }, []);
-  console.log(teamData?.constructorId)
   return(
     <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
             <View style={[theme.title_bar, {flex: 3}]}>
             <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Team:</Text>
-            <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData?.name}</Text>
+            <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData.name}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getTeamBadge(teamData ? teamData.constructorId : "")} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
+                <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
             </View>
         </View>
   );
@@ -84,7 +72,7 @@ function Driver_Team_Component(prop: Props) : React.JSX.Element{
 
 
 
-/*Gives the main information of the driver, along with their image*/
+/*Return an element containing basic information of the driver, along with their image*/
 function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     
     const theme = prop.darkMode ? Dark : Light;
@@ -98,7 +86,7 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
             <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
             <Text style={[theme.title_bar, {fontSize: 22}]}>{driver.permanentNumber}</Text>
             <Text style={[theme.title_bar, {fontSize: 16}]}>{driver.nationality}</Text>
-            <Text style={[theme.title_bar, { fontWeight: '500', color: '#a1a1a1'}]}>{driver.dateOfBirth}</Text>
+            <Text style={[theme.title_bar, {}]}>{driver.dateOfBirth}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
                 <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
@@ -113,52 +101,70 @@ export default function DriverInfo ({route}: any) {
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
     const theme = darkMode ? Dark : Light;
     //-----------------------------------------------------------------------------
+    
     //Getting driver_id from route
     const { driver: driver_id } = route.params;
     
-    const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo | null>(null);
-    //Hook for the loading state, setted to true
+    //Hooks used for fetching the data
+    const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo[]>([]);
+    const [teamData, setTeamData] = useState<Contructor[]>([]);
+    const [seasonResults, setSeasonResults] = useState<DriverResult[]>([]);
     const [loading, setLoading] = useState(true);
     
-    //Api url, fetching the driverStanding from the current season
-    const apiUrl = "http://ergast.com/api/f1/drivers/"+driver_id+".json";
-    
-    //Fetching the drivers data from the api
-    const getData =  async() => {
-      try {
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-        setDriver_Info_Data(data.MRData.DriverTable.Drivers[0]);
-      } catch (error){
+    //Api used for the data fetching
+    const driver_basic_info_apiUrl = "http://ergast.com/api/f1/drivers/"+driver_id+".json";
+    const driver_team_apiUrl = "http://ergast.com/api/f1/2024/drivers/"+driver_id+"/constructors.json"
+    const driver_season_results_apiUrl = "https://ergast.com/api/f1/2024/drivers/"+driver_id+"/results.json"
+
+    //Fetching all the data needed
+    const getData = async () => {
+      try{
+        // Parallel requests using Promise.all
+        const [driverResponse, teamResponse, resultsResponse] = await Promise.all([
+          fetch(driver_basic_info_apiUrl).then(res => res.json()),
+          fetch(driver_team_apiUrl).then(res => res.json()),
+          fetch(driver_season_results_apiUrl).then(res => res.json())
+        ]);
+        //Setting the data, once received the answer
+        setDriver_Info_Data(driverResponse.MRData.DriverTable.Drivers);
+        setTeamData(teamResponse.MRData.ConstructorTable.Constructors);
+        setSeasonResults(resultsResponse.MRData.RaceTable.Races);
+      }
+      catch (error) {
         console.error(error);
-      } finally {
-        //Only once having successufuly completed the fetch instruction, it will set the loading state to false
+      }
+      finally {
+        // Only once having successfully completed the fetch instruction, it will set the loading state to false
         setLoading(false);
       }
     };
-    //Fetching the data once the page gets loaded
+    
     useEffect(() => {
       getData();
     }, []);
     
-    /*SETTING UP A DEFAULT DRIVER DATA, DON'T KNOW IF IT'S NEEDED */
-    const driver_info: DriverInfo = driver_info_data ?? {
-        permanentNumber: 0, // Default permanentNumber value
-        givenName: "None", // Default givenName value
-        familyName: "None", // Default familyName value
-        dateOfBirth: "00/00/0", // Default dateOfBirth value
-        nationality: "None"
-    };
+    /*SETTING UP THE DATA, to improve readability*/
+    const driver_info = driver_info_data[0]
+    const team_info = teamData[0]
 
-        return(
-          <SafeAreaView style={[{flex: 1}, theme.card]}>
-            <ScrollView>
-                <Driver_Basic_Info_Component darkMode = {darkMode} DriverInfo={driver_info} driverId=''></Driver_Basic_Info_Component>
-                <Driver_Team_Component darkMode = {darkMode} DriverInfo={driver_info} driverId = {driver_id}></Driver_Team_Component>
-                {/* <DriversStats><DriversStats/> */}
+    console.log(seasonResults)
 
-                {/* CURRENT SEASON PLACEMENT */}
-            </ScrollView>
-            </SafeAreaView>
-        );
+    /*Return a loading icon, while waiting for the fetch of the data
+    Once the loading is complete, it will render the rest of the page */
+    return (
+      <SafeAreaView style={[{flex: 1}, theme.card]}>
+        {loading ? (
+          <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+            <ActivityIndicator size={"large"}/>
+            <Text style={Styles.loadingText}>Loading data...</Text>
+          </View>
+        ) : (
+          <ScrollView>
+            <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info} />
+            <Driver_Team_Component darkMode={darkMode} team={team_info} />
+            {/* CURRENT SEASON PLACEMENT */}
+          </ScrollView>
+        )}
+      </SafeAreaView>
+    );
 };
