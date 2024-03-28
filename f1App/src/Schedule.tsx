@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Styles from "../stylesheets/Styles";
 import {
   Button,
   Image,
@@ -53,7 +54,6 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const theme = darkMode ? Dark : Light;
   const country = race.Circuit.Location.country;
   
-  
   // date formatting
   const day = race.date.slice(8, 10);
   const month = race.date.slice(5, 7);
@@ -61,16 +61,16 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const date = day + "/" + month + "/" + year;
  
   return (
-      <View style={[styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
+      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
         <View>
           <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
         <View style={[{paddingHorizontal: 10, flex: 12},]}>
-          <Text style={[styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
-          <Text style={[styles.sectionDescription, theme.card]}>{race.raceName}</Text>
-          <Text style={[styles.sectionDescription, theme.card]}>{race.Circuit.circuitName}</Text>
+          <Text style={[Styles.sectionDescription, styles.highlight, theme.card, {fontSize: 16} ]}>Round {race.round}</Text>
+          <Text style={[Styles.sectionDescription, theme.card]}>{race.raceName}</Text>
+          <Text style={[Styles.sectionDescription, theme.card]}>{race.Circuit.circuitName}</Text>
         </View>
-        <Text style={[{textAlign: 'right', flex: 5, paddingRight: 10},  styles.sectionDescription, styles.highlight, theme.card,]}>{date}</Text>
+        <Text style={[{textAlign: 'right', flex: 5, paddingRight: 10},  Styles.sectionDescription, styles.highlight, theme.card,]}>{date}</Text>
     </View>
   );
 };
@@ -192,11 +192,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: '600',
   },
-  sectionDescription: {
-    fontSize: 14,
-    fontWeight: '400',
-    
-  },
   highlight: {
     fontWeight: '700',
   },
@@ -222,13 +217,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: '600'
   },
-  raceScheduleContainer: { 
-    paddingHorizontal: 10,
-    flexDirection: 'row',
-    flex: .1,
-    alignItems: 'center',
-  }, 
-
 });
 
 export default Schedule;

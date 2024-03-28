@@ -32,10 +32,14 @@ type Contructor = {
 }
 
 type DriverResult = {
-  Circuit:{
+  Circuit: {
     circuitName: string
+    circuitId: string
+    Location: {
+      country: string
+    }
   }
-  Results:{
+  Results: {
     position: number
     points: number
   }
@@ -50,6 +54,10 @@ type TeamProps = {
   darkMode: boolean
   team: Contructor
 }
+type ResultProps = {
+  darkMode: boolean
+  result: DriverResult
+}
 
 /*Returns an element containing the driver team info and the logo image.*/
 function Driver_Team_Component(prop: TeamProps) : React.JSX.Element{
@@ -59,18 +67,39 @@ function Driver_Team_Component(prop: TeamProps) : React.JSX.Element{
   
   return(
     <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
-            <View style={[theme.title_bar, {flex: 3}]}>
-            <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Team:</Text>
-            <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData.name}</Text>
-            </View>
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
-            </View>
-        </View>
+      <View style={[theme.title_bar, {flex: 3}]}>
+        <Text style={[theme.title_bar, {fontSize: 16, fontWeight: '400'}]}>Team:</Text>
+        <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData.name}</Text>
+      </View>
+      <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
+      </View>
+    </View>
   );
 };
 
+/*Return the information for a specific race of the current season*/
+function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
+  //Setting the parameters
+  const theme = prop.darkMode ? Dark : Light;
+  const race = prop.result
+  const circuit = race.Circuit
+  const result = race.Results[0]
 
+  //Creating the element
+  return (
+    <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
+      <View>
+        <Image source={imageSource.getFlag(circuit.Location.country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
+      </View>
+      <View style={[{paddingHorizontal: 10, flex: 12},]}>
+        <Text style={[Styles.sectionDescription, theme.card]}>{race.Circuit.circuitName}</Text>
+        <Text style={[Styles.sectionDescription, theme.card]}>Position: {result.position}</Text>
+        <Text style={[Styles.sectionDescription, theme.card]}>Points: {result.points}</Text>
+      </View>
+  </View>
+);
+}
 
 /*Return an element containing basic information of the driver, along with their image*/
 function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
@@ -116,7 +145,7 @@ export default function DriverInfo ({route}: any) {
     const driver_team_apiUrl = "http://ergast.com/api/f1/2024/drivers/"+driver_id+"/constructors.json"
     const driver_season_results_apiUrl = "https://ergast.com/api/f1/2024/drivers/"+driver_id+"/results.json"
 
-    //Fetching all the data needed
+    //Fetching all the data needed for the page
     const getData = async () => {
       try{
         // Parallel requests using Promise.all
@@ -147,7 +176,6 @@ export default function DriverInfo ({route}: any) {
     const driver_info = driver_info_data[0]
     const team_info = teamData[0]
 
-    console.log(seasonResults)
 
     /*Return a loading icon, while waiting for the fetch of the data
     Once the loading is complete, it will render the rest of the page */
@@ -162,7 +190,10 @@ export default function DriverInfo ({route}: any) {
           <ScrollView>
             <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info} />
             <Driver_Team_Component darkMode={darkMode} team={team_info} />
-            {/* CURRENT SEASON PLACEMENT */}
+            {
+              seasonResults.map( result => 
+              <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
+            } 
           </ScrollView>
         )}
       </SafeAreaView>

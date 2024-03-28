@@ -75,7 +75,18 @@ const Styles = StyleSheet.create({
   loadingText:{
     fontWeight: '500', 
     color: '#a1a1a1'
-  }
+  },
+  sectionDescription: {
+    fontSize: 14,
+    fontWeight: '400',
+    
+  },
+  raceScheduleContainer: { 
+    paddingHorizontal: 10,
+    flexDirection: 'row',
+    flex: .1,
+    alignItems: 'center',
+  }, 
 });
 
 export default Styles;
