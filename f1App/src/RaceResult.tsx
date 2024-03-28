@@ -14,6 +14,7 @@ type Result = {
   position: number
   points: number // points earned
   Driver: {
+    driverId: string,
     givenName: string, // first name
     familyName: string, // last name
     permanentNumber: number // actual driver number
@@ -104,7 +105,7 @@ export default function RaceResult ({route}: any) {
       </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
         <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
-        {results.map( result => <Pressable key={result.position}>
+        {results.map( result => <Pressable key={result.position} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
             <Driver result={result} darkMode={darkMode}></Driver>
           </Pressable>)}
         </ScrollView>
