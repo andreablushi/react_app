@@ -135,13 +135,15 @@ function Schedule({route}: any): React.JSX.Element {
     const verifyAndChange = (text: string) => {
       const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
       pattern.test(text) ? (
-        setYear(parseInt(text, 10)),
-        getRace()
+        setYear(parseInt(text, 10))
       ) : console.log();
     }
 
   //--------------------------------------------
 
+  useEffect(() => {
+    getRace()
+  }, [year])
 
   
   return (
@@ -156,7 +158,6 @@ function Schedule({route}: any): React.JSX.Element {
             <Dropdown data={seasons} labelField="season" valueField={"season"} value={year.toString()} 
             onChange={season => {
               setYear(season.season);
-              getRace();
             }}
             style={[{flex:1, paddingRight: 20}, theme.title_bar]} 
             placeholderStyle={[theme.title_bar, {textAlign: 'right'}]}
