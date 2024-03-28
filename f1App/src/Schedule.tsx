@@ -7,6 +7,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TextInput,
   useColorScheme,
   View,
 } from 'react-native';
@@ -18,6 +19,8 @@ import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
 import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
+import { Dropdown } from 'react-native-element-dropdown';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 export type Race = {
   round: number,
@@ -30,6 +33,10 @@ export type Race = {
     }
   }
   date: string
+}
+type Season = {
+  season: number,
+  url: string
 }
 
 type Props = {
@@ -84,13 +91,15 @@ function Schedule({route}: any): React.JSX.Element {
 
   // hooks
   const [race, setRace] = useState<Race[]>([]);
+  const [seasons, setSeason] = useState<Season[]>([])
   const [loading, setLoading] = useState(true);
+  const [year, setYear] = useState(2024);
   const navigation = useNavigation<HomePageNavigationProp>();
 
   
   // control variables
-  let year = 2023;
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
+  const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
   
   // data fetching
   const getRace =  async() => {
@@ -106,16 +115,57 @@ function Schedule({route}: any): React.JSX.Element {
     }
   };
 
+  const getSeasons = async() => {
+    try {
+      console.log("retrieving seasons")
+      const response = await fetch(seasonUrl);
+      const data = await response.json();
+      setSeason(data.MRData.SeasonTable.Seasons.reverse());
+    } catch(error) {
+      console.error(error);
+    }
+  }
+
   useEffect(() => {
     getRace();
+    getSeasons();
   }, [])
+
+  //--------------------------------------------
+    const verifyAndChange = (text: string) => {
+      const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
+      pattern.test(text) ? (
+        setYear(parseInt(text, 10)),
+        getRace()
+      ) : console.log();
+    }
+
+  //--------------------------------------------
+
+
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
-        <View style={[{backgroundColor: theme.title_bar.backgroundColor}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: theme.title_bar.color}]}>Schedule</Text>
-          <View style={{marginLeft: 20, flex: 1,}}>
-            <Text style={[styles.topBarYear, {color: theme.title_bar.color}]}>Year: {year}</Text>
+        <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 70,  minHeight: 70}, styles.topBar]}>
+          <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 1}]}>Schedule</Text>
+          <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 30}}>
+            <TextInput keyboardType='numeric' style={{marginHorizontal: 10, color: theme.card.color, flex: 1, textAlign: 'right', textAlignVertical: 'center', fontSize: 20}} onChangeText={text => verifyAndChange(text)}></TextInput>
+          </View>
+          <View style={[theme.card,{flex: .9, flexDirection: 'row'}]}>
+            
+            <Dropdown data={seasons} labelField="season" valueField={"season"} value={year.toString()} 
+            onChange={season => {
+              setYear(season.season);
+              getRace();
+            }}
+            style={[{flex:1, paddingRight: 20}, theme.title_bar]} 
+            placeholderStyle={[theme.title_bar, {textAlign: 'right'}]}
+            selectedTextStyle={[!theme.title_bar, {fontSize: 20, textAlign: 'right', paddingRight: 7, fontWeight: '700'}]}
+            itemContainerStyle={[{}, theme.card]}
+            activeColor={theme.title_bar.backgroundColor}
+            itemTextStyle={[{flex: 1, textAlign: 'center', color: theme.card.color, fontSize: 18, fontWeight: '500'}]}
+            containerStyle={[{borderRadius: 10}, theme.card]}
+            ></Dropdown>
           </View>
         </View>
         <View style={[{flex: 10}]}>

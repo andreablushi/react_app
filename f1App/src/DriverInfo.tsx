@@ -29,7 +29,7 @@ type DriverInfo = {
 }
 
 type Contructor = {
-  constructorId: String
+  constructorId: string
   name: string
 }
 
@@ -76,7 +76,7 @@ function Driver_Team_Component(prop: Props) : React.JSX.Element{
             <Text style={[theme.title_bar, {fontSize: 20, fontWeight: '800'}]}>{teamData?.name}</Text>
             </View>
             <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getTeamBadge(teamData?.constructorId)} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
+                <Image source={imageSource.getTeamBadge(teamData ? teamData.constructorId : "")} style={{ resizeMode: 'contain', width: 60, height: 60}}></Image>
             </View>
         </View>
   );

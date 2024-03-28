@@ -12,7 +12,7 @@ import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import DriverInfo from './DriverInfo';
-import { NavigationBar } from './NavigationBar';
+
 import RaceResult from './RaceResult';
 import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
