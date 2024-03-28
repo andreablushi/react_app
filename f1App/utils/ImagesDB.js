@@ -296,8 +296,8 @@ const ImagesDB =
       "src": require("../img/teams_icon/ferrari.png"),
     },
     {
-      "team_name": "hass",
-      "src": require("../img/teams_icon/hass.png"),
+      "team_name": "haas",
+      "src": require("../img/teams_icon/haas.png"),
     },
     {
       "team_name": "mclaren",
