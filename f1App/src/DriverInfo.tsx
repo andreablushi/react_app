@@ -110,7 +110,7 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     const driver = prop.DriverInfo
     
     return (
-        <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10}, theme.title_bar ]}>
+        <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10, }, theme.title_bar ]}>
             <View style={[theme.title_bar, {flex: 3}]}>
             <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
             <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
@@ -136,8 +136,8 @@ export default function DriverInfo ({route}: any) {
     const { driver: driver_id } = route.params;
     
     //Hooks used for fetching the data
-    const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo[]>([]);
-    const [teamData, setTeamData] = useState<Constructor[]>([]);
+    const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo>();
+    const [teamData, setTeamData] = useState<Constructor>();
     const [seasonResults, setSeasonResults] = useState<DriverResult[]>([]);
     const [loading, setLoading] = useState(true);
     
@@ -149,16 +149,35 @@ export default function DriverInfo ({route}: any) {
     //Fetching all the data needed for the page
     const getData = async () => {
       try{
+          console.log("retrieving seasons")
+          const responseDriver = await fetch(driver_basic_info_apiUrl);
+          const dataDriver = await responseDriver.json();
+
+          console.log("retrieving seasons")
+          const responseTeam = await fetch(driver_team_apiUrl);
+          const dataTeam = await responseTeam.json();
+
+          console.log("retrieving seasons")
+          const responseSeason = await fetch(driver_season_results_apiUrl);
+          const dataSeason = await responseSeason.json();
+          
+        
         // Parallel requests using Promise.all
-        const [driverResponse, teamResponse, resultsResponse] = await Promise.all([
+        /*  const [driverResponse, teamResponse, resultsResponse] = await Promise.all([
           fetch(driver_basic_info_apiUrl).then(res => res.json()),
           fetch(driver_team_apiUrl).then(res => res.json()),
           fetch(driver_season_results_apiUrl).then(res => res.json())
-        ]);
+        ]);  */
         //Setting the data, once received the answer
-        setDriver_Info_Data(driverResponse.MRData.DriverTable.Drivers);
-        setTeamData(teamResponse.MRData.ConstructorTable.Constructors);
-        setSeasonResults(resultsResponse.MRData.RaceTable.Races);
+        
+
+        // driver and team are a single element array
+        const driver = dataDriver.MRData.DriverTable.Drivers[0]
+        const team = dataTeam.MRData.ConstructorTable.Constructors[0]
+        const season = dataSeason.MRData.RaceTable.Races
+        setDriver_Info_Data(driver);
+        setTeamData(team);
+        season == undefined ? console.log("error fetching season") : setSeasonResults(season);
       }
       catch (error) {
         console.error(error);
@@ -174,8 +193,9 @@ export default function DriverInfo ({route}: any) {
     }, []);
     
     /*SETTING UP THE DATA, to improve readability*/
-    const driver_info = driver_info_data[0]
-    const team_info = teamData[0]
+    // const driver_info = driver_info_data[0]
+    // const team_info = teamData[0]
+    
 
 
     /*Return a loading icon, while waiting for the fetch of the data
@@ -189,8 +209,24 @@ export default function DriverInfo ({route}: any) {
           </View>
         ) : (
           <ScrollView>
-            <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info} />
-            <Driver_Team_Component darkMode={darkMode} team={team_info} />
+            {driver_info_data == undefined ? <Text style={{
+              fontSize: 23,
+              flex: 1,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              color: 'gold',
+              paddingTop: 20
+              
+            }}>Driver data not available :(</Text> : <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info_data} />}
+            {teamData == undefined ? <Text style={{
+              fontSize: 23,
+              flex: 1,
+              textAlign: 'center',
+              textAlignVertical: 'center',
+              color: 'gold',
+              paddingTop: 20
+              
+            }}>Team Data not available :(</Text> : <Driver_Team_Component darkMode={darkMode} team={teamData} />}
             {
               seasonResults.reverse().map( result => 
               <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
