@@ -17,20 +17,20 @@ import { globalThemeControl, imageSource } from './App';
     position: Position, in the driver rankings
     Points: Number of point, in the current season
     Constructor: {
-      constructorId: id of the team of the driver
+      constructorId: id of the team
       name: name of the team
     }
-
 */
 type teamStandings = {
   position: number;
   points: number;
-  Constructors: {
+  wins: number;
+  Constructor: {
     constructorId: string;
     name: string;
   }
 }
-/*Type props, used for passing the parameters to the DriverElement function*/
+/*Type props, used for passing the parameters to the TeamElement function*/
 type Props = {
   darkMode: boolean
   team_standing: teamStandings
@@ -40,17 +40,17 @@ function TeamElement(props: Props): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
   const result = props.team_standing;
-  const team = result.Constructors  ;
+  const team = result.Constructor;
 
-  
+  //returns the basic structure for the team element
   return (
-    <View style={[Styles.driverResultWrapper, theme.card]}>
+    <View style={[Styles.teamResultWrapper, theme.card]}>
     <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
-    <Image style={[Styles.driverPictureResult, ]} source={imageSource.getTeamBadge(team.constructorId)}></Image>
-    <View style={[Styles.driverResult, theme.card]}>
-      <Text style={[Styles.driverTextResult, theme.card]}>{team.name} {team.constructorId}</Text>
+    <Image style={[Styles.teamPictureResult, ]} source={imageSource.getTeamBadge(String(team.constructorId))}></Image>
+    <View style={[Styles.teamResult, theme.card]}>
+      <Text style={[Styles.constructorTextResult, theme.card]}>{team.name}</Text>
     </View>
-    <Text style={[Styles.timeResult, theme.card]}>{result.points}</Text>
+    <Text style={[Styles.pointResult, theme.card]}>{result.points}</Text>
   </View>
   )
 };
@@ -69,7 +69,7 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   //Hook for the loading state, setted to true
   const [loading, setLoading] = useState(true);
 
-  //Api url, fetching the driverStanding from the current season
+  //Api url, fetching the constructorStanding from the current season
   const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
 
   //Fetching the drivers data from the api
@@ -98,9 +98,9 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
           <Text style={[Styles.topBarText, {color: theme.card.color}]}>Constructor Standings</Text>
         </View>
         <View style={[{flex: 10}]}>
-          {/*Creating the section where the driver standings will be shown:
-            - For evry position, it will call the DriverElement funcion, for getting the element (name, image, points...) for the single driver
-            - By clicking on the element, the user will get redirected to the single driver info
+          {/*Creating the section where the constructor standings will be shown:
+            - For every position, it will call the COnstructorElement funcion, for getting the element (name, image, points...) for the single team
+            - By clicking on the element, the user will get redirected to the single team info
           */}
           <ScrollView>
             {constructorStandings.map( constructorStandings => <Pressable key={constructorStandings.position} onPress={() => {navigation.navigate("TeamInfo", {})}}>
