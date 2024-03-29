@@ -12,7 +12,7 @@ import HomePage from './HomePage';
 import Schedule, { Race } from './Schedule';
 import Drivers from './DriverStandings';
 import DriverInfo from './DriverInfo';
-
+import TeamInfo from './TeamInfo';
 import RaceResult from './RaceResult';
 import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
@@ -39,18 +39,28 @@ export class globalThemeControl {
 }
   // -------- Images -------------------------------------------------------------
 export class imageSource {
+  
+  //Return the image of the driver, given the driver id
   public static getDriverSide(name: string) {
     const imageObject = ImagesDB['drivers-side'].find(driver => driver.name.toLowerCase() === name.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.driverNotFound;
   };
 
+  //Return the flag of the nation, given the nation
   public static getFlag(nation: string) {
     const imageObject = ImagesDB['flags'].find(flag => flag.nation.toLowerCase() === nation.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   };
 
+  //Return the teamIcon, given the team id
   public static getTeamBadge(team_id: string){
     const imageObject = ImagesDB['team_icon'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
+    return imageObject ? imageObject.src : ImagesDB.notfound;
+  }
+
+  //Return the teamCar, given the team id
+  public static getTeamCar(team_id: string){
+    const imageObject = ImagesDB['team_car'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   }
 }
@@ -68,6 +78,7 @@ export type RootStackParamList = {
   DriverInfo:{
     driver: string
   };
+  TeamInfo: undefined;
 };
 
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
@@ -114,6 +125,8 @@ const App = () => {
           <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "fade" }}/>
           <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
           <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
+          <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "fade"}}/>
+
         </Stack.Navigator>
         
       </NavigationContainer>

@@ -323,7 +323,50 @@ const ImagesDB =
       "team_name": "williams",
       "src": require("../img/teams_icon/williams.png"),
     },
-  ]
+  ],
+  "team_car": [
+    {
+      "team_name": "alpine",
+      "src": require("../img/car/alpine.png"),
+    },
+    {
+      "team_name": "aston_martin",
+      "src": require("../img/car/aston_martin.png"),
+    },
+    {
+      "team_name": "ferrari",
+      "src": require("../img/car/ferrari.png"),
+    },
+    {
+      "team_name": "haas",
+      "src": require("../img/car/haas.png"),
+    },
+    {
+      "team_name": "mclaren",
+      "src": require("../img/car/mclaren.png"),
+    },
+    {
+      "team_name": "mercedes",
+      "src": require("../img/car/mercedes.png"),
+    },
+    {
+      "team_name": "rb",
+      "src": require("../img/car/rb.png"),
+    },
+    {
+      "team_name": "red_bull",
+      "src": require("../img/car/red_bull.png"),
+    },
+    {
+      "team_name": "sauber",
+      "src": require("../img/car/sauber.png"),
+    },
+    {
+      "team_name": "williams",
+      "src": require("../img/car/williams.png"),
+    },
+  ],
+  
 };
 
 export default ImagesDB;

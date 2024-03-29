@@ -10,7 +10,21 @@ const Styles = StyleSheet.create({
     paddingHorizontal: 7,
     paddingVertical: 7,
   },
+  teamResultWrapper: {
+    flexDirection: 'row',
+    flex: 1,
+    columnGap: 5,
+    paddingHorizontal: 7,
+    paddingVertical: 7,
+  },
   driverPictureResult: {
+    height: 60,
+    width: 60,
+    resizeMode: 'contain',
+    borderRadius: 50,
+    backgroundColor: 'gray',
+  },
+  teamPictureResult: {
     height: 60,
     width: 60,
     resizeMode: 'contain',
@@ -28,7 +42,10 @@ const Styles = StyleSheet.create({
   driverResult: {
     flex: 6,
     paddingLeft: 5,
-    
+  },
+  teamResult: {
+    flex: 6,
+    paddingLeft: 15,
   },
   driverTextResult: {
     fontSize: 17,
@@ -36,9 +53,20 @@ const Styles = StyleSheet.create({
     textAlignVertical: 'bottom',
     flex: 1
   },
-  teamTextResult: {
+  teamTextResult: {//Style for driver standings team
     textAlignVertical: 'top',
     flex: 1
+  },
+  constructorTextResult: { // Style for team standings
+    fontSize: 17,
+    fontWeight: '600',
+    textAlignVertical: 'center',
+    flex: 1
+  },
+  pointResult:{
+    paddingRight: 5,
+    textAlignVertical: 'center',
+    fontWeight: '500'
   },
   timeResult: {
     paddingRight: 5,
