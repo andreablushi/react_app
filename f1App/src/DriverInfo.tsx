@@ -192,12 +192,6 @@ export default function DriverInfo ({route}: any) {
       getData();
     }, []);
     
-    /*SETTING UP THE DATA, to improve readability*/
-    // const driver_info = driver_info_data[0]
-    // const team_info = teamData[0]
-    
-
-
     /*Return a loading icon, while waiting for the fetch of the data
     Once the loading is complete, it will render the rest of the page */
     return (
