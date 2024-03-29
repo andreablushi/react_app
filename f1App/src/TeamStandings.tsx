@@ -103,7 +103,7 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
             - By clicking on the element, the user will get redirected to the single team info
           */}
           <ScrollView>
-            {constructorStandings.map( constructorStandings => <Pressable key={constructorStandings.position} onPress={() => {navigation.navigate("TeamInfo", {})}}>
+            {constructorStandings.map( constructorStandings => <Pressable key={constructorStandings.position} onPress={() => {navigation.navigate("TeamInfo", {team: constructorStandings.Constructor.constructorId})}}>
                 <TeamElement darkMode={darkMode} team_standing={constructorStandings}></TeamElement>
             </Pressable>)}
           </ScrollView>
