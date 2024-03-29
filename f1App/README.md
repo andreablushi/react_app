@@ -5,6 +5,7 @@
 -LEVARE GRIGIO DELLO STANDINGS
 
 PROBLEMI DAVIDE:
+-driverInfo di piloti la cui carriera è terminata, ci mettono di più a renderizzare le info: valutare se spostare la fetch api nel main method
 -Fixare le immagini driver vecchie
 -Introdurre collegamento da infoDriver a RaceResult
 

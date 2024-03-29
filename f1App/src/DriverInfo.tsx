@@ -20,6 +20,7 @@ import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 
 type DriverInfo = {
+    driverId: string
     permanentNumber: number
     givenName: string
     familyName: string
@@ -47,7 +48,18 @@ type DriverResult = {
     points: number
   }]
 }
-
+type SeasonResults = {
+  season: number;
+  DriverStandings : [{
+    position: number;
+    points: number;
+    wins: number;
+    Constructors:[{
+      constructorId: string;
+      name: string;
+    }];
+  }];
+}
 /*Type props, used for passing the parameters to the function*/
 type DriverProps = {
   darkMode: boolean
@@ -113,6 +125,56 @@ function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
       </View>
   </View>
 );
+}
+
+/* Return the seasonalResults of a driver, from most recent to oldest*/
+function Old_Driver_Results(prop: DriverProps) : React.JSX.Element{
+  //Setting the parameters
+  const theme = prop.darkMode ? Dark : Light;
+  const driver_id = prop.DriverInfo.driverId;
+
+  //Hooks used for fetching the data  
+  const [seasonResults, setSeasonResults] = useState<SeasonResults[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
+
+  const apiUrl = "https://ergast.com/api/f1/drivers/"+driver_id+"/driverStandings.json"
+
+  const getResults =  async() => {
+     try {
+      const response = await fetch(apiUrl);
+      const data = await response.json();
+      setSeasonResults(data.MRData.StandingsTable.StandingsLists);
+    } catch (error){
+      console.error(error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    getResults();
+  }, []);
+  
+  //Creating the element
+  return (
+    <View>
+      {seasonResults.map( seasonResult => (
+        <View key={seasonResult.season} style={[Styles.raceScheduleContainer, theme.card, { flex: 1, paddingVertical: 7 }]}>
+          <View style={{ flex: 5, paddingLeft: 20, flexDirection: 'row' }}>
+            <View style={{ flex: 2.5 }}>
+              <Text style={[Styles.sectionDescription, theme.card, { fontSize: 17, fontWeight: '500', flex: 1, textAlignVertical: 'bottom' }]}>Stagione: {seasonResult.season}</Text>
+              <Text style={[Styles.sectionDescription, theme.card, { color: theme.title_bar.color }]}>Vittorie: {seasonResult.DriverStandings[0].wins}</Text>
+              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 1 }]}>Team: {seasonResult.DriverStandings[0].Constructors[0].name}</Text>
+            </View>
+            <View style={{ flex: 1, flexDirection: 'row' }}>
+              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 4, textAlignVertical: 'center' }]}>Posizione: </Text>
+              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'center', flex: 1, textAlignVertical: 'center' }]}>{seasonResult.DriverStandings[0].position}</Text>
+            </View>
+          </View>
+        </View>
+      ))}
+    </View>
+  );
 }
 
 /*Return an element containing basic information of the driver, along with their image*/
@@ -221,11 +283,14 @@ export default function DriverInfo ({route}: any) {
             
 
             {/* Check if teamData is found */}{
-              teamData == undefined ? 
-              //Team data not found
-              <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
-                Team data not available :(
-              </Text> :
+              teamData == undefined ?
+               
+              <View>
+                <Old_Driver_Results darkMode={darkMode} DriverInfo={driver_info_data}></Old_Driver_Results>
+                <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
+                  Team data not available :(
+                </Text>
+              </View> :
               
               //If found, load the Driver_Team_Component
               <Pressable onPress={() =>  navigation.navigate("TeamInfo", {team: teamData.constructorId})}>
