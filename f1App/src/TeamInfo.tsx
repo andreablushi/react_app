@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { ActivityIndicator, Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { ActivityIndicator, Image, SafeAreaView, ScrollView, Text, View, Pressable} from 'react-native';
 
 // Styles and Theme imports
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
+
+//Import used to implement navigation
+import { useNavigation } from "@react-navigation/native";
+import { HomePageNavigationProp } from "./HomePage";
 
 // Helper functions and constants imports
 import { globalThemeControl, imageSource } from './App';
@@ -17,6 +21,7 @@ type DriverInfo = {
     familyName: string;
     dateOfBirth: string;
     nationality: string;
+    driverId: string;
 }[];
 
 type Constructor = {
@@ -62,22 +67,26 @@ function TeamComponent(prop: TeamProps): React.ReactElement {
 function DriverComponent(prop: DriverProps): React.ReactElement {
     const theme = prop.darkMode ? Dark : Light;
     const drivers = prop.driverInfo;
-
+    
+    //Added to implement navigation
+    const navigation = useNavigation<HomePageNavigationProp>();
     return (
         <View>
             {drivers.map((driver) => (
-                <View key={driver.givenName} style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.card]}>
-                    <View style={[theme.card, { flex: 3 }]}>
-                        <Text style={[theme.card, { fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
-                        <Text style={[theme.card, { fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
-                        <Text style={[theme.card, { fontSize: 16 }]}>{driver.permanentNumber}</Text>
-                        <Text style={[theme.card, { fontSize: 15 }]}>{driver.nationality}</Text>
-                        <Text style={[theme.card]}>{driver.dateOfBirth}</Text>
+                <Pressable  key={driver.driverId} onPress={() =>  navigation.navigate("DriverInfo", {driver: driver.driverId})}>
+                    <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.card]}>
+                        <View style={[theme.card, { flex: 3 }]}>
+                            <Text style={[theme.card, { fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
+                            <Text style={[theme.card, { fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
+                            <Text style={[theme.card, { fontSize: 16 }]}>{driver.permanentNumber}</Text>
+                            <Text style={[theme.card, { fontSize: 15 }]}>{driver.nationality}</Text>
+                            <Text style={[theme.card]}>{driver.dateOfBirth}</Text>
+                        </View>
+                        <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
+                            <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
+                        </View>
                     </View>
-                    <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                        <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
-                    </View>
-                </View>
+                </Pressable>
             ))}
         </View>
     );

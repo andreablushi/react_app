@@ -78,7 +78,9 @@ export type RootStackParamList = {
   DriverInfo:{
     driver: string
   };
-  TeamInfo: undefined;
+  TeamInfo: {
+    team: string
+  };
 };
 
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;

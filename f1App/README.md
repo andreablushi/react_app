@@ -1,12 +1,12 @@
 #PROBLEMI ANDREA:
 -RISOLUZIONE ICONE NON UNIFORMA
 -RISOLUZIONE MACCHINA DA MIGLIORARE
--RENDERE PILOTI PRESSABLE
 -BOTTOM.TAB TENTATIVO
--PROBLEMA RICERCA BANDIERA GERMANY
 -LEVARE GRIGIO DELLO STANDINGS
 
-
+PROBLEMI DAVIDE:
+-Fixare le immagini driver vecchie
+-Introdurre collegamento da infoDriver a RaceResult
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 

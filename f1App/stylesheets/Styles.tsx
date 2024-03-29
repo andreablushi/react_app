@@ -117,7 +117,17 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     flex: .1,
     alignItems: 'center',
-  }, 
+  },
+  notFoundText:{
+    fontSize: 23,
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    textShadowColor: 'gray',
+    textShadowRadius: 5,
+    textShadowOffset: {height: 1, width: 1},
+    paddingTop: 20
+  }
 });
 
 export default Styles;

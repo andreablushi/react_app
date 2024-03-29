@@ -1,14 +1,15 @@
-/* TO DO:
-    make the team clickable, redirecting to the teaminfo page
-    https://ergast.com/api/f1/2024/drivers/alonso/results: get the current season placements
-*/
-
 import React, { useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
+
+//Import used to implement navigation
+import { useNavigation } from "@react-navigation/native";
+import { HomePageNavigationProp } from "./HomePage";
+
 import {
   ActivityIndicator,
   Image,
+  Pressable,
   SafeAreaView,
   ScrollView,
   Text,
@@ -152,7 +153,9 @@ export default function DriverInfo ({route}: any) {
     const [teamData, setTeamData] = useState<Constructor>();
     const [seasonResults, setSeasonResults] = useState<DriverResult[]>([]);
     const [loading, setLoading] = useState(true);
-    
+    const navigation = useNavigation<HomePageNavigationProp>();
+
+
     //Api used for the data fetching
     const driver_basic_info_apiUrl = "http://ergast.com/api/f1/drivers/"+driver_id+".json";
     const driver_team_apiUrl = "http://ergast.com/api/f1/2024/drivers/"+driver_id+"/constructors.json"
@@ -161,32 +164,20 @@ export default function DriverInfo ({route}: any) {
     //Fetching all the data needed for the page
     const getData = async () => {
       try{
-          console.log("retrieving seasons")
-          const responseDriver = await fetch(driver_basic_info_apiUrl);
-          const dataDriver = await responseDriver.json();
-
-          console.log("retrieving seasons")
-          const responseTeam = await fetch(driver_team_apiUrl);
-          const dataTeam = await responseTeam.json();
-
-          console.log("retrieving seasons")
-          const responseSeason = await fetch(driver_season_results_apiUrl);
-          const dataSeason = await responseSeason.json();
-          
         
         // Parallel requests using Promise.all
-        /*  const [driverResponse, teamResponse, resultsResponse] = await Promise.all([
+        const [driverResponse, teamResponse, resultsResponse] = await Promise.all([
           fetch(driver_basic_info_apiUrl).then(res => res.json()),
           fetch(driver_team_apiUrl).then(res => res.json()),
           fetch(driver_season_results_apiUrl).then(res => res.json())
-        ]);  */
-        //Setting the data, once received the answer
+        ]); 
         
+        /*Setting the data, once received the answer
+        driver and team are a single element array, season is an array containing the current season results of a driver*/
+        const driver = driverResponse.MRData.DriverTable.Drivers[0]
+        const team = teamResponse.MRData.ConstructorTable.Constructors[0]
+        const season = resultsResponse.MRData.RaceTable.Races
 
-        // driver and team are a single element array
-        const driver = dataDriver.MRData.DriverTable.Drivers[0]
-        const team = dataTeam.MRData.ConstructorTable.Constructors[0]
-        const season = dataSeason.MRData.RaceTable.Races
         setDriver_Info_Data(driver);
         setTeamData(team);
         season == undefined ? console.log("error fetching season") : setSeasonResults(season);
@@ -209,42 +200,46 @@ export default function DriverInfo ({route}: any) {
     return (
       <SafeAreaView style={[{flex: 1}, theme.card]}>
         {loading ? (
+          //Loading icon
           <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
             <ActivityIndicator size={"large"}/>
             <Text style={Styles.loadingText}>Loading data...</Text>
           </View>
-        ) : (
+        ) : 
+      
+        //Main view
+        ( 
           <ScrollView>
-            {driver_info_data == undefined ? <Text style={{
-              fontSize: 23,
-              flex: 1,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              color: darkMode ? 'gold' : 'orangered',
-              textShadowColor: 'gray',
-              textShadowRadius: 5,
-              textShadowOffset: {height: 1, width: 1},
-              paddingTop: 20
+            {driver_info_data == undefined ? 
+            //Driver data not found
+            <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
+              Driver data not available :(
+            </Text> :   
+            
+            //If found, show the Driver_Basic_Info_Component 
+            <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info_data} />}
+            
+
+            {/* Check if teamData is found */}{
+              teamData == undefined ? 
+              //Team data not found
+              <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
+                Team data not available :(
+              </Text> :
               
-            }}>Driver data not available :(</Text> : <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info_data} />}
-            {teamData == undefined ? <Text style={{
-              fontSize: 23,
-              flex: 1,
-              textAlign: 'center',
-              textAlignVertical: 'center',
-              color: darkMode ? 'gold' : 'orangered',
-              textShadowColor: 'gray',
-              textShadowRadius: 5,
-              textShadowOffset: {height: 1, width: 1},
-              paddingTop: 20
-              
-            }}>Team Data not available :(</Text> : <Driver_Team_Component darkMode={darkMode} team={teamData} />}
+              //If found, load the Driver_Team_Component
+              <Pressable onPress={() =>  navigation.navigate("TeamInfo", {team: teamData.constructorId})}>
+                <Driver_Team_Component darkMode={darkMode} team={teamData} />
+              </Pressable>
+            }
+
             {
               seasonResults.reverse().map( result => 
               <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
             } 
           </ScrollView>
         )}
+        <NavigationBar/>
       </SafeAreaView>
     );
 };
