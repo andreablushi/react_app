@@ -26,7 +26,7 @@ type DriverInfo = {
     nationality: string
 }
 
-type Contructor = {
+type Constructor = {
   constructorId: string
   name: string
 }
@@ -40,10 +40,10 @@ type DriverResult = {
       country: string
     }
   }
-  Results: {
+  Results: [{
     position: number
     points: number
-  }
+  }]
 }
 
 /*Type props, used for passing the parameters to the function*/
@@ -53,7 +53,7 @@ type DriverProps = {
 }
 type TeamProps = {
   darkMode: boolean
-  team: Contructor
+  team: Constructor
 }
 type ResultProps = {
   darkMode: boolean
@@ -137,7 +137,7 @@ export default function DriverInfo ({route}: any) {
     
     //Hooks used for fetching the data
     const [driver_info_data, setDriver_Info_Data] = useState<DriverInfo[]>([]);
-    const [teamData, setTeamData] = useState<Contructor[]>([]);
+    const [teamData, setTeamData] = useState<Constructor[]>([]);
     const [seasonResults, setSeasonResults] = useState<DriverResult[]>([]);
     const [loading, setLoading] = useState(true);
     

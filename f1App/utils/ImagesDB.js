@@ -281,6 +281,10 @@ const ImagesDB =
       "nation": "china",
       "src": require("../img/countries/china.png"),
     },
+    {
+      "nation": "germany",
+      "src": require("../img/countries/germany.png"),
+    },
   ],
   "team_icon": [
     {

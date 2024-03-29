@@ -1,19 +1,11 @@
-# Dependency da installare per fare funzionare l'app (si spera) | IN CASO DI ERRORE
-# Di base dovrebbero esserci già installate da noi altri 
+#PROBLEMI ANDREA:
+-RISOLUZIONE ICONE NON UNIFORMA
+-RISOLUZIONE MACCHINA DA MIGLIORARE
+-RENDERE PILOTI PRESSABLE
+-BOTTOM.TAB TENTATIVO
+-PROBLEMA RICERCA BANDIERA GERMANY
+-LEVARE GRIGIO DELLO STANDINGS
 
-- npm install --save-dev concurrently
-- npm install @react-navigation/native
-- npm install react-native-screens react-native-safe-area-context
-- npm install @react-navigation/stack
-
-STATO DEL PAGKAGE.JSON Blushi
-{
-  "dependencies": {
-    "@react-navigation/native": "^6.1.17",
-    "react-native-safe-area-context": "^4.9.0",
-    "react-native-screens": "^3.29.0"
-  }
-}
 
 
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
