@@ -154,10 +154,9 @@ function Schedule({route}: any): React.JSX.Element {
           <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 10,}}>
             <TextInput 
               keyboardType='numeric'
-              textAlign='right'
-              textAlignVertical='center'
               maxLength={4}
-              style={{marginHorizontal: 10, color: theme.card.color, fontSize: 20}}
+              selectTextOnFocus={true}
+              style={{marginHorizontal: 10, color: theme.card.color, fontSize: 20, flex: 1, textAlign: 'right'}}
               onChangeText={text => setTextInput(text)}
               onEndEditing={(() => verifyAndChange())}
             >{year}</TextInput>

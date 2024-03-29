@@ -53,15 +53,15 @@ function DriverElement(props: Props): React.JSX.Element {
   const team = result.Constructors[0];
   
   return (
-    <View style={[Styles.driverResultWrapper, theme.card]}>
-    <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
-    <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
-    <View style={[Styles.driverResult, theme.card]}>
-      <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
-      <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
+    <View style={[Styles.driverResultWrapper, theme.card,]}>
+      <Text style={[Styles.positionResult, theme.card, {flex:1}]}>{result.position}</Text>
+      <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
+      <View style={[Styles.driverResult, theme.card, {flex: 5}]}>
+        <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
+        <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
+      </View>
+      <Text style={[Styles.timeResult, theme.card, {flex: 1, fontSize: 20}]}>{result.points}</Text>
     </View>
-    <Text style={[Styles.timeResult, theme.card]}>{result.points}</Text>
-  </View>
   )
 };
 
@@ -103,8 +103,13 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
 
   return (
       <SafeAreaView style={[theme.card, {flex: 11}]}>
-        <View style={[{backgroundColor: theme.card.backgroundColor}, Styles.topBar]}>
-          <Text style={[Styles.topBarText, theme.title_bar]}>Driver Standings</Text>
+        <View style={[{backgroundColor: theme.card.backgroundColor, flex:1.5}, ]}>
+          <Text style={[Styles.topBarText, theme.title_bar, {flex: 1.3}]}>Driver Standings</Text>
+          <View style={[theme.title_bar, {flexDirection: 'row', flex: 1}]}>
+            <Image source={darkMode ? require("../img/podiumdark.png") : require("../img/podiumlight.png")} style={{resizeMode: 'contain', height: 30, flex: .8}}></Image>
+            <Text style={[theme.title_bar, {flex: 4, textAlignVertical: 'center', paddingLeft: 5, fontSize: 20, fontWeight: "600"}]}>Driver</Text>
+            <Text style={[theme.title_bar, {flex: 1.15, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
+          </View>
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the driver standings will be shown:

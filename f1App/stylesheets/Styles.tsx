@@ -28,8 +28,8 @@ const Styles = StyleSheet.create({
     height: 60,
     width: 60,
     resizeMode: 'contain',
-    borderRadius: 50,
-    backgroundColor: 'gray',
+    // borderRadius: 50,
+    // backgroundColor: 'gray',
   },
   positionResult: {
     paddingRight: 3,

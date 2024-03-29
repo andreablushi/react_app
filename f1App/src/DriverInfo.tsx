@@ -220,7 +220,10 @@ export default function DriverInfo ({route}: any) {
               flex: 1,
               textAlign: 'center',
               textAlignVertical: 'center',
-              color: 'gold',
+              color: darkMode ? 'gold' : 'orangered',
+              textShadowColor: 'gray',
+              textShadowRadius: 5,
+              textShadowOffset: {height: 1, width: 1},
               paddingTop: 20
               
             }}>Driver data not available :(</Text> : <Driver_Basic_Info_Component darkMode={darkMode} DriverInfo={driver_info_data} />}
@@ -229,7 +232,10 @@ export default function DriverInfo ({route}: any) {
               flex: 1,
               textAlign: 'center',
               textAlignVertical: 'center',
-              color: 'gold',
+              color: darkMode ? 'gold' : 'orangered',
+              textShadowColor: 'gray',
+              textShadowRadius: 5,
+              textShadowOffset: {height: 1, width: 1},
               paddingTop: 20
               
             }}>Team Data not available :(</Text> : <Driver_Team_Component darkMode={darkMode} team={teamData} />}

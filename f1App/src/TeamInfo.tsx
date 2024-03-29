@@ -51,7 +51,7 @@ function TeamComponent(prop: TeamProps): React.ReactElement {
                 </View>
             </View>
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-                <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 120, height: 120 }} />
+                <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
             </View>
         </View>
       
@@ -66,13 +66,13 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
     return (
         <View>
             {drivers.map((driver) => (
-                <View key={driver.givenName} style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.title_bar]}>
-                    <View style={[theme.title_bar, { flex: 3 }]}>
-                        <Text style={[theme.title_bar, { fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
-                        <Text style={[theme.title_bar, { fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
-                        <Text style={[theme.title_bar, { fontSize: 16 }]}>{driver.permanentNumber}</Text>
-                        <Text style={[theme.title_bar, { fontSize: 15 }]}>{driver.nationality}</Text>
-                        <Text style={[theme.title_bar]}>{driver.dateOfBirth}</Text>
+                <View key={driver.givenName} style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.card]}>
+                    <View style={[theme.card, { flex: 3 }]}>
+                        <Text style={[theme.card, { fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
+                        <Text style={[theme.card, { fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
+                        <Text style={[theme.card, { fontSize: 16 }]}>{driver.permanentNumber}</Text>
+                        <Text style={[theme.card, { fontSize: 15 }]}>{driver.nationality}</Text>
+                        <Text style={[theme.card]}>{driver.dateOfBirth}</Text>
                     </View>
                     <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                         <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
@@ -134,7 +134,7 @@ export default function DriverInfo({ route }: any) {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 500, height: 100 }}/>
                     </View>
-                    <Text style={[theme.title_bar, { fontSize: 22, fontWeight: '800' }]}> Drivers: </Text>
+                    <Text style={[theme.card, { fontSize: 22, fontWeight: '800' }]}> Drivers: </Text>
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
             )}
