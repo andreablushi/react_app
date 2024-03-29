@@ -151,7 +151,7 @@ function Schedule({route}: any): React.JSX.Element {
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 70,  minHeight: 70}, styles.topBar]}>
           <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 1}]}>Schedule</Text>
           <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 30}}>
-            <TextInput keyboardType='numeric' style={{marginHorizontal: 10, color: theme.card.color, flex: 1, textAlign: 'right', textAlignVertical: 'center', fontSize: 20}} onChangeText={text => verifyAndChange(text)}>{year}</TextInput>
+            <TextInput keyboardType='numeric' maxLength={4} style={{marginHorizontal: 10, color: theme.card.color, flex: 1, textAlign: 'right', textAlignVertical: 'center', fontSize: 20}} onChangeText={text => verifyAndChange(text)}>{year}</TextInput>
           </View>
           <View style={[theme.card,{flex: .9, flexDirection: 'row'}]}>
             
