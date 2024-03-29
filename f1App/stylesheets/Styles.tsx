@@ -9,6 +9,11 @@ const Styles = StyleSheet.create({
     columnGap: 5,
     paddingHorizontal: 7,
     paddingVertical: 7,
+
+    /* borderTopWidth: 1, // Add border at the top
+    borderTopColor: '#333', // Color of the top border
+    borderBottomWidth: 1, // Add border at the bottom
+    borderBottomColor: '#333', // Color of the bottom border  */
   },
   teamResultWrapper: {
     flexDirection: 'row',
@@ -16,6 +21,11 @@ const Styles = StyleSheet.create({
     columnGap: 5,
     paddingHorizontal: 7,
     paddingVertical: 7,
+
+    borderTopWidth: 1, // Add border at the top
+    borderTopColor: '#333', // Color of the top border
+    borderBottomWidth: 1, // Add border at the bottom
+    borderBottomColor: '#333', // Color of the bottom border 
   },
   driverPictureResult: {
     height: 60,
@@ -117,6 +127,11 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     flex: .1,
     alignItems: 'center',
+
+    /* borderTopWidth: 1, // Add border at the top
+    borderTopColor: '#333', // Color of the top border
+    borderBottomWidth: 1, // Add border at the bottom
+    borderBottomColor: '#333', // Color of the bottom border */
   },
   notFoundText:{
     fontSize: 23,
