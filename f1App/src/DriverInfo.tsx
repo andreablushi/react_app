@@ -112,14 +112,14 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     return (
         <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10, }, theme.title_bar ]}>
             <View style={[theme.title_bar, {flex: 3}]}>
-            <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
-            <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
-            <Text style={[theme.title_bar, {fontSize: 22}]}>{driver.permanentNumber}</Text>
-            <Text style={[theme.title_bar, {fontSize: 16}]}>{driver.nationality}</Text>
-            <Text style={[theme.title_bar, {}]}>{driver.dateOfBirth}</Text>
+              <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
+              <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
+              <Text style={[theme.title_bar, {fontSize: 22}]}>{driver.permanentNumber}</Text>
+              <Text style={[theme.title_bar, {fontSize: 16}]}>{driver.nationality}</Text>
+              <Text style={[theme.title_bar, {}]}>{driver.dateOfBirth}</Text>
             </View>
-            <View style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
-                <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
+            <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
+              <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
             </View>
         </View>
     );
