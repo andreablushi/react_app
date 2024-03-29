@@ -161,7 +161,7 @@ function Schedule({route}: any): React.JSX.Element {
             }}
             style={[{flex:1, paddingRight: 20}, theme.title_bar]} 
             placeholderStyle={[theme.title_bar, {textAlign: 'right'}]}
-            selectedTextStyle={[!theme.title_bar, {fontSize: 20, textAlign: 'right', paddingRight: 7, fontWeight: '700'}]}
+            selectedTextStyle={[theme.title_bar, {fontSize: 20, textAlign: 'right', paddingRight: 7, fontWeight: '700'}]}
             itemContainerStyle={[{}, theme.card]}
             activeColor={theme.title_bar.backgroundColor}
             itemTextStyle={[{flex: 1, textAlign: 'center', color: theme.card.color, fontSize: 18, fontWeight: '500'}]}
