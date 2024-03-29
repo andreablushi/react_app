@@ -104,7 +104,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   return (
       <SafeAreaView style={[theme.card, {flex: 11}]}>
         <View style={[{backgroundColor: theme.card.backgroundColor}, Styles.topBar]}>
-          <Text style={[Styles.topBarText, {color: theme.card.color}]}>Driver Standings</Text>
+          <Text style={[Styles.topBarText, theme.title_bar]}>Driver Standings</Text>
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the driver standings will be shown:

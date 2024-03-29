@@ -33,6 +33,7 @@ type Constructor = {
 
 type DriverResult = {
   round: number
+  raceName: string
   Circuit: {
     circuitName: string
     circuitId: string
@@ -90,13 +91,24 @@ function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
   //Creating the element
   return (
     <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
-      <View style={[Styles.driverResultWrapper, theme.card]}>
-        <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
+      <View style={[{flex: 1}, theme.card]}>
         <Image source={imageSource.getFlag(circuit.Location.country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
       </View>
-      <View>
-        <Text style={[Styles.sectionDescription, theme.card]}>Round: {race.round}</Text>
-        <Text style={[Styles.sectionDescription, theme.card]}>Points earned: {result.points}</Text>
+      <View style={[{flex: 5, paddingLeft: 20, flexDirection: 'row'}]}>
+        <View style={[{flex: 2.5}]}>
+          <Text style={[Styles.sectionDescription, theme.card, {
+          fontSize: 17, 
+          fontWeight: '500', 
+          flex: 1,
+          textAlignVertical: 'bottom'
+          }]}>Round: {race.round}</Text>
+          <Text style={[Styles.sectionDescription, theme.card, {color: theme.title_bar.color}]}>{race.raceName}</Text>
+          <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'left', flex: 1}]}>Position: {result.position}</Text>
+        </View>
+        <View style={{flex: 1, flexDirection: 'row'}}>
+          <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'left', flex: 2, textAlignVertical: 'center'}]}>Points: </Text>
+          <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'center', flex: 1, textAlignVertical: 'center'}]}>{result.points}</Text>
+        </View>
       </View>
   </View>
 );

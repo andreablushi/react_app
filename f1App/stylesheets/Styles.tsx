@@ -89,7 +89,7 @@ const Styles = StyleSheet.create({
     flex: 1,
     fontSize: 30,
     textAlignVertical: 'center',
-    marginHorizontal: 10,
+    paddingHorizontal: 10,
     fontWeight: '700',
     color: 'white'
     
@@ -105,9 +105,12 @@ const Styles = StyleSheet.create({
     color: '#a1a1a1'
   },
   sectionDescription: {
+    fontSize: 15,
+    fontWeight: '400',  
+  },
+  section14: {
     fontSize: 14,
-    fontWeight: '400',
-    
+    fontWeight: '400'
   },
   raceScheduleContainer: { 
     paddingHorizontal: 10,
