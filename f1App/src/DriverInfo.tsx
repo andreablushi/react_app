@@ -295,7 +295,7 @@ export default function DriverInfo ({route}: any) {
               teamData == undefined ?
                
               <View>
-                <Old_Driver_Results darkMode={darkMode} DriverInfo={driver_info_data}></Old_Driver_Results>
+                <Old_Driver_Results darkMode={darkMode} DriverInfo={driver_info_data!}></Old_Driver_Results>
                 <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
                   Team data not available :(
                 </Text>

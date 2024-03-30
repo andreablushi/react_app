@@ -11,7 +11,6 @@ import { HomePageNavigationProp } from "./HomePage";
 
 // Helper functions and constants imports
 import { globalThemeControl, imageSource } from './App';
-import { NavigationBar } from './NavigationBar';
 import { convertNationalityToNation } from '../utils/convertNationalityToNation';
 
 // Define types for API response data
@@ -55,10 +54,13 @@ function TeamComponent(prop: TeamProps): React.ReactElement {
                   <Image source={imageSource.getFlag(convertNationalityToNation(teamData.nationality))} style={{ resizeMode: 'contain', width: 50, height: 50 }} />
                 </View>
             </View>
+            
+
             <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
             </View>
         </View>
+        
       
     );
 }
@@ -86,7 +88,9 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
                             <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
                         </View>
                     </View>
+                    <View style={Styles.light_separator} />
                 </Pressable>
+                
             ))}
         </View>
     );
@@ -143,6 +147,7 @@ export default function DriverInfo({ route }: any) {
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                     <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 500, height: 100 }}/>
                     </View>
+                    <View style={Styles.separator} />
                     <Text style={[theme.card, { fontSize: 22, fontWeight: '800' }]}> Drivers: </Text>
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
