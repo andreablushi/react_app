@@ -1,11 +1,18 @@
-import React, { useEffect, useState } from 'react';
-import { NavigationContainer, useNavigation, useFocusEffect } from '@react-navigation/native';
+import React, {useEffect, useState} from 'react';
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { Text, View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, Pressable } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, ActivityIndicator} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Dark, Light } from '../stylesheets/Theme';
-import { FadeFromBottomAndroid } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/TransitionPresets';
+
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQueries,
+} from '@tanstack/react-query'
+
+import axios from 'axios';
 
 //Our Component
 import HomePage from './HomePage';
@@ -18,6 +25,31 @@ import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
 
 const Stack = createNativeStackNavigator();
+
+//------ Defining Caching methods --------------------------------
+
+const queryClient = new QueryClient()
+
+export default function CachedApp() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <App/>
+    </QueryClientProvider>
+  )
+}
+
+async function fetchData(apiUrl: string) {
+  try{
+    const response = await axios.get(apiUrl);
+    return response.data;
+  }
+  catch(error){
+    console.log(error)
+  }
+}
+
+//----------------------------------------------------------------
+
 
 // Global theme controller 
 export class globalThemeControl {
@@ -98,6 +130,7 @@ export const StartingScreen = () => {
 };
 
 const App = () => {
+
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   globalThemeControl.setTheme(darkMode);
@@ -115,27 +148,38 @@ const App = () => {
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
 
+  //----------- CACHED API CALLS ------------------------------------------------
+  const scheduleUrl =  "https://ergast.com/api/f1/2024.json";
+  const driverStandingsUrl = "http://ergast.com/api/f1/current/driverStandings.json";
+  const teamStandingsUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
+  const results = useQueries({
+    queries: [
+      { queryKey: ['schedule'], queryFn: () => fetchData(scheduleUrl)},
+      { queryKey: ['driverStandings'], queryFn: () => fetchData(driverStandingsUrl)},
+      { queryKey: ['teamStandings'], queryFn: () => fetchData(teamStandingsUrl)},
+    ],
+  })
+  
+  //-----------------------------------------------------------------------------
   return (
-    <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
-      <SafeAreaProvider>
-      <NavigationContainer>
-        <Stack.Navigator>
-          <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false, animation: "fade" }} />
-          <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "fade" }} />
-          <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false, animation: "fade"}}/>
-          <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false, animation: "fade"}}/>
-          <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "fade" }}/>
-          <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
-          <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
-          <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "fade"}}/>
-        </Stack.Navigator>
-      </NavigationContainer>
-      </SafeAreaProvider>
-    </View>
+      <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
+        <SafeAreaProvider>
+        <NavigationContainer>
+          <Stack.Navigator>
+            <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false, animation: "fade" }} />
+            <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "fade" }} />
+            <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false, animation: "fade"}}/>
+            <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false, animation: "fade"}}/>
+            <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "fade" }}/>
+            <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
+            <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
+            <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "fade"}}/>
+          </Stack.Navigator>
+        </NavigationContainer>
+        </SafeAreaProvider>
+      </View>
   );
 };
-
-export default App;
 
 const styles = StyleSheet.create({
   starting_container: {

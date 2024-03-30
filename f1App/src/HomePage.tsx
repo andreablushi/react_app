@@ -7,9 +7,12 @@ import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
 import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
 
+import { useQueryClient } from '@tanstack/react-query';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl } from './App';
 import { NavigationBar } from './NavigationBar';
+
 
 
 
@@ -38,6 +41,9 @@ const HomePage = () => {
     navigation.navigate('Drivers');
   };
 
+  /*Tentativo data Caching*/
+  const queryClient = useQueryClient();
+  console.log(queryClient.getQueryData(['schedule']));
   return (
   
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
