@@ -44,7 +44,7 @@ function TeamElement(props: Props): React.JSX.Element {
 
   //returns the basic structure for the team element
   return (
-    <View style={[Styles.teamResultWrapper, theme.card]}>
+    <View style={[Styles.teamResultWrapper, theme.card, theme.divisor]}>
     <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
     <Image style={[Styles.teamPictureResult, ]} source={imageSource.getTeamBadge(String(team.constructorId))}></Image>
     <View style={[Styles.teamResult, theme.card]}>
@@ -94,10 +94,15 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
 
   return (
       <SafeAreaView style={[theme.card, {flex: 11}]}>
-        <View style={[{backgroundColor: theme.card.backgroundColor}, Styles.topBar]}>
-          <Text style={[Styles.topBarText, {color: theme.card.color}]}>Constructor Standings</Text>
+        <View style={[{backgroundColor: theme.card.backgroundColor, flex:1.5}, ]}>
+          <Text style={[Styles.topBarText, theme.title_bar, {flex: 1.3}]}>Team Standings</Text>
+          <View style={[theme.title_bar, {flexDirection: 'row', flex: 1}]}>
+            <Image source={darkMode ? require("../img/podiumdark.png") : require("../img/podiumlight.png")} style={{resizeMode: 'contain', height: 30, flex: .8}}></Image>
+            <Text style={[theme.title_bar, {flex: 4, textAlignVertical: 'center', paddingLeft: 5, fontSize: 20, fontWeight: "600"}]}>Team</Text>
+            <Text style={[theme.title_bar, {flex: 1.15, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
+          </View>
         </View>
-        <View style={[{flex: 10}]}>
+        <View style={[{flex: 9}]}>
           {/*Creating the section where the constructor standings will be shown:
             - For every position, it will call the COnstructorElement funcion, for getting the element (name, image, points...) for the single team
             - By clicking on the element, the user will get redirected to the single team info

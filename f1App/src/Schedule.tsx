@@ -63,7 +63,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const date = day + "/" + month + "/" + year;
  
   return (
-      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
+      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}, theme.divisor]}>
         <View>
           <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>

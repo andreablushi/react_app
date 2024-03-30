@@ -117,7 +117,31 @@ const Styles = StyleSheet.create({
     flexDirection: 'row',
     flex: .1,
     alignItems: 'center',
-  }, 
+  },
+  notFoundText:{
+    fontSize: 23,
+    flex: 1,
+    textAlign: 'center',
+    textAlignVertical: 'center',
+    textShadowColor: 'gray',
+    textShadowRadius: 5,
+    textShadowOffset: {height: 1, width: 1},
+    paddingTop: 20
+  },
+  separator:{ 
+    borderBottomWidth: 4,
+     borderBottomColor: 'white', 
+     marginVertical: 10 
+  },
+  light_separator:{ 
+    borderBottomWidth: 4,
+    borderBottomColor: '#5A5A5A',
+    marginTop: 10,
+    marginBottom: 10,
+    marginLeft: 20,
+    marginRight: 20,
+  }
+  
 });
 
 export default Styles;

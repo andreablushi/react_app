@@ -53,7 +53,7 @@ function DriverElement(props: Props): React.JSX.Element {
   const team = result.Constructors[0];
   
   return (
-    <View style={[Styles.driverResultWrapper, theme.card,]}>
+    <View style={[Styles.driverResultWrapper, theme.card, theme.divisor]}>
       <Text style={[Styles.positionResult, theme.card, {flex:1}]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card, {flex: 5}]}>

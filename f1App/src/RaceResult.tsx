@@ -126,7 +126,7 @@ function Driver(props: Props) {
 
   // render
   return (
-    <View style={[Styles.driverResultWrapper, theme.card]}>
+    <View style={[Styles.driverResultWrapper, theme.card, theme.divisor]}>
       <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card]}>
