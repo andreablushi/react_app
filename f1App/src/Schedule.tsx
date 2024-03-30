@@ -1,27 +1,20 @@
-import React, { cloneElement, useEffect, useState } from 'react';
+import React, {useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import {
-  Button,
   Image,
   Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
   View,
 } from 'react-native';
-import {
-  Colors,
-} from 'react-native/Libraries/NewAppScreen';
+
 import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
 import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
-import { Dropdown } from 'react-native-element-dropdown';
-import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 import axios, { Axios } from 'axios';
 import Search from './Search';
 

@@ -3,7 +3,10 @@ import { View, Text, Button, StyleSheet, useColorScheme } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
+
+import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
+
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl } from './App';
 import { NavigationBar } from './NavigationBar';
