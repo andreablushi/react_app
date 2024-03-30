@@ -103,12 +103,13 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
 
   return (
       <SafeAreaView style={[theme.card, {flex: 11}]}>
-        <View style={[{backgroundColor: theme.card.backgroundColor, flex:1.5}, ]}>
-          <Text style={[Styles.topBarText, theme.title_bar, {flex: 1.3}]}>Driver Standings</Text>
+        <View style={[{backgroundColor: theme.card.backgroundColor, flex:1.7}, ]}>
+          <Text style={[Styles.topBarText, theme.title_bar, {flex: 1.5}]}>Driver Standings</Text>
           <View style={[theme.title_bar, {flexDirection: 'row', flex: 1}]}>
-            <Image source={darkMode ? require("../img/podiumdark.png") : require("../img/podiumlight.png")} style={{resizeMode: 'contain', height: 30, flex: .8}}></Image>
-            <Text style={[theme.title_bar, {flex: 4, textAlignVertical: 'center', paddingLeft: 5, fontSize: 20, fontWeight: "600"}]}>Driver</Text>
-            <Text style={[theme.title_bar, {flex: 1.15, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
+            <Image source={darkMode ? require("../img/podiumdark.png") : require("../img/podiumlight.png")} style={{resizeMode: 'contain', height: 30, flex: .9, alignSelf: 'center'}}></Image>
+            <View style={{width: 70}}></View>
+            <Text style={[theme.title_bar, {flex: 3, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Driver</Text>
+            <Text style={[theme.title_bar, {flex: 1.2, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
           </View>
         </View>
         <View style={[{flex: 10}]}>

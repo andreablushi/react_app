@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { cloneElement, useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import {
   Button,
@@ -22,6 +22,8 @@ import { globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 import { Dropdown } from 'react-native-element-dropdown';
 import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
+import axios, { Axios } from 'axios';
+import Search from './Search';
 
 export type Race = {
   round: number,
@@ -35,7 +37,7 @@ export type Race = {
   }
   date: string
 }
-type Season = {
+export type Season = {
   season: number,
   url: string
 }
@@ -95,6 +97,7 @@ function Schedule({route}: any): React.JSX.Element {
   const [loading, setLoading] = useState(true);
   const [year, setYear] = useState(2024);
   const [textInput, setTextInput] = useState("");
+  const [search, setSearch] = useState(false);
   const navigation = useNavigation<HomePageNavigationProp>();
 
   
@@ -105,9 +108,9 @@ function Schedule({route}: any): React.JSX.Element {
   // data fetching
   const getRace =  async() => {
     try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setRace(data.MRData.RaceTable.Races);
+      const response= await axios.get(apiUrl);
+      // const data = await response.json();
+      setRace(response.data.MRData.RaceTable.Races);
       console.log("retrieving races");
     } catch (error){
       console.error(error);
@@ -119,16 +122,16 @@ function Schedule({route}: any): React.JSX.Element {
   const getSeasons = async() => {
     try {
       console.log("retrieving seasons")
-      const response = await fetch(seasonUrl);
-      const data = await response.json();
-      setSeason(data.MRData.SeasonTable.Seasons.reverse());
+      const response = await axios.get(seasonUrl);
+      // const data = await response.json();
+      setSeason(response.data.MRData.SeasonTable.Seasons.reverse());
     } catch(error) {
       console.error(error);
     }
   }
 
   useEffect(() => {
-    getRace();
+    // getRace();
     getSeasons();
   }, [])
 
@@ -136,7 +139,8 @@ function Schedule({route}: any): React.JSX.Element {
     const verifyAndChange = () => {
       const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
       pattern.test(textInput) ? (
-        setYear(parseInt(textInput, 10))
+        setYear(parseInt(textInput, 10)),
+        setSearch(false)
       ) : console.log();
     }
 
@@ -150,8 +154,14 @@ function Schedule({route}: any): React.JSX.Element {
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 60,  minHeight: 60}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 1}]}>Schedule</Text>
-          <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 10,}}>
+          <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 5}]}>Schedule for {year}</Text>
+          <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
+            <Image 
+              source={darkMode ? require("../img/magniDark.png") : require("../img/magniLight.png")}
+              style={[{maxHeight: 30, resizeMode: 'contain', maxWidth: 30, flex: 1, alignSelf: 'center'}]}>  
+              </Image>
+          </Pressable>
+          {/* <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 10,}}>
             <TextInput 
               keyboardType='numeric'
               maxLength={4}
@@ -160,6 +170,7 @@ function Schedule({route}: any): React.JSX.Element {
               onChangeText={text => setTextInput(text)}
               onEndEditing={(() => verifyAndChange())}
             >{year}</TextInput>
+            <Button onPress={() => setSearch(true)} title='O'></Button>
           </View>
           <View style={[theme.card,{flex: .9, flexDirection: 'row'}]}>
             
@@ -176,7 +187,7 @@ function Schedule({route}: any): React.JSX.Element {
             itemTextStyle={[{flex: 1, textAlign: 'center', color: theme.card.color, fontSize: 18, fontWeight: '500'}]}
             containerStyle={[{borderRadius: 10}, theme.card]}
             ></Dropdown>
-          </View>
+          </View> */}
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
@@ -187,6 +198,14 @@ function Schedule({route}: any): React.JSX.Element {
             </Pressable>)}
           </ScrollView>
         </View>
+        {search ? <Search 
+                    setSearch={setSearch} 
+                    textInput={textInput}
+                    setTextInput={setTextInput}
+                    seasons={seasons}
+                    setYear={setYear}
+                    darkMode={darkMode}>
+                  </Search> : <View></View>}
         <NavigationBar/>
       </SafeAreaView>
   );
