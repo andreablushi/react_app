@@ -138,6 +138,7 @@ export default function DriverInfo({ route }: any) {
 
     return (
         <SafeAreaView style={[{ flex: 1 }, theme.card]}>
+
             {loading ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" />
@@ -146,7 +147,7 @@ export default function DriverInfo({ route }: any) {
             ) : (
                 <ScrollView>
                     <TeamComponent darkMode={darkMode} team={teamData} />
-                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.title_bar]}>
                     <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 302, height: 78 }}/>
                     </View>
                     <View style={Styles.separator} />
