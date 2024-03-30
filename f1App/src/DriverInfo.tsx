@@ -166,7 +166,7 @@ function Old_Driver_Results(prop: DriverProps) : React.JSX.Element{
         </View>
       ) : (
         oldSeasonResults.map( oldSeasonResult => (
-          <View key={oldSeasonResult.season} style={[Styles.raceScheduleContainer, theme.card, { flex: 1, paddingVertical: 7 }]}>
+          <View key={oldSeasonResult.season} style={[ theme.divisor, Styles.raceScheduleContainer, theme.card, { flex: 1, paddingVertical: 7 }]}>
             <View style={{ flex: 5, paddingLeft: 20, flexDirection: 'row' }}>
               <View style={{ flex: 2.5 }}>
                 <Text style={[Styles.sectionDescription, theme.card, { fontSize: 17, fontWeight: '500', flex: 1, textAlignVertical: 'bottom' }]}>Stagione: {oldSeasonResult.season}</Text>
