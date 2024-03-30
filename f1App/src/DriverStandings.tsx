@@ -102,7 +102,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   }, []);
 
   return (
-      <SafeAreaView style={[theme.card, {flex: 11}]}>
+      <SafeAreaView style={[theme.card, {flex: 1}]}>
         <View style={[{backgroundColor: theme.card.backgroundColor, flex:1.7}, ]}>
           <Text style={[Styles.topBarText, theme.title_bar, {flex: 1.5}]}>Driver Standings</Text>
           <View style={[theme.title_bar, {flexDirection: 'row', flex: 1}]}>
