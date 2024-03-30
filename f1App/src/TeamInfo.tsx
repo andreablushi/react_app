@@ -138,7 +138,6 @@ export default function DriverInfo({ route }: any) {
 
     return (
         <SafeAreaView style={[{ flex: 1 }, theme.card]}>
-            <HeaderBar/>
             {loading ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" />

@@ -3,7 +3,7 @@ import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { globalThemeControl } from './App';
 import Styles from "../stylesheets/Styles";
-
+//MOMENTANEAMENTE USELESS
 
 export const HeaderBar: React.FC = () => {
   const navigation = useNavigation();
