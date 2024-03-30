@@ -130,7 +130,7 @@ const Styles = StyleSheet.create({
   },
   separator:{ 
     borderBottomWidth: 4,
-     borderBottomColor: 'white', 
+     borderBottomColor: '#5A5A5A', 
      marginVertical: 10 
   },
   light_separator:{ 

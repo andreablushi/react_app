@@ -1,15 +1,12 @@
 import React, { cloneElement, useEffect, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import {
-  Button,
   Image,
   Pressable,
   SafeAreaView,
   ScrollView,
   StyleSheet,
   Text,
-  TextInput,
-  useColorScheme,
   View,
 } from 'react-native';
 import {
@@ -84,10 +81,7 @@ function Schedule({route}: any): React.JSX.Element {
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
 
-  const switchTheme= () => {
-    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
-    globalThemeControl.changeTheme()
-  }
+  
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
 
@@ -157,7 +151,7 @@ function Schedule({route}: any): React.JSX.Element {
           <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 5}]}>Schedule for {year}</Text>
           <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
             <Image 
-              source={darkMode ? require("../img/magniDark.png") : require("../img/magniLight.png")}
+              source={darkMode ? require("../img/icon/dark/magni.png") : require("../img/icon/light/magni.png")}
               style={[{maxHeight: 30, resizeMode: 'contain', maxWidth: 30, flex: 1, alignSelf: 'center'}]}>  
               </Image>
           </Pressable>

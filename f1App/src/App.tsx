@@ -128,11 +128,8 @@ const App = () => {
           <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
           <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
           <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "fade"}}/>
-
         </Stack.Navigator>
-        
       </NavigationContainer>
-      
       </SafeAreaProvider>
     </View>
   );

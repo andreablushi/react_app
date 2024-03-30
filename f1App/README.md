@@ -1,7 +1,6 @@
 #PROBLEMI ANDREA:
--RISOLUZIONE ICONE NON UNIFORMA
--RISOLUZIONE MACCHINA DA MIGLIORARE
 -BOTTOM.TAB TENTATIVO
+-HOMEPAGE NAVIGATION BAR PROBLEMA COL TEMA CHE NON SI AGGIORNA(UNICO CON STO PROBLEMA)
 
 PROBLEMI DAVIDE:
 -driverInfo di piloti la cui carriera è terminata, ci mettono di più a renderizzare le info: valutare se spostare la fetch api nel main method

@@ -5,7 +5,7 @@ import { Season } from "./Schedule";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Dark, Light } from "../stylesheets/Theme";
 import { Colors } from "react-native/Libraries/NewAppScreen";
-import { height } from "@fortawesome/free-solid-svg-icons/fa0";
+
 
 
 
@@ -99,7 +99,7 @@ function Search(props: Props) {
           
         </TextInput>
         <Pressable onPress={() => closeSearch()} style={[{flex: 1, justifyContent: 'center'}]}>
-          <Image source={darkMode ? require("../img/xmarkdark.png") : require("../img/xmarklight.png")} style={[{maxHeight: 40, maxWidth: 40, resizeMode: 'contain', alignSelf: 'center'}]}></Image>
+          <Image source={darkMode ? require("../img/icon/dark/xmark.png") : require("../img/icon/light/xmark.png")} style={[{maxHeight: 40, maxWidth: 40, resizeMode: 'contain', alignSelf: 'center'}]}></Image>
         </Pressable>
       </View>
       <View style={[{flex: 12, marginHorizontal: 10}]}>

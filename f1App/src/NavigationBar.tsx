@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 import { TouchableOpacity, StyleSheet, Image, Pressable } from 'react-native';
 import { RootStackNavigationProp } from './App';
-import { RootStackParamList } from './App';
+import { globalThemeControl } from './App';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Dark, Light } from '../stylesheets/Theme';
 
 
 //Component which already defines a basic structure for the bottom-bar to export to other components
@@ -13,6 +14,8 @@ export const NavigationBar = ({}) => {
     const navigation = useNavigation<RootStackNavigationProp>();
     //Basic structure of the navigation bar
     const route = useRoute();
+    //Setting the theme
+    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
     
     // Ottieni il nome della pagina attualmente visualizzata
     const currentPage = route.name;
@@ -24,16 +27,16 @@ export const NavigationBar = ({}) => {
     return (
       <SafeAreaView style={styles.navigationBar}>
         <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
-          <Image source={require('../img/icon/light/homepage.png')} style={styles.icon} />
+          <Image source={darkMode ? require('../img/icon/dark/homepage.png') : require('../img/icon/light/homepage.png')} style={styles.icon} />
         </TouchableOpacity>
         <TouchableOpacity onPress={() => navigation.navigate('Schedule')}>
-          <Image source={require('../img/icon/light/schedule.png')} style={styles.icon} />
+          <Image source={darkMode ? require('../img/icon/dark/schedule.png') : require('../img/icon/light/schedule.png')} style={styles.icon} />
         </TouchableOpacity>
         <Pressable onPress={() => navigation.navigate('Drivers')}>
-          <Image source={require('../img/icon/light/drivers.png')} style={styles.icon} />
+          <Image source={darkMode ? require('../img/icon/dark/drivers.png') : require('../img/icon/light/drivers.png')} style={styles.icon} />
         </Pressable>
         <Pressable onPress={() => navigation.navigate('Teams')}>
-          <Image source={require('../img/icon/light/teams.png')} style={styles.icon} />
+          <Image source={darkMode ? require('../img/icon/dark/teams.png') : require('../img/icon/light/teams.png')} style={styles.icon} />
         </Pressable>
       </SafeAreaView>
     );

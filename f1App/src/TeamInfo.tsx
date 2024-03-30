@@ -145,7 +145,7 @@ export default function DriverInfo({ route }: any) {
                 <ScrollView>
                     <TeamComponent darkMode={darkMode} team={teamData} />
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 500, height: 100 }}/>
+                    <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 302, height: 78 }}/>
                     </View>
                     <View style={Styles.separator} />
                     <Text style={[theme.card, { fontSize: 22, fontWeight: '800' }]}> Drivers: </Text>

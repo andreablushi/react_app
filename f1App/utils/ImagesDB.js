@@ -270,6 +270,10 @@ const ImagesDB =
       "src": require("../img/countries/uk.png"),
     },
     {
+      "nation": "switzerland",
+      "src": require("../img/countries/switzerland.png"),
+    },
+    {
       "nation": "usa",
       "src": require("../img/countries/usa.png"),
     },
