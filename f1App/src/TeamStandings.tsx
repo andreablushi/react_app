@@ -44,7 +44,7 @@ function TeamElement(props: Props): React.JSX.Element {
 
   //returns the basic structure for the team element
   return (
-    <View style={[Styles.teamResultWrapper, theme.card]}>
+    <View style={[Styles.teamResultWrapper, theme.card, theme.divisor]}>
     <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
     <Image style={[Styles.teamPictureResult, ]} source={imageSource.getTeamBadge(String(team.constructorId))}></Image>
     <View style={[Styles.teamResult, theme.card]}>
