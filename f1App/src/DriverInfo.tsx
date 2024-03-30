@@ -103,7 +103,7 @@ function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
 
   //Creating the element
   return (
-    <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
+    <View style={[theme.divisor, Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}]}>
       <View style={[{flex: 1}, theme.card]}>
         <Image source={imageSource.getFlag(circuit.Location.country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
       </View>
@@ -134,7 +134,7 @@ function Old_Driver_Results(prop: DriverProps) : React.JSX.Element{
   const driver_id = prop.DriverInfo.driverId;
 
   //Hooks used for fetching the data  
-  const [seasonResults, setSeasonResults] = useState<SeasonResults[]>([]);
+  const [oldSeasonResults, setSeasonResults] = useState<SeasonResults[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
 
   const apiUrl = "https://ergast.com/api/f1/drivers/"+driver_id+"/driverStandings.json"
@@ -143,7 +143,7 @@ function Old_Driver_Results(prop: DriverProps) : React.JSX.Element{
      try {
       const response = await fetch(apiUrl);
       const data = await response.json();
-      setSeasonResults(data.MRData.StandingsTable.StandingsLists);
+      setSeasonResults(data.MRData.StandingsTable.StandingsLists.reverse());
     } catch (error){
       console.error(error);
     } finally {
@@ -158,23 +158,32 @@ function Old_Driver_Results(prop: DriverProps) : React.JSX.Element{
   //Creating the element
   return (
     <View>
-      {seasonResults.map( seasonResult => (
-        <View key={seasonResult.season} style={[Styles.raceScheduleContainer, theme.card, { flex: 1, paddingVertical: 7 }]}>
-          <View style={{ flex: 5, paddingLeft: 20, flexDirection: 'row' }}>
-            <View style={{ flex: 2.5 }}>
-              <Text style={[Styles.sectionDescription, theme.card, { fontSize: 17, fontWeight: '500', flex: 1, textAlignVertical: 'bottom' }]}>Stagione: {seasonResult.season}</Text>
-              <Text style={[Styles.sectionDescription, theme.card, { color: theme.title_bar.color }]}>Vittorie: {seasonResult.DriverStandings[0].wins}</Text>
-              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 1 }]}>Team: {seasonResult.DriverStandings[0].Constructors[0].name}</Text>
-            </View>
-            <View style={{ flex: 1, flexDirection: 'row' }}>
-              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 4, textAlignVertical: 'center' }]}>Posizione: </Text>
-              <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'center', flex: 1, textAlignVertical: 'center' }]}>{seasonResult.DriverStandings[0].position}</Text>
+      {loading ? (
+        // Loading icon
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <ActivityIndicator size={"large"}/>
+          <Text style={Styles.loadingText}>Loading old season data...</Text>
+        </View>
+      ) : (
+        oldSeasonResults.map( oldSeasonResult => (
+          <View key={oldSeasonResult.season} style={[Styles.raceScheduleContainer, theme.card, { flex: 1, paddingVertical: 7 }]}>
+            <View style={{ flex: 5, paddingLeft: 20, flexDirection: 'row' }}>
+              <View style={{ flex: 2.5 }}>
+                <Text style={[Styles.sectionDescription, theme.card, { fontSize: 17, fontWeight: '500', flex: 1, textAlignVertical: 'bottom' }]}>Stagione: {oldSeasonResult.season}</Text>
+                <Text style={[Styles.sectionDescription, theme.card, { color: theme.title_bar.color }]}>Vittorie: {oldSeasonResult.DriverStandings[0].wins}</Text>
+                <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 1 }]}>Team: {oldSeasonResult.DriverStandings[0].Constructors[0].name}</Text>
+              </View>
+              <View style={{ flex: 1, flexDirection: 'row' }}>
+                <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'left', flex: 4, textAlignVertical: 'center' }]}>Posizione: </Text>
+                <Text style={[Styles.sectionDescription, theme.card, { textAlign: 'center', flex: 1, textAlignVertical: 'center' }]}>{oldSeasonResult.DriverStandings[0].position}</Text>
+              </View>
             </View>
           </View>
-        </View>
-      ))}
+        ))
+      )}
     </View>
   );
+  
 }
 
 /*Return an element containing basic information of the driver, along with their image*/
@@ -185,7 +194,7 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     const driver = prop.DriverInfo
     
     return (
-        <View style={[{flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10, }, theme.title_bar ]}>
+        <View style={[ theme.divisor, {flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10,}, theme.title_bar]}>
             <View style={[theme.title_bar, {flex: 3}]}>
               <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
               <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
