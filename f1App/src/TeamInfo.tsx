@@ -11,6 +11,8 @@ import { HomePageNavigationProp } from "./HomePage";
 
 // Helper functions and constants imports
 import { globalThemeControl, imageSource } from './App';
+import { HeaderBar } from './HeaderBar'
+import { NavigationBar } from './NavigationBar';
 import { convertNationalityToNation } from '../utils/convertNationalityToNation';
 
 // Define types for API response data
@@ -136,6 +138,7 @@ export default function DriverInfo({ route }: any) {
 
     return (
         <SafeAreaView style={[{ flex: 1 }, theme.card]}>
+            <HeaderBar/>
             {loading ? (
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
                     <ActivityIndicator size="large" />
@@ -152,6 +155,7 @@ export default function DriverInfo({ route }: any) {
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
             )}
+            <NavigationBar/>
         </SafeAreaView> 
     );
 }

@@ -140,7 +140,23 @@ const Styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-  }
+  },
+  header_arrow:{
+    maxHeight: 25,
+    maxWidth: 25, 
+    resizeMode: 'contain', 
+    alignSelf: 'center'
+  },
+  header_container: {
+    backgroundColor: 'red',
+    height: 50,
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 10,
+  },
+  header_backButton: {
+    marginRight: 10,
+  },
   
 });
 

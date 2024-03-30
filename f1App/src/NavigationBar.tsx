@@ -16,14 +16,11 @@ export const NavigationBar = ({}) => {
     const route = useRoute();
     //Setting the theme
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-    
-    // Ottieni il nome della pagina attualmente visualizzata
-    const currentPage = route.name;
-
-    if (currentPage==='StartingPage') {
-        // Se la pagina attuale è la pagina iniziale, non renderizzare la NavigationBar
-        return null;
+    const switchTheme= () => {
+      globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+      globalThemeControl.changeTheme()
     }
+    const theme = darkMode ? Dark : Light;
     return (
       <SafeAreaView style={styles.navigationBar}>
         <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>
