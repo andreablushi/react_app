@@ -126,7 +126,7 @@ const Styles = StyleSheet.create({
     textShadowColor: 'gray',
     textShadowRadius: 5,
     textShadowOffset: {height: 1, width: 1},
-    paddingTop: 20
+    paddingVertical: 20
   },
   separator:{ 
     borderBottomWidth: 4,
