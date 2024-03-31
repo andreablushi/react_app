@@ -10,6 +10,7 @@ import { Dark, Light } from '../stylesheets/Theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl, imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
+import { Colors } from 'react-native/Libraries/NewAppScreen';
 
 
 
@@ -50,7 +51,8 @@ type TeamProp = {
 function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
-  const textColor = !props.darkMode ? 'black' : 'white'
+  const boldTextColor = !props.darkMode ? 'black' : 'white';
+  const normalTextColor = props.darkMode ? '#bfbfbf': Colors.darker
 
   const driver = props.driver_standing.Driver
   const standing = props.driver_standing
@@ -63,9 +65,9 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
           <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
         </View>
         <View style = {[{flex: 1}, theme.horizontalList_element]}>
-          <Text style = {{fontSize: 15, fontWeight: '400'}}>{driver.givenName}</Text>
-          <Text style = {{fontSize: 18, fontWeight: '700', color: textColor}}>{driver.familyName}</Text>
-          <Text style = {{fontSize: 15, fontWeight: '400'}}>{standing.Constructors[0].name}</Text>
+          <Text style = {{fontSize: 15, fontWeight: '400', color: normalTextColor}}>{driver.givenName}</Text>
+          <Text style = {{fontSize: 18, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
+          <Text style = {{fontSize: 15, fontWeight: '400', color: normalTextColor}}>{standing.Constructors[0].name}</Text>
         </View>
       </View>
       <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
