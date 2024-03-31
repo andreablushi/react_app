@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-import { globalThemeControl, imageSource } from './App';
+import { globalThemeControl, imageSource, queryClient } from './App';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
@@ -68,6 +68,14 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   const [constructorStandings, setConstructorStandings] = useState<teamStandings[]>([]);
   //Hook for the loading state, setted to true
   const [loading, setLoading] = useState(true);
+  
+  useEffect(() => {
+    /*Data Caching*/
+    
+    const driver_Cached_Data : any = queryClient.getQueryData(['constructorStandings']);
+    
+    setConstructorStandings(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].ContructorStandings);
+  }, []);
 
   //Api url, fetching the constructorStanding from the current season
   const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";

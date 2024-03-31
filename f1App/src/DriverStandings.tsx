@@ -79,7 +79,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   //This function will be run only once, during the mount of the page
   useEffect(() => {
     /*Tentativo data Caching*/
-    const driver_Cached_Data = queryClient.getQueryData(['driverStandings']);
+    const driver_Cached_Data : any = queryClient.getQueryData(['driverStandings']);
     setDriverStanding(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
   }, []);
 

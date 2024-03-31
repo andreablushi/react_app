@@ -80,7 +80,9 @@ const HomePage = () => {
 
     useEffect(() => {
       /*Tentativo data Caching*/
-      const driver_Cached_Data = queryClient.getQueryData(['driverStandings']);
+      
+      const driver_Cached_Data : any = queryClient.getQueryData(['driverStandings']);
+      
       setDriverStanding(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
     }, []);
   //-------------------------------------------------------------------------------
