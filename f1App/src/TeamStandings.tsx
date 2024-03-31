@@ -69,14 +69,6 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   //Hook for the loading state, setted to true
   const [loading, setLoading] = useState(true);
   
-  useEffect(() => {
-    /*Data Caching*/
-    
-    const cached_Data : any = queryClient.getQueryData(['constructorStandings']);
-    
-    setConstructorStandings(cached_Data.MRData.StandingsTable.StandingsLists[0].ContructorStandings);
-  }, []);
-
   //Api url, fetching the constructorStanding from the current season
   const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
 
