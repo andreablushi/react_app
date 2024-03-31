@@ -63,9 +63,9 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
           <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
         </View>
         <View style = {[{flex: 1}, theme.horizontalList_element]}>
-          <Text style = {{fontSize: 15, fontWeight: '400'}}>{driver.givenName}</Text>
+          <Text style = {theme.minortext}>{driver.givenName}</Text>
           <Text style = {{fontSize: 18, fontWeight: '700', color: textColor}}>{driver.familyName}</Text>
-          <Text style = {{fontSize: 15, fontWeight: '400'}}>{standing.Constructors[0].name}</Text>
+          <Text style = {theme.minortext}>{standing.Constructors[0].name}</Text>
         </View>
       </View>
       <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>

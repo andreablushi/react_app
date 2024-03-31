@@ -22,6 +22,11 @@ export const Dark = StyleSheet.create({
     backgroundColor: '#1c1c1c',
     color: '#d9d9d9',
   },
+  minortext:{
+    fontSize: 15, 
+    fontWeight: '400',
+    color: '#bfbfbf'
+  }
 })
 
 export const Light = StyleSheet.create({
@@ -43,5 +48,10 @@ export const Light = StyleSheet.create({
     color: Colors.dark,
     borderColor: '#eeeeee',
     backgroundColor: '#e6e6e6'
+  },
+  minortext:{
+    fontSize: 15, 
+    fontWeight: '400',
+    color: Colors.darker,
   }
 })
