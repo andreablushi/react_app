@@ -157,7 +157,17 @@ const Styles = StyleSheet.create({
   header_backButton: {
     marginRight: 10,
   },
-  
+  horizontalListElement: {
+    flex: 1,
+    flexDirection: 'row',
+    margin: 12,
+    padding: 8,
+    paddingBottom: 0,
+    borderWidth: 2,
+    borderColor: '#1c1c1c',
+    borderRadius: 15,
+    backgroundColor: '#1c1c1c'
+  }
 });
 
 export default Styles;

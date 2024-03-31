@@ -41,14 +41,20 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   const driver = props.driver_standing.Driver
   const standing = props.driver_standing
   return(
-    <View style = {[Styles.driverResultWrapper, {flex: 1, flexDirection: 'column'}]}>
-      <Text style = {{textAlign: 'left', fontSize: 20}}> {driver.givenName} {driver.familyName}</Text>
-      <Text>Points: {standing.points}</Text>
-      
-      <View style ={{flex: 1, flexDirection: 'row'}}>
-        <Text style = {{textAlignVertical: 'bottom', flex: 1}}>{standing.position}</Text>
-        <Image source={imageSource.getDriverSide(driver.familyName)} style = {{height: 90, width: 90, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
+    <View style = {Styles.horizontalListElement}>
+      {/* View containing position, name and team*/}
+      <View style = {{flexDirection:'column'}}>
+        <View style = {{flex: 1}}>
+          <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
+        </View>
+        
+        <View style = {{flex: 1}}>
+          <Text style = {{fontSize: 15, fontWeight: '400'}}>{driver.givenName}</Text>
+          <Text style = {{fontSize: 18, fontWeight: '700', color: 'white'}}>{driver.familyName}</Text>
+          <Text style = {{fontSize: 15, fontWeight: '400'}}>{standing.Constructors[0].name}</Text>
+        </View>
       </View>
+      <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
     </View>
   )
 };
@@ -88,7 +94,7 @@ const HomePage = () => {
   //-------------------------------------------------------------------------------
   return (  
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
-      <ScrollView horizontal={true}>
+      <ScrollView style = {{flex: 1}} horizontal={true}>
         {driver_standings_data.map( 
           driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
         )}
