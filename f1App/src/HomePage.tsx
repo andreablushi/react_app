@@ -50,20 +50,21 @@ type TeamProp = {
 function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
-  
+  const textColor = !props.darkMode ? 'black' : 'white'
+
   const driver = props.driver_standing.Driver
   const standing = props.driver_standing
+  
   return(
-    <View style = {Styles.horizontalListElement}>
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
       {/* View containing position, name and team*/}
       <View style = {{flexDirection:'column'}}>
         <View style = {{flex: 1}}>
           <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
         </View>
-        
-        <View style = {{flex: 1}}>
-          <Text style = {{ fontSize: 15, fontWeight: '400'}}>{driver.givenName}</Text>
-          <Text style = {{fontSize: 18, fontWeight: '700', color: 'white'}}>{driver.familyName}</Text>
+        <View style = {[{flex: 1}, theme.horizontalList_element]}>
+          <Text style = {{fontSize: 15, fontWeight: '400'}}>{driver.givenName}</Text>
+          <Text style = {{fontSize: 18, fontWeight: '700', color: textColor}}>{driver.familyName}</Text>
           <Text style = {{fontSize: 15, fontWeight: '400'}}>{standing.Constructors[0].name}</Text>
         </View>
       </View>
@@ -89,7 +90,7 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
           <Text style = {{fontSize: 13, fontWeight: '400'}}>Wins:{standing.wins}</Text>
         </View>
       </View>
-      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 0.5, height: 76, width: 76, resizeMode: 'contain', alignSelf: 'center'}}></Image>
+      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 0.5, height: 76, width: 76, resizeMode: 'contain', alignSelf: 'top'}}></Image>
     </View>
   )
 };
@@ -155,7 +156,7 @@ const HomePage = () => {
         )}
       </ScrollView>
       
-      <View style={[styles.container, theme.card]}>
+      <View style={[styles.container, theme.card, {flex: 2}]}>
           <Text style={[styles.title, theme.card]}>Welcome to the Homepage</Text>
           <Button title="Go to Schedule" onPress={goToSchedule} /> 
           <Button title="Go to Drivers" onPress={goToDrivers} />

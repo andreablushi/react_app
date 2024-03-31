@@ -17,6 +17,11 @@ export const Dark = StyleSheet.create({
     borderBottomWidth: 1, // Add border at the bottom
     borderBottomColor: '#191919', // Color of the bottom border  
   },
+  horizontalList_element:{
+    borderColor: '#1c1c1c',
+    backgroundColor: '#1c1c1c',
+    color: '#d9d9d9',
+  },
 })
 
 export const Light = StyleSheet.create({
@@ -33,5 +38,10 @@ export const Light = StyleSheet.create({
     borderTopColor: '#e6e6e6', 
     borderBottomWidth: 1, 
     borderBottomColor: '#e6e6e6',
+  },
+  horizontalList_element:{
+    color: Colors.dark,
+    borderColor: '#eeeeee',
+    backgroundColor: '#e6e6e6'
   }
 })
