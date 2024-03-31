@@ -90,7 +90,7 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
           <Text style = {{fontSize: 13, fontWeight: '400'}}>Wins:{standing.wins}</Text>
         </View>
       </View>
-      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 0.5, height: 76, width: 76, resizeMode: 'contain', alignSelf: 'top'}}></Image>
+      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 0.5, height: 76, width: 76, resizeMode: 'contain', }}></Image>
     </View>
   )
 };
