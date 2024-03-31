@@ -76,22 +76,24 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
 function Team_Standings_Element (props: TeamProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
-  
+  const boldTextColor = !props.darkMode ? 'black' : 'white';
+
   const team = props.team_standing.Constructor
   const standing = props.team_standing
   return(
-    <View style = {Styles.horizontalListElement}>
-      {/* View containing position, name and team*/}
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
       <View style = {{flexDirection:'column'}}>
+        
         <View style = {{flex: 1}}>
           <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
         </View>
+        
         <View style = {{flex: 1}}>
-          <Text style = {{ fontSize: 20, fontWeight: '800'}}>{team.name}</Text>
-          <Text style = {{fontSize: 13, fontWeight: '400'}}>Wins:{standing.wins}</Text>
+          <Text style = {{ fontSize: 20, fontWeight: '800', color: boldTextColor}}>{team.name}</Text>
+          <Text style = {theme.minortext}>Wins:{standing.wins}</Text>
         </View>
       </View>
-      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 0.5, height: 76, width: 76, resizeMode: 'contain', }}></Image>
+      <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 1, height: 76, width: 76, resizeMode: 'contain'}}></Image>
     </View>
   )
 };
@@ -142,15 +144,12 @@ const HomePage = () => {
   return (  
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
       
-        <ScrollView style = {{flex: 1}} horizontal={true}>
-        {driver_standings_data.map( 
-          driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
-        )}
-        </ScrollView>
-      
-        <View style={Styles.separator} />
-
-
+      <ScrollView style = {{flex: 1}} horizontal={true}>
+      {driver_standings_data.map( 
+        driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
+      )}
+      </ScrollView>
+    
       <ScrollView style = {{flex: 1}} horizontal={true}>
         {team_standings_data.map( 
           team_standings_data => <Team_Standings_Element key = {team_standings_data.Constructor.constructorId} darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
