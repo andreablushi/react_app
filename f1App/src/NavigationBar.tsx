@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useNavigation, useRoute} from '@react-navigation/native';
+import {useNavigation} from '@react-navigation/native';
 
 import { TouchableOpacity, StyleSheet, Image, Pressable } from 'react-native';
 import { RootStackNavigationProp } from './App';
@@ -13,14 +13,9 @@ export const NavigationBar = ({}) => {
     //Calls the navigation with the prop defined in the App.tsx
     const navigation = useNavigation<RootStackNavigationProp>();
     //Basic structure of the navigation bar
-    const route = useRoute();
     //Setting the theme
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-    const switchTheme= () => {
-      globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
-      globalThemeControl.changeTheme()
-    }
-    const theme = darkMode ? Dark : Light;
+
     return (
       <SafeAreaView style={styles.navigationBar}>
         <TouchableOpacity onPress={() => navigation.navigate('HomePage')}>

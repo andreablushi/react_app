@@ -72,9 +72,9 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   useEffect(() => {
     /*Data Caching*/
     
-    const driver_Cached_Data : any = queryClient.getQueryData(['constructorStandings']);
+    const cached_Data : any = queryClient.getQueryData(['constructorStandings']);
     
-    setConstructorStandings(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].ContructorStandings);
+    setConstructorStandings(cached_Data.MRData.StandingsTable.StandingsLists[0].ContructorStandings);
   }, []);
 
   //Api url, fetching the constructorStanding from the current season
