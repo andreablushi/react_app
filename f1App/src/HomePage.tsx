@@ -52,8 +52,6 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
   const boldTextColor = !props.darkMode ? 'black' : 'white';
-  const normalTextColor = props.darkMode ? '#bfbfbf': Colors.darker
-
   const driver = props.driver_standing.Driver
   const standing = props.driver_standing
   
@@ -64,10 +62,11 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
         <View style = {{flex: 1}}>
           <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
         </View>
-        <View style = {[{flex: 1}, theme.horizontalList_element]}>
-          <Text style = {{fontSize: 15, fontWeight: '400', color: normalTextColor}}>{driver.givenName}</Text>
+        <View style = {[{flex: 1}, theme.horizontalList_element]}>          
+          <Text style = {theme.minortext}>{driver.givenName}</Text>
           <Text style = {{fontSize: 18, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
-          <Text style = {{fontSize: 15, fontWeight: '400', color: normalTextColor}}>{standing.Constructors[0].name}</Text>
+          <Text style = {theme.minortext}>{standing.Constructors[0].name}</Text>
+          
         </View>
       </View>
       <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
