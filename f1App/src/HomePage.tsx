@@ -41,11 +41,7 @@ const HomePage = () => {
     navigation.navigate('Drivers');
   };
 
-  /*Tentativo data Caching*/
-  const queryClient = useQueryClient();
-  console.log(queryClient.getQueryData(['schedule']));
-  return (
-  
+  return (  
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
       <View style={[styles.container, theme.card]}>
           <Text style={[styles.title, theme.card]}>Welcome to the Homepage</Text>

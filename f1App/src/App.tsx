@@ -28,8 +28,10 @@ const Stack = createNativeStackNavigator();
 
 //------ Defining Caching methods --------------------------------
 
-const queryClient = new QueryClient()
+//Defyning a queryClient element. Each page using cached api calls should import this component
+export const queryClient = new QueryClient()
 
+/*The app component should be wrapped inside the queryClientProvider component*/
 export default function CachedApp() {
   return (
     <QueryClientProvider client={queryClient}>
@@ -38,7 +40,11 @@ export default function CachedApp() {
   )
 }
 
-async function fetchData(apiUrl: string) {
+/*Defining a default method to perform the fetching of the data
+  PARAMETERS: an apiUrl, passed as a string
+  RETURNS the data fetched from the apiUrl
+*/ 
+export async function fetchData(apiUrl: string) {
   try{
     const response = await axios.get(apiUrl);
     return response.data;
@@ -47,7 +53,6 @@ async function fetchData(apiUrl: string) {
     console.log(error)
   }
 }
-
 //----------------------------------------------------------------
 
 
@@ -152,6 +157,11 @@ const App = () => {
   const scheduleUrl =  "https://ergast.com/api/f1/2024.json";
   const driverStandingsUrl = "http://ergast.com/api/f1/current/driverStandings.json";
   const teamStandingsUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
+  
+  /* Performing the three main queries used in the application. The data is not saved locally, but cached by the useQueries function
+    -each api call result is saved using a QUERY_KEY (a unique array)
+    -cached data, can be re-used using the function: queryClient.getQueryData(QUERY_KEY)
+  */
   const results = useQueries({
     queries: [
       { queryKey: ['schedule'], queryFn: () => fetchData(scheduleUrl)},
@@ -159,7 +169,11 @@ const App = () => {
       { queryKey: ['teamStandings'], queryFn: () => fetchData(teamStandingsUrl)},
     ],
   })
-  
+
+  const isLoading = results.some(queryResult => queryResult.isLoading);
+  if(!isLoading){
+    console.log("done")
+  }
   //-----------------------------------------------------------------------------
   return (
       <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>

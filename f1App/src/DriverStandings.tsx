@@ -10,8 +10,7 @@ import {
   Text,
   View,
 } from 'react-native';
-
-import { globalThemeControl, imageSource } from './App';
+import { globalThemeControl, imageSource, queryClient} from './App';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
@@ -76,30 +75,14 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
  
   //Hook for the fetch of the data
   const [driver_standings_data, setDriverStanding] = useState<driverStandings[]>([]);
-  //Hook for the loading state, setted to true
-  const [loading, setLoading] = useState(true);
 
-  //Api url, fetching the driverStanding from the current season
-  const apiUrl = "http://ergast.com/api/f1/current/driverStandings.json";
-
-  //Fetching the drivers data from the api
-  const getData =  async() => {
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      setDriverStanding(data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
-      console.log("retrieving data");
-    } catch (error){
-      console.error(error);
-    } finally {
-      //Only once having successufuly completed the fetch instruction, it will set the loading state to false
-      setLoading(false);
-    }
-  };
-  //Fetching the data once the page gets loaded
+  //This function will be run only once, during the mount of the page
   useEffect(() => {
-    getData();
+    /*Tentativo data Caching*/
+    const driver_Cached_Data = queryClient.getQueryData(['driverStandings']);
+    setDriverStanding(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
   }, []);
+
 
   return (
       <SafeAreaView style={[theme.card, {flex: 1}]}>
@@ -127,4 +110,5 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
       </SafeAreaView>
   );
 }
+
 export default Driver_standings;
