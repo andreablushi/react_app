@@ -145,13 +145,13 @@ const HomePage = () => {
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
       
       <ScrollView style = {{flex: 1}} horizontal={true}>
-      {driver_standings_data.map( 
+      {driver_standings_data.slice(0, 5).map( 
         driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
       )}
       </ScrollView>
     
       <ScrollView style = {{flex: 1}} horizontal={true}>
-        {team_standings_data.map( 
+        {team_standings_data.slice(0,3).map( 
           team_standings_data => <Team_Standings_Element key = {team_standings_data.Constructor.constructorId} darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
         )}
       </ScrollView>
