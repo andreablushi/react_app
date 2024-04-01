@@ -13,9 +13,9 @@ import {
 import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
-import { globalThemeControl, imageSource } from './App';
+import { globalThemeControl, imageSource, queryClient } from './App';
 import { NavigationBar } from './NavigationBar';
-import axios, { Axios } from 'axios';
+import axios, { Axios, AxiosResponse } from 'axios';
 import Search from './Search';
 
 export type Race = {
@@ -38,6 +38,20 @@ export type Season = {
 type Props = {
   darkMode: boolean
   race: Race
+}
+
+export class ScheduleFetch{
+  static seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
+
+  public static async getSeasons() {
+  try {
+      console.log("retrieving seasons")
+      const response = await axios.get(ScheduleFetch.seasonUrl);
+      return response.data;  
+    } catch(error) {
+      console.error(error);
+    }
+  }  
 }
 
 
@@ -96,33 +110,23 @@ function Schedule({route}: any): React.JSX.Element {
   const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
   
   // data fetching
-  const getRace =  async() => {
+  const getRace = async () => {
     try {
+      console.log("retrieving races");
       const response= await axios.get(apiUrl);
       // const data = await response.json();
       setRace(response.data.MRData.RaceTable.Races);
-      console.log("retrieving races");
     } catch (error){
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  const getSeasons = async() => {
-    try {
-      console.log("retrieving seasons")
-      const response = await axios.get(seasonUrl);
-      // const data = await response.json();
-      setSeason(response.data.MRData.SeasonTable.Seasons.reverse());
-    } catch(error) {
       console.error(error);
     }
   }
+  
+  
 
   useEffect(() => {
     // getRace();
-    getSeasons();
+    const response: any = queryClient.getQueryData(['seasons']);
+    setSeason(response.MRData.SeasonTable.Seasons.reverse());
   }, [])
 
   //------ valid year check --------------------
@@ -137,7 +141,7 @@ function Schedule({route}: any): React.JSX.Element {
   //--------------------------------------------
 
   useEffect(() => {
-    getRace()
+    getRace();
   }, [year])
 
   

@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, ActivityIndicator} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, ActivityIndicator, AppState} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
 import { Dark, Light } from '../stylesheets/Theme';
@@ -16,7 +16,7 @@ import axios from 'axios';
 
 //Our Component
 import HomePage from './HomePage';
-import Schedule, { Race } from './Schedule';
+import Schedule, { Race, ScheduleFetch } from './Schedule';
 import Drivers from './DriverStandings';
 import DriverInfo from './DriverInfo';
 import TeamInfo from './TeamInfo';
@@ -144,8 +144,8 @@ const App = () => {
       setDarkMode(globalThemeControl.getTheme())
     }, 1000);
     return () => clearInterval(refresh)
-  }, [globalThemeControl.theme])
- 
+  }, [])
+
   const switchTheme= () => {
     globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
     globalThemeControl.changeTheme()
@@ -167,6 +167,8 @@ const App = () => {
       { queryKey: ['schedule'], queryFn: () => fetchData(scheduleUrl)},
       { queryKey: ['driverStandings'], queryFn: () => fetchData(driverStandingsUrl)},
       { queryKey: ['teamStandings'], queryFn: () => fetchData(teamStandingsUrl)},
+      { queryKey: ['seasons'], queryFn: ScheduleFetch.getSeasons},
+      { queryKey: ['raceSchedule'], queryFn: ScheduleFetch.getRace}
     ],
   })
 

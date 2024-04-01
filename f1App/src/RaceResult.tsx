@@ -8,6 +8,7 @@ import { useNavigation } from "@react-navigation/native";
 import { HomePageNavigationProp } from "./HomePage";
 import { globalThemeControl, imageSource } from "./App";
 import { NavigationBar } from "./NavigationBar";
+import axios from "axios";
 
 type Result = {
   number: number // driver number
@@ -74,10 +75,8 @@ export default function RaceResult ({route}: any) {
   const getResults =  async() => {
     try {
       console.log("retrieving results");
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      let filteredArrayValues = data.MRData.RaceTable.Races[0];
-      filteredArrayValues == undefined ? setFailed(true) : setResults(filteredArrayValues.Results);
+      const response = await axios.get(apiUrl);
+      setResults(response.data.MRData.RaceTable.Races[0]?.Results);
     } catch (error){
       console.error(error);
     } finally {
@@ -105,9 +104,10 @@ export default function RaceResult ({route}: any) {
       </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
         <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
-        {results.map( result => <Pressable key={result.position} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
+        {results != undefined ? results.map( result => <Pressable key={result.position} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
             <Driver result={result} darkMode={darkMode}></Driver>
-          </Pressable>)}
+          </Pressable>) : <Text style={Styles.notFoundText}>Informations about this race{"\n"} are not available</Text>}
+        
         </ScrollView>
       </View> 
       <NavigationBar/>
