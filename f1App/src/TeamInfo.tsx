@@ -11,7 +11,6 @@ import { HomePageNavigationProp } from "./HomePage";
 
 // Helper functions and constants imports
 import { globalThemeControl, imageSource } from './App';
-import { HeaderBar } from './HeaderBar'
 import { NavigationBar } from './NavigationBar';
 import { convertNationalityToNation } from '../utils/convertNationalityToNation';
 
@@ -48,22 +47,19 @@ function TeamComponent(prop: TeamProps): React.ReactElement {
     const teamData = prop.team[0];
 
     return (
-        <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.title_bar]}>
-            <View style={[theme.title_bar, { flex: 3 }]}>
-                <Text style={[theme.title_bar, { fontSize: 25, fontWeight: '800', paddingTop: 7, paddingBottom:7 }]}>{teamData.name}</Text>
-                <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                  <Text style={[theme.title_bar, { fontSize: 18, fontWeight: '500', paddingRight:10 }]}>{teamData.nationality}</Text>
-                  <Image source={imageSource.getFlag(convertNationalityToNation(teamData.nationality))} style={{ resizeMode: 'contain', width: 50, height: 50 }} />
+        <View style = {[{flexDirection: 'column', alignItems: 'center'}, theme.title_bar]}>
+            <View style={{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }}>
+                <View style = {{flexDirection: 'column', flex: 3}}>
+                    <Text style={[theme.title_bar, { fontSize: 30, fontWeight: '800', paddingTop: 7, paddingBottom:7 }]}>{teamData.name}</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+                        <Text style={[theme.title_bar, { fontSize: 18, fontWeight: '500', paddingRight:10 }]}>{teamData.nationality}</Text>
+                        <Image source={imageSource.getFlag(convertNationalityToNation(teamData.nationality))} style={{ resizeMode: 'contain', width: 50, height: 50 }} />
+                    </View>
                 </View>
-            </View>
-            
-
-            <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                 <Image source={imageSource.getTeamBadge(teamData.constructorId)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
             </View>
+        <Image source={imageSource.getTeamCar(teamData.constructorId)} style={{ resizeMode: 'contain', width: 216, height: 64, marginTop: 20}}/>
         </View>
-        
-      
     );
 }
 
@@ -78,19 +74,19 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
         <View>
             {drivers.map((driver) => (
                 <Pressable  key={driver.driverId} onPress={() =>  navigation.navigate("DriverInfo", {driver: driver.driverId})}>
-                    <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.card]}>
-                        <View style={[theme.card, { flex: 3 }]}>
-                            <Text style={[theme.card, { fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
-                            <Text style={[theme.card, { fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
-                            <Text style={[theme.card, { fontSize: 16 }]}>{driver.permanentNumber}</Text>
-                            <Text style={[theme.card, { fontSize: 15 }]}>{driver.nationality}</Text>
-                            <Text style={[theme.card]}>{driver.dateOfBirth}</Text>
+                    <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, Styles.horizontalListElement, theme.horizontalList_element]}>
+                        <View style={{ flex: 3, paddingBottom: 10}}>
+                            <Text style={[theme.minortext, {fontSize: 20, fontWeight: '400' }]}>{driver.givenName}</Text>
+                            <Text style={[theme.minortext, {fontSize: 24, fontWeight: '800' }]}>{driver.familyName}</Text>
+                            <Text style={[theme.minortext, {fontSize: 16 }]}>{driver.permanentNumber}</Text>
+                            <Text style={[theme.minortext, {fontSize: 15 }]}>{driver.nationality}</Text>
+                            <Text style = {theme.minortext}>{driver.dateOfBirth}</Text>
                         </View>
                         <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
                             <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
                         </View>
                     </View>
-                    <View style={Styles.light_separator} />
+                    {/* <View style={Styles.light_separator} /> */}
                 </Pressable>
                 
             ))}
@@ -147,11 +143,7 @@ export default function DriverInfo({ route }: any) {
             ) : (
                 <ScrollView>
                     <TeamComponent darkMode={darkMode} team={teamData} />
-                    <View style={[{ flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10 }, theme.title_bar]}>
-                    <Image source={imageSource.getTeamCar(teamId)} style={{ resizeMode: 'contain', width: 302, height: 78 }}/>
-                    </View>
-                    <View style={Styles.separator} />
-                    <Text style={[theme.card, { fontSize: 22, fontWeight: '800' }]}> Drivers: </Text>
+                    <Text style={[theme.card, { fontSize: 22, fontWeight: '800', paddingTop: 10 }]}> Drivers: </Text>
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
             )}

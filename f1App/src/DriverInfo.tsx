@@ -195,15 +195,15 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     
     return (
         <View style={[ theme.divisor, {flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10,}, theme.title_bar]}>
-            <View style={[theme.title_bar, {flex: 3}]}>
-              <Text style={[theme.title_bar, {fontSize: 26, fontWeight: '400'}]}>{driver.givenName}</Text>
-              <Text style={[theme.title_bar, {fontSize: 30, fontWeight: '800'}]}>{driver.familyName}</Text>
-              <Text style={[theme.title_bar, {fontSize: 22}]}>{driver.permanentNumber}</Text>
-              <Text style={[theme.title_bar, {fontSize: 16}]}>{driver.nationality}</Text>
-              <Text style={[theme.title_bar, {}]}>{driver.dateOfBirth}</Text>
+            <View style={{flex: 3}}>
+              <Text style={{fontSize: 26, fontWeight: '400'}}>{driver.givenName}</Text>
+              <Text style={{fontSize: 30, fontWeight: '800'}}>{driver.familyName}</Text>
+              <Text style={{fontSize: 22}}>{driver.permanentNumber}</Text>
+              <Text style={{fontSize: 16}}>{driver.nationality}</Text>
+              <Text>{driver.dateOfBirth}</Text>
             </View>
             <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
-              <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 160, height: 160}}></Image>
+              <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 140, height: 140}}></Image>
             </View>
         </View>
     );
@@ -295,22 +295,22 @@ export default function DriverInfo ({route}: any) {
               teamData == undefined ?
                
               <View>
+                <Text style={[theme.card, { fontSize: 22, fontWeight: '800', paddingVertical: 10}]}> Past seasons: </Text>
                 <Old_Driver_Results darkMode={darkMode} DriverInfo={driver_info_data!}></Old_Driver_Results>
-                <Text style={[Styles.notFoundText, { color: darkMode ? 'gold' : 'orangered' }]}>
-                  Team data not available :(
-                </Text>
               </View> :
               
-              //If found, load the Driver_Team_Component
+              //If found, load the Driver_Team_Component and current season results
+              <View>
               <Pressable onPress={() =>  navigation.navigate("TeamInfo", {team: teamData.constructorId})}>
                 <Driver_Team_Component darkMode={darkMode} team={teamData} />
               </Pressable>
+              <Text style={[theme.card, { fontSize: 22, fontWeight: '800', paddingVertical: 10}]}> Current season result: </Text>
+              {
+                seasonResults.reverse().map( result => 
+                <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
+              }
+              </View> 
             }
-
-            {
-              seasonResults.reverse().map( result => 
-              <Driver_Season_Results_Component key={result.Circuit.circuitName} darkMode={darkMode} result={result}/> )
-            } 
           </ScrollView>
         )}
         <NavigationBar/>

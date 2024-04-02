@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, ActivityIndicator, AppState} from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, AppState} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
-import { SafeAreaProvider, SafeAreaView } from 'react-native-safe-area-context';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Dark, Light } from '../stylesheets/Theme';
 
 import {
@@ -157,8 +157,9 @@ const App = () => {
   const scheduleUrl =  "https://ergast.com/api/f1/2024.json";
   const driverStandingsUrl = "http://ergast.com/api/f1/current/driverStandings.json";
   const teamStandingsUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
-  
-  /* Performing the three main queries used in the application. The data is not saved locally, but cached by the useQueries function
+  const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
+
+  /* Performing the four main queries used in the application. The data is not saved locally, but cached by the useQueries function
     -each api call result is saved using a QUERY_KEY (a unique array)
     -cached data, can be re-used using the function: queryClient.getQueryData(QUERY_KEY)
   */
@@ -167,8 +168,7 @@ const App = () => {
       { queryKey: ['schedule'], queryFn: () => fetchData(scheduleUrl)},
       { queryKey: ['driverStandings'], queryFn: () => fetchData(driverStandingsUrl)},
       { queryKey: ['teamStandings'], queryFn: () => fetchData(teamStandingsUrl)},
-      { queryKey: ['seasons'], queryFn: ScheduleFetch.getSeasons},
-      { queryKey: ['raceSchedule'], queryFn: ScheduleFetch.getRace}
+      { queryKey: ['seasons'], queryFn: () => fetchData(seasonUrl)},
     ],
   })
 
