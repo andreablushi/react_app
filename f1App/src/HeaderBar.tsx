@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
-import { View, TouchableOpacity, StyleSheet, Image } from 'react-native';
+import { View, TouchableOpacity, StyleSheet, Image, Text } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { globalThemeControl } from './App';
 import Styles from "../stylesheets/Styles";
+import Formula1Black from './fonts/Formula1-Black.ttf'; // Adjust the path as necessary
+
 //MOMENTANEAMENTE USELESS
 
 export const HeaderBar: React.FC = () => {
@@ -16,14 +18,17 @@ export const HeaderBar: React.FC = () => {
 
   return (
     <View style={Styles.header_container}>
-      <TouchableOpacity onPress={handleBackPress} style={Styles.header_backButton}>
-        <Image source={darkMode ? require("../img/icon/dark/arrow.png") : require("../img/icon/light/arrow.png")} style={Styles.header_arrow}></Image>
-      </TouchableOpacity>
+        <Text style={styles.header_text}>Formula 1</Text>    
     </View>
   );
 };
 
-
+const styles = StyleSheet.create({
+  header_text: {
+    fontFamily: 'Formula1-Black', // Use the registered font family
+    // Add other styles as needed
+  },
+});
 
 export default HeaderBar;
 

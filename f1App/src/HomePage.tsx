@@ -11,6 +11,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl, imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
+import HeaderBar from './HeaderBar';
 
 
 
@@ -113,12 +114,7 @@ const HomePage = () => {
   //NativeStackNavigationProp from App.tsx
   const navigation = useNavigation<HomePageNavigationProp>();
   
-  const goToSchedule = () => {
-    navigation.navigate("Schedule")
-  };
-  const goToDrivers = () => {
-    navigation.navigate('Drivers');
-  };
+ 
   //------ GETTING DATA FROM CACHE API --------------------------------------------
     //Hooks
     const [driver_standings_data, setDriverStanding] = useState<driverStandings[]>([]);
@@ -143,7 +139,7 @@ const HomePage = () => {
   //-------------------------------------------------------------------------------
   return (  
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
-      
+      <HeaderBar/>
       <NextRace/>
       <ScrollView style = {{flex: 1}} horizontal={true}>
       {driver_standings_data.slice(0, 5).map( 
@@ -159,8 +155,6 @@ const HomePage = () => {
       
       <View style={[styles.container, theme.card, {flex: 2}]}>
           <Text style={[styles.title, theme.card]}>Welcome to the Homepage</Text>
-          <Button title="Go to Schedule" onPress={goToSchedule} /> 
-          <Button title="Go to Drivers" onPress={goToDrivers} />
           <Button onPress={switchTheme} title='Switch Theme' />
           <Text style={[theme.card, {fontSize: 18}]}>Current theme: {darkMode ? "Dark" : "Light"}</Text>
       </View>

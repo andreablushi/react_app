@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Image } from 'react-native';
+import { imageSource } from './App';
 import axios from 'axios';
 
 interface Race {
@@ -94,6 +95,7 @@ const UpcomingRace: React.FC = () => {
           <Text>Season: {upcomingRace.season}</Text>
           <Text>Round: {upcomingRace.round}</Text>
           <Text>Country: {upcomingRace.country}</Text>
+          <Image source={imageSource.getFlag(upcomingRace.country)}  />
           <Text>Date: {upcomingRace.date}</Text>
           <Text>Time: {upcomingRace.time}</Text>
           {/* Display countdown */}
