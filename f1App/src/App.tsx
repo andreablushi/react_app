@@ -158,6 +158,7 @@ const App = () => {
   const driverStandingsUrl = "http://ergast.com/api/f1/current/driverStandings.json";
   const teamStandingsUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
   const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
+  const nextRaceUrl = "https://ergast.com/api/f1/current/next.json";
 
   /* Performing the four main queries used in the application. The data is not saved locally, but cached by the useQueries function
     -each api call result is saved using a QUERY_KEY (a unique array)
@@ -168,6 +169,7 @@ const App = () => {
       { queryKey: ['schedule'], queryFn: () => fetchData(scheduleUrl)},
       { queryKey: ['driverStandings'], queryFn: () => fetchData(driverStandingsUrl)},
       { queryKey: ['teamStandings'], queryFn: () => fetchData(teamStandingsUrl)},
+      { queryKey: ['next'], queryFn: () => fetchData(nextRaceUrl)},
       { queryKey: ['seasons'], queryFn: () => fetchData(seasonUrl)},
     ],
   })
