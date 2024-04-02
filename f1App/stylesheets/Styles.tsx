@@ -128,7 +128,7 @@ const Styles = StyleSheet.create({
     textShadowOffset: {height: 1, width: 1},
     paddingVertical: 20
   },
-  separator:{ 
+/*   separator:{ 
     borderBottomWidth: 4,
      borderBottomColor: '#5A5A5A', 
      marginVertical: 10 
@@ -140,7 +140,7 @@ const Styles = StyleSheet.create({
     marginBottom: 10,
     marginLeft: 20,
     marginRight: 20,
-  },
+  }, */
   header_arrow:{
     maxHeight: 25,
     maxWidth: 25, 
