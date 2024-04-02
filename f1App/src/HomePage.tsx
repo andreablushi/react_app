@@ -3,7 +3,7 @@ import { View, Text, Button, StyleSheet, Image, ScrollView } from 'react-native'
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
-
+import NextRace from './NextRace';
 import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
 
@@ -144,6 +144,7 @@ const HomePage = () => {
   return (  
     <SafeAreaView style={[styles.safeAreaView, theme.card]}>
       
+      <NextRace/>
       <ScrollView style = {{flex: 1}} horizontal={true}>
       {driver_standings_data.slice(0, 5).map( 
         driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
