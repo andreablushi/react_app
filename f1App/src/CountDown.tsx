@@ -1,12 +1,20 @@
 import React, { useState, useEffect } from 'react';
-import { Text } from 'react-native-svg';
+import { Text } from 'react-native';
+import { Dark, Light } from '../stylesheets/Theme';
 
 type UpcomingRaceProps = {
   date: string;
   time: string;
+  darkMode: boolean
 }
-
+/*
+  Defining the Upcoming Race ELEMENT. This eleements create a COUNTDOWN to a race
+  which DATE AND TIME are being passed as a parameter. The countdown is updated every second
+*/
 function UpcomingRace(props: UpcomingRaceProps): React.JSX.Element {
+  const theme = props.darkMode ? Dark : Light;
+
+  //Setting up the countdown hook. It-s initialized as an empty string
   const [countdown, setCountdown] = useState<string>('');
 
   // Set up a timer to update the countdown every second
@@ -48,11 +56,11 @@ function UpcomingRace(props: UpcomingRaceProps): React.JSX.Element {
     }
   };
 
-  // Return the countdown string wrapped within the Text component
-  console.log(countdown)
+  // Return the countdown string wrapped within a Text component
+
   return( 
-    <Text>
-      {calculateCountdown(props.date, props.time)}
+    <Text style = {[theme.minortext, {fontSize:18, fontWeight: '900'}]}>
+      {countdown}
     </Text>
   )
 };

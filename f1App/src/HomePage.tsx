@@ -69,18 +69,26 @@ type NextRaceProp = {
 function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
   const next_race = props.next_race[0];
+  const country = next_race.Circuit.Location.country
+  const boldTextColor = !props.darkMode ? 'black' : 'white';
+
   return(
 
     <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10}]}>
-      {/* Circui information */}
-      <View style = {{flex:1, flexDirection:'column'}}>
-        <Text>{next_race.raceName}</Text>
-        <Text>{next_race.Circuit.Location.country}</Text>
-        <Text>{next_race.round}</Text>
+      {/* CircuiT information */}
+      <View style = {{flex:3, flexDirection:'column'}}>
+        <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
+        <Text>{country}</Text>
+        <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
       </View>
-      <View style = {{flex: 1}}>
-        <UpcomingRace date={next_race.date} time={next_race.time}/>
+
+      <View style = {{flex: 2}}>
+      <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center'}]}></Image>
+        <View style = {{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
+          <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
+        </View>
       </View>
+      
     </View>
   )
 }
@@ -101,7 +109,7 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
         </View>
         <View style = {[{flex: 1}, theme.horizontalList_element]}>          
           <Text style = {theme.minortext}>{driver.givenName}</Text>
-          <Text style = {{fontSize: 18, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
+          <Text style = {{fontSize: 20, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
         </View>
       </View>
       <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
@@ -129,7 +137,7 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
           <Text style = {theme.minortext}>Wins:{standing.wins}</Text>
         </View>
       </View>
-      <View>
+      <View >
         <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 1, height: 76, width: 76, resizeMode: 'contain', marginLeft:20}}></Image>
       </View>
     </View>
