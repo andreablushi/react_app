@@ -187,6 +187,10 @@ const HomePage = () => {
   if(!isLoading){
     return (  
       <SafeAreaView style={[styles.safeAreaView, theme.card]}>
+        <View style={[theme.title_bar, styles.title_container]}>
+          <Image source={require('../img/ic_launcher.png')} style={ styles.icon}/>
+          <Text style={[Styles.topBarText, theme.title_bar, { flex: 5, color:'red' }]}>FORMULA 1</Text>
+        </View>
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
         </View>
@@ -223,6 +227,18 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingHorizontal: 20,
+  },
+  icon: {
+    flex:1,
+    width: 30,
+    height: 30,
+    padding: 30,
+    resizeMode:'contain',
+  },
+  title_container: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 30, 
   },
   title: {
     fontSize: 24,

@@ -88,9 +88,9 @@ const Styles = StyleSheet.create({
   topBarText: {
     flex: 1,
     fontSize: 30,
+    fontFamily:'Formula1-Bold-4',
     textAlignVertical: 'center',
-    paddingHorizontal: 10,
-    fontWeight: '700',
+    textAlign:'center',
     color: 'white'
     
   },

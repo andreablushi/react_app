@@ -91,8 +91,8 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
           <View style={[theme.title_bar, {flexDirection: 'row', flex: 1}]}>
             <Image source={darkMode ? require("../img/icon/dark/podium.png") : require("../img/icon/light/podium.png")} style={{resizeMode: 'contain', height: 30, flex: .9, alignSelf: 'center'}}></Image>
             <View style={{width: 70}}></View>
-            <Text style={[theme.title_bar, {flex: 3, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Driver</Text>
-            <Text style={[theme.title_bar, {flex: 1.2, textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
+            <Text style={[theme.title_bar, {flex: 3, fontFamily:'Formula1-Bold_web',textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Driver</Text>
+            <Text style={[theme.title_bar, {flex: 1.2, fontFamily:'Formula1-Bold_web',textAlignVertical: 'center', fontSize: 20, fontWeight: "600"}]}>Points</Text>
           </View>
         </View>
         <View style={[{flex: 10}]}>

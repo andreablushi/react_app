@@ -1,0 +1,29 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Formula1-Black.ttf",
+      "sha1": "b224b934daa36c7a6e6b719f24db7953419ece59"
+    },
+    {
+      "path": "assets/fonts/Formula1-Bold-4.ttf",
+      "sha1": "5c806366fa6b8a262f444e1aab11e57d9298396c"
+    },
+    {
+      "path": "assets/fonts/Formula1-Bold_web.ttf",
+      "sha1": "8407efb4b9e2f3793b7f0514d347a879a4af1ed1"
+    },
+    {
+      "path": "assets/fonts/Formula1-Italic.ttf",
+      "sha1": "fc9ee8e0004b46b4f8568763e92439bcebaee62f"
+    },
+    {
+      "path": "assets/fonts/Formula1-Regular-1.ttf",
+      "sha1": "69b0b201f4bbbcc0c420496810e98915f795c397"
+    },
+    {
+      "path": "assets/fonts/Formula1-Wide.ttf",
+      "sha1": "76d2db72bd91a6208859989326d0fc08e0af5a22"
+    }
+  ]
+}
