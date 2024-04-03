@@ -23,6 +23,7 @@ import TeamInfo from './TeamInfo';
 import RaceResult from './RaceResult';
 import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
+import { EventRegister } from 'react-native-event-listeners';
 
 const Stack = createNativeStackNavigator();
 
@@ -140,10 +141,13 @@ const App = () => {
   const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
   globalThemeControl.setTheme(darkMode);
   useEffect(() => {
-    const refresh = setInterval(() => {
-      setDarkMode(globalThemeControl.getTheme())
-    }, 1000);
-    return () => clearInterval(refresh)
+    EventRegister.addEventListener('theme', data => {
+      setDarkMode(data);
+      console.log("i've changed theme to: " + darkMode ? "dark" : "light");
+    })
+    return () => {
+      EventRegister.removeAllListeners();
+    }
   }, [])
 
   const switchTheme= () => {

@@ -12,6 +12,7 @@ import { globalThemeControl, imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
 import { Colors } from 'react-native/Libraries/NewAppScreen';
 import HeaderBar from './HeaderBar';
+import { EventRegister } from 'react-native-event-listeners';
 
 
 
@@ -105,6 +106,7 @@ const HomePage = () => {
     const switchTheme= () => {
       globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
       globalThemeControl.changeTheme()
+      EventRegister.emit('theme', globalThemeControl.getTheme())
     }
     const theme = darkMode ? Dark : Light;
     //-----------------------------------------------------------------------------
