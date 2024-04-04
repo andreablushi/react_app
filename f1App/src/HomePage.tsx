@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, ScrollView } from 'react-native';
+import { View, Text, Button, StyleSheet, Image, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
+import { RootStackParamList, cfg, setConfig} from './App'; // Importa RootParamList da App.tsx
 import UpcomingRace from "./CountDown"
 import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
@@ -10,6 +10,7 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl, imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
 import { EventRegister } from 'react-native-event-listeners';
+import Settings from './Settings';
 
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
@@ -161,11 +162,16 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
 const HomePage = () => {
 
     //_______________________ THEME ________________________________________
-    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-    const switchTheme = () => {
-      globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
+    const [darkMode, setDarkMode] = useState(cfg.darkMode);
+    const switchTheme = async() => {
+      const tmp = darkMode ? false : true
+      await setConfig({darkMode: tmp})
+      EventRegister.emit('cfg', tmp)
+      console.log("cfg " + cfg.darkMode)
+      setDarkMode(tmp) 
+      /* globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
       globalThemeControl.changeTheme()
-      EventRegister.emit('theme', globalThemeControl.getTheme())
+      EventRegister.emit('theme', globalThemeControl.getTheme()) */
     }
     const theme = darkMode ? Dark : Light;
     
@@ -182,6 +188,7 @@ const HomePage = () => {
     const [team_standings_data, setTeamStanding] = useState<teamStandings[]>([]);
     const [next_race_data, setNextRace] = useState<Race[]>([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [isSettingVisible, setSettingVisible] = useState(false);
 
     useEffect(() => {
       const driver_Cached_Data : any = queryClient.getQueryData(['driverStandings']);
@@ -203,6 +210,9 @@ const HomePage = () => {
         <View style={[theme.title_bar, styles.title_container]}>
           <Image source={require('../img/ic_launcher.png')} style={ styles.icon}/>
           <Text style={[Styles.topBarText, theme.title_bar, { flex: 5, color:'red' }]}>FORMULA 1</Text>
+          <Pressable onPress={() => setSettingVisible(true)}>
+            <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
+          </Pressable>
         </View>
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
@@ -224,6 +234,11 @@ const HomePage = () => {
             <Button onPress={switchTheme} title='Switch Theme' />
             <Text style={[theme.card, {fontSize: 18}]}>Current theme: {darkMode ? "Dark" : "Light"}</Text>
         </View>
+        {isSettingVisible ? <Settings 
+          setSettingsVisible = {setSettingVisible} 
+          darkMode={darkMode} 
+          setDarkMode={setDarkMode}>
+        </Settings> : <View></View>}
         <NavigationBar key={darkMode ? 'dark' : 'light'}  />{/* Imported the navigation bar from the NavigationBar.tsx component as it's defined*/}
       </SafeAreaView>
       
@@ -263,6 +278,13 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginBottom: 20,
   },
+  gearIcon: {
+    height: 30,
+    width: 30,
+    resizeMode: 'contain',
+    opacity: 0.8
+
+  }
 });
 
 export default HomePage;

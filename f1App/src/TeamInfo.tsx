@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import { HomePageNavigationProp } from "./HomePage";
 
 // Helper functions and constants imports
-import { globalThemeControl, imageSource } from './App';
+import { cfg, globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 import { convertNationalityToNation } from '../utils/convertNationalityToNation';
 
@@ -97,7 +97,7 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
 // Main component for the driver info page
 export default function DriverInfo({ route }: any) {
     // State for theme
-    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+    const [darkMode, setDarkMode] = useState(cfg.darkMode);
     const theme = darkMode ? Dark : Light;
 
     // Getting team ID from route params

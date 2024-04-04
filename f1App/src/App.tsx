@@ -5,14 +5,10 @@ import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, 
 import { StackNavigationProp } from '@react-navigation/stack';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { Dark, Light } from '../stylesheets/Theme';
-
-import {
-  QueryClient,
-  QueryClientProvider,
-  useQueries,
-} from '@tanstack/react-query'
-
+import { EventRegister } from 'react-native-event-listeners';
+import { QueryClient, QueryClientProvider, replaceEqualDeep, useQueries,} from '@tanstack/react-query'
 import axios from 'axios';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 //Our Component
 import HomePage from './HomePage';
@@ -23,11 +19,40 @@ import TeamInfo from './TeamInfo';
 import RaceResult from './RaceResult';
 import Teams from './TeamStandings';
 import ImagesDB from '../utils/ImagesDB';
-import { EventRegister } from 'react-native-event-listeners';
+
 
 const Stack = createNativeStackNavigator();
 
-//------ Defining Caching methods --------------------------------
+/**========================================================================
+ **                            ASYNC STORAGE
+ *========================================================================**/
+
+export let cfg: Config = {
+  darkMode: true
+}
+export const setConfig = async (config: Config) => {
+  try {
+    cfg = config;
+    const jsonConfig = JSON.stringify(config);
+    console.log(jsonConfig);
+    await AsyncStorage.setItem('config', jsonConfig);
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+export const getConfig = async () => {
+  try {
+    const jsonConfig = await AsyncStorage.getItem('config');
+    return jsonConfig != null ? JSON.parse(jsonConfig) : null;
+  } catch (e) {
+    console.error(e);
+  }
+};
+
+/**========================================================================
+ **                          CACHING METHODS
+ *========================================================================**/
 
 //Defyning a queryClient element. Each page using cached api calls should import this component
 export const queryClient = new QueryClient()
@@ -54,20 +79,19 @@ export async function fetchData(apiUrl: string) {
     console.log(error)
   }
 }
-//----------------------------------------------------------------
 
-
-// Global theme controller 
+/**========================================================================
+ **                          THEME METHODS
+ *========================================================================**/
 export class globalThemeControl {
   static theme = true;
 
   public static changeTheme() {
-    console.log("switching theme, now: " + globalThemeControl.theme ? "Dark": "Light")
     globalThemeControl.theme ? globalThemeControl.theme = false : globalThemeControl.theme = true;
+    console.log("switching theme, now: " + (globalThemeControl.theme ? "Dark": "Light"))
   }
 
   public static getTheme() {
-    // console.log(globalThemeControl.theme ? "Dark": "Light")
     return globalThemeControl.theme;
   }
 
@@ -75,7 +99,10 @@ export class globalThemeControl {
     globalThemeControl.theme = darkMode
   }
 }
-  // -------- Images -------------------------------------------------------------
+
+/**========================================================================
+ **                           IMAGES METHODS
+ *========================================================================**/
 export class imageSource {
   
   //Return the image of the driver, given the driver id
@@ -102,7 +129,9 @@ export class imageSource {
     return imageObject ? imageObject.src : ImagesDB.notfound;
   }
 }
-  //-------------------------------------------------------------------------------
+/**========================================================================
+ **                          TYPES
+ *========================================================================**/
 export type RootStackParamList = {
   StartingScreen: undefined;
   HomePage: undefined;
@@ -121,8 +150,15 @@ export type RootStackParamList = {
   };
 };
 
+export type Config = {
+  darkMode: boolean
+}
+
 export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
 
+/**========================================================================
+ **                           STARTING SCREEN COMPONENT
+ *========================================================================**/
 export const StartingScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
   
@@ -135,29 +171,43 @@ export const StartingScreen = () => {
   );
 };
 
-const App = () => {
+/**========================================================================
+ * *                          APP COMPONENT
+ *========================================================================**/
+const App = () => { 
+  const [darkMode, setDarkMode] = useState<boolean>();
+  //! WARNING 
+    const initCfg = async() => {
+      const response = await getConfig();
+      response == null ? cfg.darkMode = useColorScheme() === 'dark' : cfg = response;
+      console.log("init cfg completato: " + cfg.darkMode);
+    }
+    
+    const initTheme = async() => {
+      await initCfg();
+      console.log("cfg: " + cfg.darkMode)
+      setDarkMode(cfg.darkMode)
+      globalThemeControl.setTheme(cfg.darkMode); 
+    }
+  //!=============== END OF WARNING ==============*/
+  
+  
+  /*================== THEME =================*/
 
-  // -------- THEME -------------------------------------------------------------
-  const [darkMode, setDarkMode] = useState(useColorScheme() === 'dark');
-  globalThemeControl.setTheme(darkMode);
   useEffect(() => {
-    EventRegister.addEventListener('theme', data => {
+    initTheme()
+    EventRegister.addEventListener('cfg', data => {
       setDarkMode(data);
-      console.log("i've changed theme to: " + darkMode ? "dark" : "light");
     })
+
     return () => {
       EventRegister.removeAllListeners();
     }
   }, [])
-
-  const switchTheme= () => {
-    globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
-    globalThemeControl.changeTheme()
-  }
   const theme = darkMode ? Dark : Light;
-  //-----------------------------------------------------------------------------
 
-  //----------- CACHED API CALLS ------------------------------------------------
+  /*================== API CALLS & METHODS =================*/
+
   const scheduleUrl =  "https://ergast.com/api/f1/2024.json";
   const driverStandingsUrl = "http://ergast.com/api/f1/current/driverStandings.json";
   const teamStandingsUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
@@ -180,9 +230,10 @@ const App = () => {
 
   const isLoading = results.some(queryResult => queryResult.isLoading);
   if(!isLoading){
-    console.log("done")
+    console.log("loading completed")
   }
-  //-----------------------------------------------------------------------------
+
+  /*================== RENDER =================*/
   return (
       <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
         <SafeAreaProvider>
@@ -203,6 +254,9 @@ const App = () => {
   );
 };
 
+/**========================================================================
+ * *                          STYLESHEET
+ *========================================================================**/
 const styles = StyleSheet.create({
   starting_container: {
     flex: 1,

@@ -84,7 +84,7 @@ function Search(props: Props) {
   
   /*=============== RENDER ==============*/
   return(
-    <Animated.View style={[Style.searchOverlay, dimensions, {backgroundColor: darkMode ? "#000000cc" : "#ffffffcc", opacity: fadeAnim}]}>
+    <Animated.View style={[Style.overlay, dimensions, {backgroundColor: darkMode ? "#000000cc" : "#ffffffcc", opacity: fadeAnim}]}>
       <View style={[{flex: 1, flexDirection: 'row', marginVertical: 20}]}>
         <View style={[{flex: 1}]}></View>
         <TextInput 
@@ -122,7 +122,7 @@ function Search(props: Props) {
  *                           STYLESHEET
  *========================================================================**/
 const Style = StyleSheet.create({
-  searchOverlay: {
+  overlay: {
     position: 'absolute',
   },
   yearWrap : {

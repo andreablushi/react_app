@@ -11,7 +11,7 @@ import {
   View,
 } from 'react-native';
 
-import { globalThemeControl, imageSource, queryClient } from './App';
+import { cfg, globalThemeControl, imageSource, queryClient } from './App';
 
 /*Defining the type driverStandings
     position: Position, in the driver rankings
@@ -60,7 +60,7 @@ function TeamElement(props: Props): React.JSX.Element {
 /*Main function of this page*/
 function Team_standings({navigation, route}: any): React.JSX.Element {
   // -------- THEME -------------------------------------------------------------
-  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const [darkMode, setDarkMode] = useState(cfg.darkMode);
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
  

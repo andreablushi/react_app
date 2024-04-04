@@ -13,7 +13,7 @@ import {
 import { Dark, Light } from '../stylesheets/Theme';
 import { HomePageNavigationProp } from './HomePage';
 import { useNavigation } from '@react-navigation/native';
-import { globalThemeControl, imageSource, queryClient } from './App';
+import { cfg, globalThemeControl, imageSource, queryClient } from './App';
 import { NavigationBar } from './NavigationBar';
 import axios, { Axios, AxiosResponse } from 'axios';
 import Search from './Search';
@@ -89,7 +89,7 @@ function Schedule({route}: any): React.JSX.Element {
 
 
   // -------- THEME -------------------------------------------------------------
-  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const [darkMode, setDarkMode] = useState(cfg.darkMode);
 
   
   const theme = darkMode ? Dark : Light;

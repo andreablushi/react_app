@@ -6,7 +6,7 @@ import Styles from "../stylesheets/Styles"
 import { Light, Dark } from "../stylesheets/Theme";
 import { useNavigation } from "@react-navigation/native";
 import { HomePageNavigationProp } from "./HomePage";
-import { globalThemeControl, imageSource } from "./App";
+import { cfg, globalThemeControl, imageSource } from "./App";
 import { NavigationBar } from "./NavigationBar";
 import axios from "axios";
 
@@ -45,7 +45,7 @@ export default function RaceResult ({route}: any) {
 
 
   // -------- THEME -------------------------------------------------------------
-  const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const [darkMode, setDarkMode] = useState(cfg.darkMode);
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
   

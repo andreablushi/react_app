@@ -16,7 +16,7 @@ import {
   View,
 } from 'react-native';
 
-import { globalThemeControl, imageSource } from './App';
+import { cfg, globalThemeControl, imageSource } from './App';
 import { NavigationBar } from './NavigationBar';
 
 type DriverInfo = {
@@ -212,7 +212,7 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
 /* Main function of this page*/
 export default function DriverInfo ({route}: any) {
     // -------- THEME -------------------------------------------------------------
-    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+    const [darkMode, setDarkMode] = useState(cfg.darkMode)
     const theme = darkMode ? Dark : Light;
     //-----------------------------------------------------------------------------
     
