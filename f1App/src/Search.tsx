@@ -1,14 +1,11 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Button, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View, useWindowDimensions } from "react-native";
-
+import { Animated, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View, } from "react-native";
 import { Season } from "./Schedule";
-import { SafeAreaView } from "react-native-safe-area-context";
 import { Dark, Light } from "../stylesheets/Theme";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 
-
-
-
+/**========================================================================
+ * *                          TYPES
+ *========================================================================**/
 type Props = {
   setSearch: any,
   setTextInput: any,
@@ -18,25 +15,27 @@ type Props = {
   darkMode: boolean
 }
 
+/**========================================================================
+ **                         SEARCH COMPONENT
+ *========================================================================**/
 function Search(props: Props) {
-  // props
+
+  /*================== PROPS =================*/
   const setSearch = props.setSearch;
   const textInput = props.textInput;
   const setTextInput = props.setTextInput;
   const seasons = props.seasons;
   const setYear = props.setYear;
   const darkMode = props.darkMode;
-
   const theme = darkMode ? Dark : Light;
 
-  // hooks
+  /*================== HOOKS =================*/
   const [placeHolder, setPlaceHolder] = useState("Search Season")
 
-  //-------- Animation -----------
+  /*=============== ANIMATIONS ==============*/
   const fadeAnim = useRef(new Animated.Value(0)).current;
 
   const fadeIn = () => {
-    // Will change fadeAnim value to 1 in 5 seconds
     Animated.timing(fadeAnim, {
       toValue: 1,
       duration: 250,
@@ -45,7 +44,6 @@ function Search(props: Props) {
   };
 
   const fadeOut = () => {
-    // Will change fadeAnim value to 0 in 3 seconds
     Animated.timing(fadeAnim, {
       toValue: 0,
       duration: 250,
@@ -56,7 +54,7 @@ function Search(props: Props) {
   useEffect(() => {
     fadeIn();
   }, [])
-  //-----------------------------------------
+  
 
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
@@ -65,7 +63,8 @@ function Search(props: Props) {
     width: windowWidth,
     height: windowHeight
   }
-
+  
+  /*================== SEARCHBAR CHECK METHOD =================*/
   const verifyAndChange = async () => {
     const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
     pattern.test(textInput) ? (
@@ -76,12 +75,14 @@ function Search(props: Props) {
     ) : setPlaceHolder("Enter a valid year");
   }
 
+  /*================== CLOSE SEARCH COMPONENT =================*/
   const closeSearch = async () => {
     fadeOut();
     await new Promise(r => setTimeout(r, 250));
     setSearch(false);
   }
-
+  
+  /*=============== RENDER ==============*/
   return(
     <Animated.View style={[Style.searchOverlay, dimensions, {backgroundColor: darkMode ? "#000000cc" : "#ffffffcc", opacity: fadeAnim}]}>
       <View style={[{flex: 1, flexDirection: 'row', marginVertical: 20}]}>
@@ -117,7 +118,9 @@ function Search(props: Props) {
     </Animated.View>
   )
 }
-
+/**========================================================================
+ *                           STYLESHEET
+ *========================================================================**/
 const Style = StyleSheet.create({
   searchOverlay: {
     position: 'absolute',

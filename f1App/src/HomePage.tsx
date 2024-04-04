@@ -6,17 +6,16 @@ import { RootStackParamList} from './App'; // Importa RootParamList da App.tsx
 import UpcomingRace from "./CountDown"
 import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
-
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { globalThemeControl, imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
-
 import { EventRegister } from 'react-native-event-listeners';
-
-
 
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
+/**========================================================================
+ *                           TYPES
+ *========================================================================**/
 type driverStandings = {
   position: number;
   points: number;
@@ -30,6 +29,7 @@ type driverStandings = {
     name: string;
   }]
 }
+
 type teamStandings = {
   position: number;
   points: number;
@@ -66,15 +66,17 @@ type NextRaceProp = {
   next_race: Race[]
 }
 
-
+/**========================================================================
+ *                           NEXT RACE COMPONENT
+ *========================================================================**/
 function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
   const next_race = props.next_race[0];
   const country = next_race.Circuit.Location.country
   const boldTextColor = !props.darkMode ? 'black' : 'white';
 
+  // RENDER _________________________________________________________
   return(
-
     <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10}]}>
       {/* CircuiT information */}
       <View style = {{flex:3, flexDirection:'column'}}>
@@ -89,11 +91,13 @@ function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
           <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
         </View>
       </View>
-      
     </View>
   )
 }
 
+/**========================================================================
+ *                           DRIVER STANDINGS COMPONENT
+ *========================================================================**/
 function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
@@ -101,6 +105,7 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   const driver = props.driver_standing.Driver
   const standing = props.driver_standing
   
+  // RENDER _____________________________________________________________
   return(
     <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
       {/* View containing position, name and team*/}
@@ -118,6 +123,9 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   )
 };
 
+/**========================================================================
+ *                           TEAM STANDINGS COMPONENT
+ *========================================================================**/
 function Team_Standings_Element (props: TeamProp): React.JSX.Element {
   // import prop, to improve readability
   const theme = props.darkMode ? Dark : Light;
@@ -125,6 +133,8 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
 
   const team = props.team_standing.Constructor
   const standing = props.team_standing
+
+  // RENDER ___________________________________________________________
   return(
     <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
       <View style = {{flexDirection:'column'}}>
@@ -144,17 +154,21 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
     </View>
   )
 };
+
+/**========================================================================
+ *                           HOME PAGE COMPONENT
+ *========================================================================**/
 const HomePage = () => {
 
-    // -------- THEME -------------------------------------------------------------
+    //_______________________ THEME ________________________________________
     const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
-    const switchTheme= () => {
+    const switchTheme = () => {
       globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
       globalThemeControl.changeTheme()
       EventRegister.emit('theme', globalThemeControl.getTheme())
     }
     const theme = darkMode ? Dark : Light;
-    //-----------------------------------------------------------------------------
+    
 
 
   //I "create" the same navigation by taking HomePageNavigationProp which for now is a copy of
@@ -162,7 +176,7 @@ const HomePage = () => {
   const navigation = useNavigation<HomePageNavigationProp>();
   
  
-  //------ GETTING DATA FROM CACHE API --------------------------------------------
+  //_________________ GETTING DATA FROM CACHE API ____________________________________
     //Hooks
     const [driver_standings_data, setDriverStanding] = useState<driverStandings[]>([]);
     const [team_standings_data, setTeamStanding] = useState<teamStandings[]>([]);
@@ -182,8 +196,7 @@ const HomePage = () => {
       setIsLoading(false);
     }, []);
 
-  //-------------------------------------------------------------------------------
-  
+  //_________________________________ RENDER ____________________________________________
   if(!isLoading){
     return (  
       <SafeAreaView style={[styles.safeAreaView, theme.card]}>
@@ -218,6 +231,9 @@ const HomePage = () => {
   }
 };
 
+/**========================================================================
+ *                           STYLESHEET
+ *========================================================================**/
 const styles = StyleSheet.create({
   safeAreaView: {
     flex: 1,
