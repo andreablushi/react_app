@@ -148,7 +148,7 @@ function Schedule({route}: any): React.JSX.Element {
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 60,  minHeight: 60}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 5}]}>Schedule for {year}</Text>
+          <Text style={[styles.topBarText, theme.title_bar, {flex: 5}]}>Schedule {year}</Text>
           <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
             <Image 
               source={darkMode ? require("../img/icon/dark/magni.png") : require("../img/icon/light/magni.png")}

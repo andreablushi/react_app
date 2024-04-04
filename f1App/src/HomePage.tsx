@@ -214,11 +214,10 @@ const HomePage = () => {
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
           </Pressable>
         </View>
-        
+
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
         </View>
-
         <ScrollView style = {{flex: 1}} horizontal={true}>
         {driver_standings_data.slice(0, 5).map( 
           driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
@@ -259,9 +258,9 @@ const styles = StyleSheet.create({
   },
   icon: {
     flex:1,
-    width: 30,
-    height: 30,
-    padding: 30,
+    width: 20,
+    height: 20,
+    padding: 20,
     resizeMode:'contain',
   },
   title_container: {

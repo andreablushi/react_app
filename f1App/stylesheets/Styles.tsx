@@ -37,7 +37,7 @@ const Styles = StyleSheet.create({
     width: 30,
     textAlignVertical: 'center',
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily:'Formula1-Black'
   },
   driverResult: {
     flex: 6,
@@ -66,7 +66,7 @@ const Styles = StyleSheet.create({
   pointResult:{
     paddingRight: 5,
     textAlignVertical: 'center',
-    fontWeight: '500'
+  
   },
   timeResult: {
     paddingRight: 5,

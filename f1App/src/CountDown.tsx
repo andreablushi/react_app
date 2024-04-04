@@ -59,7 +59,7 @@ function UpcomingRace(props: UpcomingRaceProps): React.JSX.Element {
   // Return the countdown string wrapped within a Text component
 
   return( 
-    <Text style = {[theme.minortext, {fontSize:18, fontWeight: '900'}]}>
+    <Text style = {[theme.minortext, {fontSize:28, fontFamily:'Formula1-Wide'}]}>
       {countdown}
     </Text>
   )

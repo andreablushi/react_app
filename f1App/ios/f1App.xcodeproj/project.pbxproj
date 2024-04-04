@@ -14,12 +14,12 @@
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
 		7699B88040F8A987B510C191 /* libPods-f1App-f1AppTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-f1App-f1AppTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		C2623DFCADB2404AAAAFB5F7 /* Formula1-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B35644DCA7154A1EAE952A13 /* Formula1-Black.ttf */; };
-		5A45EF6ECD724F6BBD40941D /* Formula1-Bold-4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2794B33AB97C46ADB333DDE9 /* Formula1-Bold-4.ttf */; };
-		F40DD11D0A78418FB457D24B /* Formula1-Bold_web.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 45A43C9EC008487FB65127CD /* Formula1-Bold_web.ttf */; };
-		74E2527B6030497E92869493 /* Formula1-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 06A6F6E6E3FF4B6DB8D3099D /* Formula1-Italic.ttf */; };
-		CAA6318DB96E4212BBAD1810 /* Formula1-Regular-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E6995A48E69A4491A5F7BCF9 /* Formula1-Regular-1.ttf */; };
-		2EBFCA4276194504A804C4FE /* Formula1-Wide.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 7507A179C7794EC59BE56BFF /* Formula1-Wide.ttf */; };
+		60800ED303DE4138B4D0194F /* Formula1-Black.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A4D5373186A048FCB960F938 /* Formula1-Black.ttf */; };
+		5A180638F0B6485C94D771D0 /* Formula1-Bold-4.ttf in Resources */ = {isa = PBXBuildFile; fileRef = A0AC518FD753492DA9499799 /* Formula1-Bold-4.ttf */; };
+		984D9485095B4D03AB833929 /* Formula1-Bold_web.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2D244041CE334ED98EDD93A3 /* Formula1-Bold_web.ttf */; };
+		014F64B4501B4373BF217135 /* Formula1-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 80B34BF6A93A49DAA683E9F9 /* Formula1-Italic.ttf */; };
+		E6EDF213BE614D3187E000AE /* Formula1-Regular-1.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4B0FE51F1CB8488ABD9B2FE1 /* Formula1-Regular-1.ttf */; };
+		EB93EC4530B74143BD209C2D /* Formula1-Wide.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 95623442E5D344CFBA385AF3 /* Formula1-Wide.ttf */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -50,12 +50,12 @@
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = f1App/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-f1App-f1AppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-f1App-f1AppTests.release.xcconfig"; path = "Target Support Files/Pods-f1App-f1AppTests/Pods-f1App-f1AppTests.release.xcconfig"; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		B35644DCA7154A1EAE952A13 /* Formula1-Black.ttf */ = {isa = PBXFileReference; name = "Formula1-Black.ttf"; path = "../assets/fonts/Formula1-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		2794B33AB97C46ADB333DDE9 /* Formula1-Bold-4.ttf */ = {isa = PBXFileReference; name = "Formula1-Bold-4.ttf"; path = "../assets/fonts/Formula1-Bold-4.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		45A43C9EC008487FB65127CD /* Formula1-Bold_web.ttf */ = {isa = PBXFileReference; name = "Formula1-Bold_web.ttf"; path = "../assets/fonts/Formula1-Bold_web.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		06A6F6E6E3FF4B6DB8D3099D /* Formula1-Italic.ttf */ = {isa = PBXFileReference; name = "Formula1-Italic.ttf"; path = "../assets/fonts/Formula1-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		E6995A48E69A4491A5F7BCF9 /* Formula1-Regular-1.ttf */ = {isa = PBXFileReference; name = "Formula1-Regular-1.ttf"; path = "../assets/fonts/Formula1-Regular-1.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		7507A179C7794EC59BE56BFF /* Formula1-Wide.ttf */ = {isa = PBXFileReference; name = "Formula1-Wide.ttf"; path = "../assets/fonts/Formula1-Wide.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A4D5373186A048FCB960F938 /* Formula1-Black.ttf */ = {isa = PBXFileReference; name = "Formula1-Black.ttf"; path = "../assets/fonts/Formula1-Black.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		A0AC518FD753492DA9499799 /* Formula1-Bold-4.ttf */ = {isa = PBXFileReference; name = "Formula1-Bold-4.ttf"; path = "../assets/fonts/Formula1-Bold-4.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		2D244041CE334ED98EDD93A3 /* Formula1-Bold_web.ttf */ = {isa = PBXFileReference; name = "Formula1-Bold_web.ttf"; path = "../assets/fonts/Formula1-Bold_web.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		80B34BF6A93A49DAA683E9F9 /* Formula1-Italic.ttf */ = {isa = PBXFileReference; name = "Formula1-Italic.ttf"; path = "../assets/fonts/Formula1-Italic.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		4B0FE51F1CB8488ABD9B2FE1 /* Formula1-Regular-1.ttf */ = {isa = PBXFileReference; name = "Formula1-Regular-1.ttf"; path = "../assets/fonts/Formula1-Regular-1.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
+		95623442E5D344CFBA385AF3 /* Formula1-Wide.ttf */ = {isa = PBXFileReference; name = "Formula1-Wide.ttf"; path = "../assets/fonts/Formula1-Wide.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -164,12 +164,12 @@
 		C53B525A7CA84DB2B234DA62 /* Resources */ = {
 			isa = "PBXGroup";
 			children = (
-				B35644DCA7154A1EAE952A13 /* Formula1-Black.ttf */,
-				2794B33AB97C46ADB333DDE9 /* Formula1-Bold-4.ttf */,
-				45A43C9EC008487FB65127CD /* Formula1-Bold_web.ttf */,
-				06A6F6E6E3FF4B6DB8D3099D /* Formula1-Italic.ttf */,
-				E6995A48E69A4491A5F7BCF9 /* Formula1-Regular-1.ttf */,
-				7507A179C7794EC59BE56BFF /* Formula1-Wide.ttf */,
+				A4D5373186A048FCB960F938 /* Formula1-Black.ttf */,
+				A0AC518FD753492DA9499799 /* Formula1-Bold-4.ttf */,
+				2D244041CE334ED98EDD93A3 /* Formula1-Bold_web.ttf */,
+				80B34BF6A93A49DAA683E9F9 /* Formula1-Italic.ttf */,
+				4B0FE51F1CB8488ABD9B2FE1 /* Formula1-Regular-1.ttf */,
+				95623442E5D344CFBA385AF3 /* Formula1-Wide.ttf */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -270,12 +270,12 @@
 			files = (
 				81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */,
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
-				C2623DFCADB2404AAAAFB5F7 /* Formula1-Black.ttf in Resources */,
-				5A45EF6ECD724F6BBD40941D /* Formula1-Bold-4.ttf in Resources */,
-				F40DD11D0A78418FB457D24B /* Formula1-Bold_web.ttf in Resources */,
-				74E2527B6030497E92869493 /* Formula1-Italic.ttf in Resources */,
-				CAA6318DB96E4212BBAD1810 /* Formula1-Regular-1.ttf in Resources */,
-				2EBFCA4276194504A804C4FE /* Formula1-Wide.ttf in Resources */,
+				60800ED303DE4138B4D0194F /* Formula1-Black.ttf in Resources */,
+				5A180638F0B6485C94D771D0 /* Formula1-Bold-4.ttf in Resources */,
+				984D9485095B4D03AB833929 /* Formula1-Bold_web.ttf in Resources */,
+				014F64B4501B4373BF217135 /* Formula1-Italic.ttf in Resources */,
+				E6EDF213BE614D3187E000AE /* Formula1-Regular-1.ttf in Resources */,
+				EB93EC4530B74143BD209C2D /* Formula1-Wide.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
