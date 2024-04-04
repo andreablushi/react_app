@@ -91,8 +91,7 @@ const Styles = StyleSheet.create({
     fontFamily:'Formula1-Bold-4',
     textAlignVertical: 'center',
     textAlign:'center',
-    color: 'white'
-    
+    color: 'white',
   },
   topBar: {
     height: 70,  
@@ -128,19 +127,6 @@ const Styles = StyleSheet.create({
     textShadowOffset: {height: 1, width: 1},
     paddingVertical: 20
   },
-/*   separator:{ 
-    borderBottomWidth: 4,
-     borderBottomColor: '#5A5A5A', 
-     marginVertical: 10 
-  },
-  light_separator:{ 
-    borderBottomWidth: 4,
-    borderBottomColor: '#5A5A5A',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
-  }, */
   header_arrow:{
     maxHeight: 25,
     maxWidth: 25, 
