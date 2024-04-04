@@ -214,31 +214,29 @@ const HomePage = () => {
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
           </Pressable>
         </View>
+        
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
         </View>
+
         <ScrollView style = {{flex: 1}} horizontal={true}>
         {driver_standings_data.slice(0, 5).map( 
           driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
         )}
         </ScrollView>
-      
+          
         <ScrollView style = {{flex: 1}} horizontal={true}>
           {team_standings_data.slice(0,3).map( 
             team_standings_data => <Team_Standings_Element key = {team_standings_data.Constructor.constructorId} darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
           )}
         </ScrollView>
-        
-        <View style={[styles.container, theme.card, {flex: 2}]}>
-            <Text style={[styles.title, theme.card]}>Welcome to the Homepage</Text>
-            <Button onPress={switchTheme} title='Switch Theme' />
-            <Text style={[theme.card, {fontSize: 18}]}>Current theme: {darkMode ? "Dark" : "Light"}</Text>
-        </View>
+
         {isSettingVisible ? <Settings 
           setSettingsVisible = {setSettingVisible} 
           darkMode={darkMode} 
           setDarkMode={setDarkMode}>
         </Settings> : <View></View>}
+
         <NavigationBar key={darkMode ? 'dark' : 'light'}  />{/* Imported the navigation bar from the NavigationBar.tsx component as it's defined*/}
       </SafeAreaView>
       
