@@ -59,7 +59,7 @@ const Styles = StyleSheet.create({
   },
   constructorTextResult: { // Style for team standings
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: '800',
     textAlignVertical: 'center',
     flex: 1
   },

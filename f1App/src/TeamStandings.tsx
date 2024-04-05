@@ -72,7 +72,7 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   //Api url, fetching the constructorStanding from the current season
   const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
 
-  //Fetching the drivers data from the api
+  //Fetching the teams data from the api
   const getData =  async() => {
     try {
       const response = await fetch(apiUrl);
@@ -105,7 +105,7 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the constructor standings will be shown:
-            - For every position, it will call the COnstructorElement funcion, for getting the element (name, image, points...) for the single team
+            - For every position, it will call the ConstructorElement funcion, for getting the element (name, image, points...) for the single team
             - By clicking on the element, the user will get redirected to the single team info
           */}
           <ScrollView>

@@ -186,12 +186,12 @@ const HomePage = () => {
         
         {/* DRIVER STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {{flex: 1}}>Driver Standing</Text>
+          <Text style = {[theme.minortext,{flex: 1}]}>Driver Standing</Text>
           <Pressable
             style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
             onPress={() => navigation.navigate('Drivers')}
           >
-            <Text style={{ textDecorationLine: 'underline' }}>View more:</Text>
+            <Text style={[theme.minortext, { textDecorationLine: 'underline' }]}>View more:</Text>
           </Pressable>
         </View>
 
@@ -207,12 +207,12 @@ const HomePage = () => {
 
         {/* TEAM STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {{flex: 1}}>Team Standing</Text>
+          <Text style = {[theme.minortext,{flex: 1}]}>Team Standing</Text>
           <Pressable
             style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
             onPress={() => navigation.navigate('Teams')}
           >
-            <Text style={{ textDecorationLine: 'underline' }}>View more:</Text>
+            <Text style={[theme.minortext,{ textDecorationLine: 'underline' }]}>View more:</Text>
           </Pressable>
         </View>
 

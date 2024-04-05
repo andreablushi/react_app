@@ -149,7 +149,7 @@ function Schedule({route}: any): React.JSX.Element {
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 60,  minHeight: 60}, styles.topBar]}>
-          <Text style={[styles.topBarText, theme.title_bar, {flex: 5}]}>Schedule {year}</Text>
+          <Text style={[Styles.topBarText, theme.title_bar, {flex: 5, textAlign:'left', paddingLeft:10}]}>Schedule {year}</Text>
           <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
             <Image 
               source={darkMode ? require("../img/icon/dark/magni.png") : require("../img/icon/light/magni.png")}
@@ -218,15 +218,7 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-  topBarText: {
-    flex: 1,
-    fontSize: 30,
-    textAlignVertical: 'center',
-    marginHorizontal: 10,
-    fontWeight: '700',
-    color: 'white'
-    
-  }, topBar: {
+   topBar: {
     height: 70,  
     flex:1,
     flexDirection: 'row'
