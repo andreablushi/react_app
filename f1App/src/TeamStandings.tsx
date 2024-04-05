@@ -58,7 +58,7 @@ function TeamElement(props: Props): React.JSX.Element {
 
 
 /*Main function of this page*/
-function Team_standings({navigation, route}: any): React.JSX.Element {
+function Team_standings({navigation}: any): React.JSX.Element {
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(cfg.darkMode);
   const theme = darkMode ? Dark : Light;
@@ -68,7 +68,6 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
   const [constructorStandings, setConstructorStanding] = useState<teamStandings[]>([]);
   //Fetching the teams data from the api
   useEffect(() => {
-    /*Tentativo data Caching*/
     const constructor_Cached_Data : any = queryClient.getQueryData(['teamStandings']);
     setConstructorStanding(constructor_Cached_Data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
   }, []);

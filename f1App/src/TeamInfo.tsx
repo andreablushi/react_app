@@ -86,7 +86,6 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
                             <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 100, height: 100 }} />
                         </View>
                     </View>
-                    {/* <View style={Styles.light_separator} /> */}
                 </Pressable>
                 
             ))}
@@ -94,8 +93,8 @@ function DriverComponent(prop: DriverProps): React.ReactElement {
     );
 }
 
-// Main component for the driver info page
-export default function DriverInfo({ route }: any) {
+// Main component for the team info page
+export default function TeamInfo({ route }: any) {
     // State for theme
     const [darkMode, setDarkMode] = useState(cfg.darkMode);
     const theme = darkMode ? Dark : Light;
@@ -143,7 +142,7 @@ export default function DriverInfo({ route }: any) {
             ) : (
                 <ScrollView>
                     <TeamComponent darkMode={darkMode} team={teamData} />
-                    <Text style={[theme.card, { fontSize: 20, fontFamily:'Formula1-Bold_web', paddingTop: 10 }]}> Drivers </Text>
+                    <Text style={[theme.card, { fontSize: 20, alignSelf:'center', fontFamily:'Formula1-Bold_web', paddingTop: 10 }]}> Drivers </Text>
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
             )}
