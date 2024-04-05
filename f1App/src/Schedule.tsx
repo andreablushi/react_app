@@ -80,14 +80,13 @@ function RaceSchedule(props: Props,): React.JSX.Element {
           <Text style={[Styles.section14, theme.card]}>{race.raceName}</Text>
           <Text style={[Styles.section14, theme.card]}>{race.Circuit.circuitName}</Text>
         </View>
-        <Text style={[{textAlign: 'right', flex: 5, paddingRight: 10},  Styles.section14, styles.highlight, theme.card,]}>{date}</Text>
+        <Text style={[{textAlign: 'right', flex: 6, paddingRight: 10},  Styles.section14, styles.highlight, theme.card,]}>{date}</Text>
     </View>
   );
 };
 
   
 function Schedule({route}: any): React.JSX.Element {
-
 
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(cfg.darkMode);
@@ -105,32 +104,17 @@ function Schedule({route}: any): React.JSX.Element {
   const [search, setSearch] = useState(false);
   const navigation = useNavigation<HomePageNavigationProp>();
 
-  
-  // control variables
-  let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
-  const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
-  
-  // data fetching
-  const getRace = async () => {
-    try {
-      console.log("retrieving races");
-      const response= await axios.get(apiUrl);
-      // const data = await response.json();
-      setRace(response.data.MRData.RaceTable.Races);
-    } catch (error){
-      console.error(error);
-    }
-  }
-  
-  
-
   useEffect(() => {
-    // getRace();
-    const response: any = queryClient.getQueryData(['seasons']);
-    setSeason(response.MRData.SeasonTable.Seasons.reverse());
+
+    const season_data: any = queryClient.getQueryData(['seasons']);
+    setSeason(season_data.MRData.SeasonTable.Seasons.reverse());
+
+    const schedule_data: any = queryClient.getQueryData(['schedule']);
+    console.log(schedule_data)
+    setRace(schedule_data.MRData.RaceTable.Races);
   }, [])
 
-  //------ valid year check --------------------
+/*   //------ valid year check --------------------
     const verifyAndChange = () => {
       const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
       pattern.test(textInput) ? (
@@ -139,11 +123,7 @@ function Schedule({route}: any): React.JSX.Element {
       ) : console.log();
     }
 
-  //--------------------------------------------
-
-  useEffect(() => {
-    getRace();
-  }, [year])
+  //-------------------------------------------- */
 
   
   return (
