@@ -12,56 +12,16 @@ import { NavigationBar } from './NavigationBar';
 import { EventRegister } from 'react-native-event-listeners';
 import Settings from './Settings';
 
+/**========================================================================
+ *                           IMPORTING TYPES
+ *========================================================================**/
+import { Race } from "./Schedule";
+import { driverStandings, Props as DriverProp } from './DriverStandings';
+import { teamStandings, Props as TeamProp } from './TeamStandings';
+
+
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-/**========================================================================
- *                           TYPES
- *========================================================================**/
-type driverStandings = {
-  position: number;
-  points: number;
-  Driver: {
-    driverId: string;
-    givenName: string; 
-    familyName: string;
-  }
-  Constructors: [{
-    constructorId: string;
-    name: string;
-  }]
-}
-
-type teamStandings = {
-  position: number;
-  points: number;
-  wins: number;
-  Constructor: {
-    constructorId: string;
-    name: string;
-  }
-}
-
-type Race = {
-  season: string;
-  round: string;
-  raceName: string;
-  date: string;
-  time: string;
-  Circuit:{
-    Location:{
-      country: string
-    }
-  }
-}
-
-type DriverProp = {
-  darkMode: boolean
-  driver_standing: driverStandings
-}
-type TeamProp = {
-  darkMode: boolean
-  team_standing: teamStandings
-}
 type NextRaceProp = {
   darkMode: boolean
   next_race: Race[]
@@ -78,19 +38,20 @@ function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
 
   // RENDER _________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10}]}>
-      {/* CircuiT information */}
-      <View style = {{flex:3, flexDirection:'column'}}>
-        <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
-        <Text>{country}</Text>
-        <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
-      </View>
-
-      <View style = {{flex: 2}}>
-      <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center'}]}></Image>
-        <View style = {{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
-          <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10, flexDirection:'column'}]}>
+      
+      {/* View containing circuit info and flag */}
+      <View style = {{flex: 2, flexDirection:'row'}}>
+        <View style = {{flex:3, flexDirection:'column'}}>
+          <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
+          <Text>{country}</Text>
+          <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
         </View>
+        <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
+      </View>
+      
+      <View style = {{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
+        <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
       </View>
     </View>
   )
@@ -108,19 +69,20 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   
   // RENDER _____________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
-      {/* View containing position, name and team*/}
-      <View style = {{flexDirection:'column'}}>
-        <View style = {{flex: 1}}>
-          <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
+        {/* View containing position, name and team*/}
+        
+        <View style = {{flexDirection:'column'}}>
+          <View style = {{flex: 1}}>
+            <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
+          </View>
+          <View style = {[{flex: 1}, theme.horizontalList_element]}>          
+            <Text style = {theme.minortext}>{driver.givenName}</Text>
+            <Text style = {{fontSize: 20, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
+          </View>
         </View>
-        <View style = {[{flex: 1}, theme.horizontalList_element]}>          
-          <Text style = {theme.minortext}>{driver.givenName}</Text>
-          <Text style = {{fontSize: 20, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
-        </View>
+        <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
       </View>
-      <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
-    </View>
   )
 };
 
@@ -146,7 +108,7 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
         
         <View style = {{flex: 1}}>
           <Text style = {{ fontSize: 20, fontWeight: '800', color: boldTextColor}}>{team.name}</Text>
-          <Text style = {theme.minortext}>Wins:{standing.wins}</Text>
+          <Text style = {theme.minortext}>{standing.points} pts</Text>
         </View>
       </View>
       <View >
@@ -207,26 +169,59 @@ const HomePage = () => {
   if(!isLoading){
     return (  
       <SafeAreaView style={[styles.safeAreaView, theme.card]}>
+
+        {/* HEADER COMPONENT */}
         <View style={[theme.title_bar, styles.title_container]}>
-          <Image source={require('../img/ic_launcher.png')} style={ styles.icon}/>
-          <Text style={[Styles.topBarText, theme.title_bar, { flex: 5, color:'red' }]}>FORMULA 1</Text>
+          <Image source={require('../img/ic_launcher.png')} style={[styles.icon, {flex: 1}]}/>
+          <Text style={[Styles.topBarText, theme.title_bar, { flex: 10, color:'red', margin: 10}]}>FORMULA 1</Text>
           <Pressable onPress={() => setSettingVisible(true)}>
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
           </Pressable>
         </View>
 
+        {/* NEXT RACE */}
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
         </View>
+        
+        {/* DRIVER STANDINGS */}
+        <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
+          <Text style = {{flex: 1}}>Driver Standing</Text>
+          <Pressable
+            style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
+            onPress={() => navigation.navigate('Drivers')}
+          >
+            <Text style={{ textDecorationLine: 'underline' }}>View more:</Text>
+          </Pressable>
+        </View>
+
         <ScrollView style = {{flex: 1}} horizontal={true}>
         {driver_standings_data.slice(0, 5).map( 
-          driver_standings_data => <Driver_Standings_Element key = {driver_standings_data.Driver.driverId} darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
+          driver_standings_data => 
+          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.navigate('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
+            <Driver_Standings_Element  darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
+          </Pressable>
         )}
         </ScrollView>
           
+
+        {/* TEAM STANDINGS */}
+        <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
+          <Text style = {{flex: 1}}>Team Standing</Text>
+          <Pressable
+            style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
+            onPress={() => navigation.navigate('Teams')}
+          >
+            <Text style={{ textDecorationLine: 'underline' }}>View more:</Text>
+          </Pressable>
+        </View>
+
         <ScrollView style = {{flex: 1}} horizontal={true}>
           {team_standings_data.slice(0,3).map( 
-            team_standings_data => <Team_Standings_Element key = {team_standings_data.Constructor.constructorId} darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
+            team_standings_data =>
+            <Pressable key = {team_standings_data.Constructor.constructorId} onPress={() => navigation.navigate("TeamInfo", {team: team_standings_data.Constructor.constructorId})}> 
+              <Team_Standings_Element darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
+            </Pressable>
           )}
         </ScrollView>
 
@@ -276,6 +271,7 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   gearIcon: {
+    alignSelf: 'flex-end',
     height: 30,
     width: 30,
     resizeMode: 'contain',

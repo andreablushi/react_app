@@ -21,7 +21,7 @@ import { cfg, globalThemeControl, imageSource, queryClient } from './App';
       name: name of the team
     }
 */
-type teamStandings = {
+ export type teamStandings = {
   position: number;
   points: number;
   wins: number;
@@ -31,7 +31,7 @@ type teamStandings = {
   }
 }
 /*Type props, used for passing the parameters to the TeamElement function*/
-type Props = {
+export type Props = {
   darkMode: boolean
   team_standing: teamStandings
 }

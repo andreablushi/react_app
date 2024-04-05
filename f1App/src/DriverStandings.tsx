@@ -25,7 +25,7 @@ import { cfg, globalThemeControl, imageSource, queryClient} from './App';
     }
 
 */
-type driverStandings = {
+export type driverStandings = {
   position: number;
   points: number;
   Driver: {
@@ -39,7 +39,7 @@ type driverStandings = {
   }]
 }
 /*Type props, used for passing the parameters to the DriverElement function*/
-type Props = {
+export type Props = {
   darkMode: boolean
   driver_standing: driverStandings
 }

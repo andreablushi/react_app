@@ -87,7 +87,7 @@ const Styles = StyleSheet.create({
   },
   topBarText: {
     flex: 1,
-    fontSize: 30,
+    fontSize: 27,
     fontFamily:'Formula1-Bold-4',
     textAlignVertical: 'center',
     textAlign:'center',
