@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { Button, Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Race } from "./Schedule";
-import { Colors } from "react-native/Libraries/NewAppScreen";
 import Styles from "../stylesheets/Styles"
 import { Light, Dark } from "../stylesheets/Theme";
 import { useNavigation } from "@react-navigation/native";
@@ -58,6 +57,7 @@ export default function RaceResult ({route}: any) {
 
   // route
   const {race}: {race:Race} = route.params;
+  const circuit = race.Circuit.circuitName;
   const {season} = route.params;
   
 
@@ -101,12 +101,17 @@ export default function RaceResult ({route}: any) {
         <View style={[theme.title_bar, {flex: 1}]}>
           <Image source={imageSource.getFlag(country)} style={{ resizeMode: 'contain', flex: 1}}></Image>
         </View>
+        
       </View>
+      <View style={[theme.title_bar, {flex: 5, alignItems:"center", padding:25}]}>
+        <Image source={imageSource.getCircuit(circuit)} style={{ resizeMode: 'contain', flex: 1}}></Image>
+        </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
+        <Text style={[theme.card, { fontSize: 20, fontFamily:'Formula1-Bold_web', padding: 10, textAlign:"center" }]}> Results </Text>
         <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
         {results != undefined ? results.map( result => <Pressable key={result.position} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
             <Driver result={result} darkMode={darkMode}></Driver>
-          </Pressable>) : <Text style={Styles.notFoundText}>Informations about this race{"\n"} are not available</Text>}
+          </Pressable>) : <Text style={[Styles.notFoundText, theme.card]}>Informations about this race{"\n"} are not available</Text>}
         
         </ScrollView>
       </View> 
@@ -127,7 +132,7 @@ function Driver(props: Props) {
   // render
   return (
     <View style={[Styles.driverResultWrapper, theme.card, theme.divisor]}>
-      <Text style={[Styles.positionResult, theme.card]}>{result.position}</Text>
+      <Text style={[Styles.positionResult, theme.card, {flex:1.5}]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card]}>
         <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>

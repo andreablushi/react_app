@@ -143,7 +143,7 @@ export default function DriverInfo({ route }: any) {
             ) : (
                 <ScrollView>
                     <TeamComponent darkMode={darkMode} team={teamData} />
-                    <Text style={[theme.card, { fontSize: 22, fontWeight: '800', paddingTop: 10 }]}> Drivers: </Text>
+                    <Text style={[theme.card, { fontSize: 20, fontFamily:'Formula1-Bold_web', paddingTop: 10 }]}> Drivers </Text>
                     <DriverComponent darkMode={darkMode} driverInfo={driverInfoData} />
                 </ScrollView>
             )}
