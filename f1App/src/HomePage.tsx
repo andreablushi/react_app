@@ -87,8 +87,8 @@ function Race_Element(props: RaceProp): React.JSX.Element {
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
         <View style = {{flex:3, flexDirection: 'column', padding: 8, justifyContent: 'center'}}>
           <Text style = {{color: 'red'}}>Round {next_race.round}</Text>
-          <Text>{next_race.raceName}</Text>
-          <Text>{formatDate(next_race.date)}</Text>
+          <Text style = {theme.minortext}>{next_race.raceName}</Text>
+          <Text style = {theme.minortext}>{formatDate(next_race.date)}</Text>
         </View>
       </View>
   )
