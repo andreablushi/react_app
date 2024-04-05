@@ -22,7 +22,7 @@ import { teamStandings, Props as TeamProp } from './TeamStandings';
 
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
 
-type NextRaceProp = {
+type RaceProp = {
   darkMode: boolean
   next_race: Race[]
 }
@@ -30,7 +30,7 @@ type NextRaceProp = {
 /**========================================================================
  *                           NEXT RACE COMPONENT
  *========================================================================**/
-function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
+function Next_Race_Element(props: RaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
   const next_race = props.next_race[0];
   const country = next_race.Circuit.Location.country
@@ -56,6 +56,37 @@ function Next_Race_Element(props: NextRaceProp): React.JSX.Element {
     </View>
   )
 }
+
+/**========================================================================
+ *                           NEXT RACE COMPONENT
+ *========================================================================**/
+function Race_Element(props: RaceProp): React.JSX.Element {
+  const theme = props.darkMode ? Dark : Light;
+  const next_race = props.next_race[0];
+  const country = next_race.Circuit.Location.country
+  const boldTextColor = !props.darkMode ? 'black' : 'white';
+
+  // RENDER _________________________________________________________
+  return(
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10, flexDirection:'column'}]}>
+      
+      {/* View containing circuit info and flag */}
+      <View style = {{flex: 2, flexDirection:'row'}}>
+        <View style = {{flex:3, flexDirection:'column'}}>
+          <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
+          <Text>{country}</Text>
+          <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
+        </View>
+        <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
+      </View>
+      
+      <View style = {{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
+        <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
+      </View>
+    </View>
+  )
+}
+
 
 /**========================================================================
  *                           DRIVER STANDINGS COMPONENT
@@ -183,6 +214,17 @@ const HomePage = () => {
         <View style = {{flex: 1.5}}>
           <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
         </View>
+
+        {/* Next 5 RACES */}
+        {/* <View style = {{flex: 1.5}}>
+          {driver_standings_data.slice(0, 5).map( 
+            race_data => 
+          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.navigate('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
+            <Race_Element darkMode={darkMode} next_race={race_data}/>
+          </Pressable>
+        )}
+          
+        </View> */}
         
         {/* DRIVER STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
