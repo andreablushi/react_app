@@ -109,7 +109,7 @@ export default function RaceResult ({route}: any) {
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
         <Text style={[theme.card, { fontSize: 20, fontFamily:'Formula1-Bold_web', padding: 10, textAlign:"center" }]}> Results </Text>
         <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
-        {results != undefined ? results.map( result => <Pressable key={result.position} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
+        {results != undefined ? results.map( result => <Pressable key={result.Driver.driverId} onPress={() => navigation.navigate("DriverInfo", {driver: result.Driver.driverId})}>
             <Driver result={result} darkMode={darkMode}></Driver>
           </Pressable>) : <Text style={[Styles.notFoundText, theme.card]}>Informations about this race{"\n"} are not available</Text>}
         

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Button, StyleSheet, Image, ScrollView, Pressable } from 'react-native';
+import { View, Text, StyleSheet, Image, ScrollView, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, cfg, setConfig} from './App'; // Importa RootParamList da App.tsx
@@ -7,7 +7,7 @@ import UpcomingRace from "./CountDown"
 import Styles from "../stylesheets/Styles";
 import { Dark, Light } from '../stylesheets/Theme';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { globalThemeControl, imageSource, queryClient} from './App';
+import { imageSource, queryClient} from './App';
 import { NavigationBar } from './NavigationBar';
 import { EventRegister } from 'react-native-event-listeners';
 import Settings from './Settings';
@@ -24,7 +24,22 @@ export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamLis
 
 type RaceProp = {
   darkMode: boolean
-  next_race: Race[]
+  next_race: Race
+}
+
+/**========================================================================
+ *                           DATE FORMATTER
+ *========================================================================**/
+function formatDate(inputDate: string): string {
+  const [year, month, day] = inputDate.split("-");
+  
+  const date = new Date(parseInt(year), parseInt(month) - 1, parseInt(day));
+  
+  const months: string[] = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+  const monthName: string = months[date.getMonth()];
+  
+  const formattedDate: string = `${day} ${monthName} ${year}`;
+  return formattedDate;
 }
 
 /**========================================================================
@@ -32,7 +47,7 @@ type RaceProp = {
  *========================================================================**/
 function Next_Race_Element(props: RaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
-  const next_race = props.next_race[0];
+  const next_race = props.next_race;
   const country = next_race.Circuit.Location.country
   const boldTextColor = !props.darkMode ? 'black' : 'white';
 
@@ -58,32 +73,24 @@ function Next_Race_Element(props: RaceProp): React.JSX.Element {
 }
 
 /**========================================================================
- *                           NEXT RACE COMPONENT
+ *                           SCHEDULE COMPONENT
  *========================================================================**/
 function Race_Element(props: RaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
-  const next_race = props.next_race[0];
+  const next_race = props.next_race;
   const country = next_race.Circuit.Location.country
-  const boldTextColor = !props.darkMode ? 'black' : 'white';
 
+  console.log(next_race.Circuit.circuitName)
   // RENDER _________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10, flexDirection:'column'}]}>
-      
-      {/* View containing circuit info and flag */}
-      <View style = {{flex: 2, flexDirection:'row'}}>
-        <View style = {{flex:3, flexDirection:'column'}}>
-          <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
-          <Text>{country}</Text>
-          <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
-        </View>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {flex: 1, flexDirection:'row'}]}>
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
+        <View style = {{flex:3, flexDirection: 'column', padding: 8, justifyContent: 'center'}}>
+          <Text style = {{color: 'red'}}>Round {next_race.round}</Text>
+          <Text>{next_race.raceName}</Text>
+          <Text>{formatDate(next_race.date)}</Text>
+        </View>
       </View>
-      
-      <View style = {{flex: 1, justifyContent: 'flex-end', paddingBottom: 20}}>
-        <UpcomingRace date={next_race.date} time={next_race.time} darkMode={props.darkMode}/>
-      </View>
-    </View>
   )
 }
 
@@ -180,6 +187,8 @@ const HomePage = () => {
     const [driver_standings_data, setDriverStanding] = useState<driverStandings[]>([]);
     const [team_standings_data, setTeamStanding] = useState<teamStandings[]>([]);
     const [next_race_data, setNextRace] = useState<Race[]>([]);
+    const [season_data, setSeasonData] = useState<Race[]>([]);
+
     const [isLoading, setIsLoading] = useState(true);
     const [isSettingVisible, setSettingVisible] = useState(false);
 
@@ -192,9 +201,14 @@ const HomePage = () => {
 
       const race_Cached_Data: any = queryClient.getQueryData(['next']);
       setNextRace(race_Cached_Data.MRData.RaceTable.Races);
+     
+
+      const season_Cached_Data: any = queryClient.getQueryData(['schedule']);
+      setSeasonData(season_Cached_Data.MRData.RaceTable.Races);
       
       setIsLoading(false);
     }, []);
+
 
   //_________________________________ RENDER ____________________________________________
   if(!isLoading){
@@ -212,19 +226,16 @@ const HomePage = () => {
 
         {/* NEXT RACE */}
         <View style = {{flex: 1.5}}>
-          <Next_Race_Element darkMode={darkMode} next_race={next_race_data}/>
+          <Next_Race_Element darkMode={darkMode} next_race={next_race_data[0]}/>
         </View>
 
         {/* Next 5 RACES */}
-        {/* <View style = {{flex: 1.5}}>
-          {driver_standings_data.slice(0, 5).map( 
-            race_data => 
-          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.navigate('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
-            <Race_Element darkMode={darkMode} next_race={race_data}/>
-          </Pressable>
-        )}
+        <ScrollView style = {{flex: 1}} horizontal={true}>
           
-        </View> */}
+          {season_data.slice(next_race_data[0].round, +next_race_data[0].round + 5).map(
+            race_data => <Race_Element key = {race_data.round} darkMode={darkMode} next_race={race_data}/>
+        )}
+        </ScrollView>
         
         {/* DRIVER STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
