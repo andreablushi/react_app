@@ -103,28 +103,36 @@ function Schedule({route}: any): React.JSX.Element {
   const [textInput, setTextInput] = useState("");
   const [search, setSearch] = useState(false);
   const navigation = useNavigation<HomePageNavigationProp>();
+  
+  let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
+ 
+  
+  // data fetching
+  const getRace = async () => {
+    console.log(year);
+    try {
+      console.log("retrieving races");
+      const response= await axios.get(apiUrl);
+      // const data = await response.json();
+      setRace(response.data.MRData.RaceTable.Races);
+    } catch (error){
+      console.error(error);
+    }
+  }
+  
+  
 
   useEffect(() => {
-
-    const season_data: any = queryClient.getQueryData(['seasons']);
-    setSeason(season_data.MRData.SeasonTable.Seasons.reverse());
-
-    const schedule_data: any = queryClient.getQueryData(['schedule']);
-    console.log(schedule_data)
-    setRace(schedule_data.MRData.RaceTable.Races);
-  }, [])
-
-/*   //------ valid year check --------------------
-    const verifyAndChange = () => {
-      const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
-      pattern.test(textInput) ? (
-        setYear(parseInt(textInput, 10)),
-        setSearch(false)
-      ) : console.log();
-    }
-
-  //-------------------------------------------- */
-
+    const response: any = queryClient.getQueryData(['seasons']);
+    setSeason(response.MRData.SeasonTable.Seasons.reverse());
+  
+    year !== 2024
+      ? getRace()
+      : (() => {
+          const schedule_data: any = queryClient.getQueryData(['schedule']);
+          setRace(schedule_data.MRData.RaceTable.Races);
+        })();
+  }, [year]);
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
@@ -136,33 +144,6 @@ function Schedule({route}: any): React.JSX.Element {
               style={[{maxHeight: 30, resizeMode: 'contain', maxWidth: 30, flex: 1, alignSelf: 'center'}]}>  
               </Image>
           </Pressable>
-          {/* <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 10,}}>
-            <TextInput 
-              keyboardType='numeric'
-              maxLength={4}
-              selectTextOnFocus={true}
-              style={{marginHorizontal: 10, color: theme.card.color, fontSize: 20, flex: 1, textAlign: 'right'}}
-              onChangeText={text => setTextInput(text)}
-              onEndEditing={(() => verifyAndChange())}
-            >{year}</TextInput>
-            <Button onPress={() => setSearch(true)} title='O'></Button>
-          </View>
-          <View style={[theme.card,{flex: .9, flexDirection: 'row'}]}>
-            
-            <Dropdown data={seasons} labelField="season" valueField={"season"} value={year.toString()} 
-            onChange={season => {
-              setYear(season.season);
-            }}
-            placeholder={year.toString()}
-            style={[{flex:1, paddingRight: 20}, theme.title_bar]} 
-            placeholderStyle={[theme.title_bar, {textAlign: 'right'}]}
-            selectedTextStyle={[theme.title_bar, {fontSize: 20, textAlign: 'right', paddingRight: 7, fontWeight: '700'}]}
-            itemContainerStyle={[{}, theme.card]}
-            activeColor={theme.title_bar.backgroundColor}
-            itemTextStyle={[{flex: 1, textAlign: 'center', color: theme.card.color, fontSize: 18, fontWeight: '500'}]}
-            containerStyle={[{borderRadius: 10}, theme.card]}
-            ></Dropdown>
-          </View> */}
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
