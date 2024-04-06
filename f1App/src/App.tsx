@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import { NavigationContainer, Theme, useNavigation } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { View, TouchableOpacity, StyleSheet, Image, Dimensions, useColorScheme, AppState} from 'react-native';
 import { StackNavigationProp } from '@react-navigation/stack';
@@ -197,7 +197,7 @@ const App = () => {
   
   
   /*================== THEME =================*/
-
+  
   useEffect(() => {
     initTheme()
     EventRegister.addEventListener('cfg', data => {
@@ -210,6 +210,17 @@ const App = () => {
   }, [])
   const theme = darkMode ? Dark : Light;
 
+  const MyTheme: Theme = {
+    dark: darkMode!,
+    colors: {
+      background: theme.card.backgroundColor,
+      text: theme.card.color,
+      primary: theme.card.backgroundColor,
+      card: theme.card.backgroundColor,
+      border: theme.card.backgroundColor,
+      notification: theme.card.backgroundColor
+    }
+  }
   /*================== API CALLS & METHODS =================*/
 
   const scheduleUrl =  "https://ergast.com/api/f1/2024.json";
@@ -240,8 +251,8 @@ const App = () => {
   /*================== RENDER =================*/
   return (
       <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
-        <SafeAreaProvider>
-        <NavigationContainer>
+        <SafeAreaProvider style={{backgroundColor: theme.card.backgroundColor}}>
+        <NavigationContainer theme={MyTheme}>
           <Stack.Navigator>
             <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false, animation: "fade" }} />
             <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "fade" }} />
