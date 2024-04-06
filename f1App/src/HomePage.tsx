@@ -239,9 +239,9 @@ const HomePage = () => {
       setIsLoading(false);
     }, []);
 
-
   //_________________________________ RENDER ____________________________________________
   if(!isLoading){
+    const year: number= parseInt(next_race_data[0].date.slice(0, 4));
     return (  
       <SafeAreaView style={[styles.safeAreaView, theme.card]}>
 
@@ -255,8 +255,9 @@ const HomePage = () => {
         </View>
 
         {/* NEXT RACE */}
-        <View style = {{flex: 1.5}}>
-          <Next_Race_Element darkMode={darkMode} next_race={next_race_data[0]}/>
+        
+        <View style={{ flex: 1.5 }}>
+          <Next_Race_Element darkMode={darkMode} next_race={next_race_data[0]} />
         </View>
 
         {/* Next 5 RACES */}
@@ -281,7 +282,7 @@ const HomePage = () => {
         <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
         {driver_standings_data.slice(0, 5).map( 
           driver_standings_data => 
-          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.navigate('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
+          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.replace('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
             <Driver_Standings_Element  darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
           </Pressable>
         )}
