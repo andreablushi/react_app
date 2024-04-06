@@ -165,11 +165,12 @@ export type RootStackNavigationProp = StackNavigationProp<RootStackParamList>;
  *========================================================================**/
 export const StartingScreen = () => {
   const navigation = useNavigation<RootStackNavigationProp>();
-  
+  const [darkMode, setDarkMode] = useState(cfg.darkMode);
+  const theme = darkMode ? Dark : Light;
   return (
-    <View style={styles.starting_container}>
+    <View style={[styles.starting_container, {backgroundColor: theme.card.backgroundColor}]}>
       <TouchableOpacity onPress={() => navigation.replace('HomePage')}>
-        <Image source={require('../img/starting-image.jpg')} style={styles.starting_image} />
+        <Image source={require('../img/starting-image.jpg')} style={[styles.starting_image, {backgroundColor: theme.card.backgroundColor}]} />
       </TouchableOpacity>
     </View>
   );

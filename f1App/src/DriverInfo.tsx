@@ -196,11 +196,11 @@ function Driver_Basic_Info_Component(prop: DriverProps) : React.JSX.Element{
     return (
         <View style={[ theme.divisor, {flexDirection: 'row', paddingHorizontal: 15, paddingVertical: 10,}, theme.title_bar]}>
             <View style={{flex: 3}}>
-              <Text style={{fontSize: 26, fontWeight: '400'}}>{driver.givenName}</Text>
-              <Text style={{fontSize: 30, fontWeight: '800'}}>{driver.familyName}</Text>
-              <Text style={{fontSize: 22}}>{driver.permanentNumber}</Text>
-              <Text style={{fontSize: 16}}>{driver.nationality}</Text>
-              <Text>{driver.dateOfBirth}</Text>
+              <Text style={{fontSize: 26, fontWeight: '400', color: theme.card.color}}>{driver.givenName}</Text>
+              <Text style={{fontSize: 30, fontWeight: '800', color: theme.card.color}}>{driver.familyName}</Text>
+              <Text style={{fontSize: 22, color: theme.card.color}}>{driver.permanentNumber}</Text>
+              <Text style={{fontSize: 16, color: theme.card.color}}>{driver.nationality}</Text>
+              <Text style={{color: theme.card.color}}>{driver.dateOfBirth}</Text>
             </View>
             <View style={{flex: 2, alignItems: 'center', justifyContent: 'center'}}>
               <Image source={imageSource.getDriverSide(driver.familyName)} style={{ resizeMode: 'contain', width: 140, height: 140}}></Image>
@@ -301,7 +301,7 @@ export default function DriverInfo ({route}: any) {
               
               //If found, load the Driver_Team_Component and current season results
               <View>
-              <Pressable onPress={() =>  navigation.navigate("TeamInfo", {team: teamData.constructorId})}>
+              <Pressable onPress={() =>  navigation.replace("TeamInfo", {team: teamData.constructorId})}>
                 <Driver_Team_Component darkMode={darkMode} team={teamData} />
               </Pressable>
               <Text style={[theme.card, { fontSize: 22, fontWeight: '800', paddingVertical: 10}]}> Current season result: </Text>

@@ -86,7 +86,7 @@ function Next_Race_Element(props: RaceProp): React.JSX.Element {
       <View style = {{flex: 2, flexDirection:'row'}}>
         <View style = {{flex:3, flexDirection:'column'}}>
           <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
-          <Text>{country}</Text>
+          <Text style={{color: theme.card.color}}>{country}</Text>
           <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
         </View>
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
