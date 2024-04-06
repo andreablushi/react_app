@@ -59,7 +59,8 @@ export default function Settings (props: Props) {
     fadeIn();
   }, [])
   
-
+  /*================== DYNAMIC STYLES =================*/
+  
   const windowWidth = Dimensions.get('window').width;
   const windowHeight = Dimensions.get('window').height;
 
