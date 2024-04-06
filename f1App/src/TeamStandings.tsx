@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
 import { NavigationBar } from './NavigationBar';
 import {
+  Animated,
   Image,
   Pressable,
   SafeAreaView,
@@ -12,6 +13,7 @@ import {
 } from 'react-native';
 
 import { cfg, globalThemeControl, imageSource, queryClient } from './App';
+import { faD } from '@fortawesome/free-solid-svg-icons';
 
 /*Defining the type teamStandings
     position: Position, in the driver rankings
@@ -70,7 +72,23 @@ function Team_standings({navigation}: any): React.JSX.Element {
   useEffect(() => {
     const constructor_Cached_Data : any = queryClient.getQueryData(['teamStandings']);
     setConstructorStanding(constructor_Cached_Data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
+    setLoading(false);
   }, []);
+
+  /*================== ANIMAZIONE =================*/
+  const [loading, setLoading] = useState(true)
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+  useEffect(() => {
+    fadeIn();
+  }, [loading])
 
   return (
       <SafeAreaView style={[theme.card, {flex: 1}]}>
@@ -88,11 +106,11 @@ function Team_standings({navigation}: any): React.JSX.Element {
             - For every position, it will call the ConstructorElement funcion, for getting the element (name, image, points...) for the single team
             - By clicking on the element, the user will get redirected to the single team info
           */}
-          <ScrollView>
+          <Animated.ScrollView style={{opacity: fadeAnim}}>
             {constructorStandings.map( constructorStandings => <Pressable key={constructorStandings.position} onPress={() => {navigation.navigate("TeamInfo", {team: constructorStandings.Constructor.constructorId})}}>
                 <TeamElement darkMode={darkMode} team_standing={constructorStandings}></TeamElement>
             </Pressable>)}
-          </ScrollView>
+          </Animated.ScrollView>
         </View>
         <NavigationBar/>
       </SafeAreaView>

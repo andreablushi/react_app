@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
+import React, { useEffect, useRef, useState } from "react";
+import { Animated, Image, Pressable, SafeAreaView, ScrollView, Text, View } from "react-native";
 import { Race } from "./Schedule";
 import Styles from "../stylesheets/Styles"
 import { Light, Dark } from "../stylesheets/Theme";
@@ -88,6 +88,20 @@ export default function RaceResult ({route}: any) {
     getResults();
   }, []);
 
+  /*================== ANIMAZIONE =================*/
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+  useEffect(() => {
+    fadeIn();
+  }, [loading])
   // render
   return (
     <SafeAreaView style={{backgroundColor: theme.title_bar.backgroundColor, flex: 1}}>
@@ -108,12 +122,12 @@ export default function RaceResult ({route}: any) {
         </View>
       <View style={{backgroundColor: theme.card.backgroundColor, flex: 9}}>
         <Text style={[theme.card, { fontSize: 20, fontFamily:'Formula1-Bold_web', padding: 10, textAlign:"center" }]}> Results </Text>
-        <ScrollView style={{backgroundColor: theme.card.backgroundColor}}>
+        <Animated.ScrollView style={{backgroundColor: theme.card.backgroundColor, opacity: fadeAnim}}>
         {results != undefined ? results.map( result => <Pressable key={result.Driver.driverId} onPress={() => navigation.replace("DriverInfo", {driver: result.Driver.driverId})}>
             <Driver result={result} darkMode={darkMode}></Driver>
           </Pressable>) : <Text style={[Styles.notFoundText, theme.card]}>Informations about this race{"\n"} are not available</Text>}
         
-        </ScrollView>
+        </Animated.ScrollView>
       </View> 
       <NavigationBar/>
     </SafeAreaView>

@@ -1,6 +1,7 @@
-import React, {useEffect, useState } from 'react';
+import React, {useEffect, useRef, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import {
+  Animated,
   Image,
   Pressable,
   SafeAreaView,
@@ -17,6 +18,7 @@ import { cfg, globalThemeControl, imageSource, queryClient } from './App';
 import { NavigationBar } from './NavigationBar';
 import axios, { Axios, AxiosResponse } from 'axios';
 import Search from './Search';
+import { faD } from '@fortawesome/free-solid-svg-icons';
 
 export type Race = {
   round: number,
@@ -69,9 +71,9 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const month = race.date.slice(5, 7);
   const year = race.date.slice(0, 4);
   const date = day + "/" + month + "/" + year;
- 
+  
   return (
-      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7}, theme.divisor]}>
+      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7, }, theme.divisor]}>
         <View>
           <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
@@ -123,6 +125,7 @@ function Schedule({route}: any): React.JSX.Element {
   
 
   useEffect(() => {
+    setLoading(true)
     const response: any = queryClient.getQueryData(['seasons']);
     setSeason(response.MRData.SeasonTable.Seasons.reverse());
   
@@ -132,7 +135,32 @@ function Schedule({route}: any): React.JSX.Element {
           const schedule_data: any = queryClient.getQueryData(['schedule']);
           setRace(schedule_data.MRData.RaceTable.Races);
         })();
+    setLoading(false)
   }, [year]);
+
+  /*================== ANIMAZIONE =================*/
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  const fadeOut = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 0,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    fadeIn();
+  }, [loading])
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
@@ -145,14 +173,14 @@ function Schedule({route}: any): React.JSX.Element {
               </Image>
           </Pressable>
         </View>
-        <View style={[{flex: 10}]}>
-          <ScrollView>
+        <View style={[{flex: 10, }]}>
+          <Animated.ScrollView style={{opacity:fadeAnim}}>
             {race.map( race => <Pressable key={race.round}
               onPress={() => {navigation.navigate("RaceResult", {race: race, season: year})}}
             >
               <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
             </Pressable>)}
-          </ScrollView>
+          </Animated.ScrollView>
         </View>
         {search ? <Search 
                     setSearch={setSearch} 

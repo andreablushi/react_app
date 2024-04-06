@@ -1,8 +1,9 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Styles from "../stylesheets/Styles";
 import { Light, Dark } from "../stylesheets/Theme";
 import { NavigationBar } from './NavigationBar';
 import {
+  Animated,
   Image,
   Pressable,
   SafeAreaView,
@@ -50,9 +51,10 @@ function DriverElement(props: Props): React.JSX.Element {
   const result= props.driver_standing;
   const driver = result.Driver;
   const team = result.Constructors[0];
-  
+
+   /*================== RENDER =================*/
   return (
-    <View style={[Styles.driverResultWrapper, theme.card, theme.divisor]}>
+    <View style={[Styles.driverResultWrapper, theme.card, theme.divisor, ]}>
       <Text style={[Styles.positionResult, theme.card, {flex:1}]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card, {flex: 5}]}>
@@ -81,8 +83,24 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
     /*Tentativo data Caching*/
     const driver_Cached_Data : any = queryClient.getQueryData(['driverStandings']);
     setDriverStanding(driver_Cached_Data.MRData.StandingsTable.StandingsLists[0].DriverStandings);
+    setLoading(false);
   }, []);
 
+  /*================== ANIMAZIONE =================*/
+  const [loading, setLoading] = useState(true);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 300,
+      useNativeDriver: true,
+    }).start();
+  };
+  useEffect(() => {
+    fadeIn();
+  }, [loading])
+  
 
   return (
       <SafeAreaView style={[theme.card, {flex: 1}]}>
@@ -100,11 +118,11 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
             - For evry position, it will call the DriverElement funcion, for getting the element (name, image, points...) for the single driver
             - By clicking on the element, the user will get redirected to the single driver info
           */}
-          <ScrollView>
+          <Animated.ScrollView style={{opacity: fadeAnim}}>
             {driver_standings_data.map( driver_standings_data => <Pressable key={driver_standings_data.Driver.driverId} onPress={() => {navigation.replace("DriverInfo", {driver: driver_standings_data.Driver.driverId})}}>
                 <DriverElement darkMode={darkMode} driver_standing={driver_standings_data}></DriverElement>
             </Pressable>)}
-          </ScrollView>
+          </Animated.ScrollView>
         </View>
         <NavigationBar/>
       </SafeAreaView>
