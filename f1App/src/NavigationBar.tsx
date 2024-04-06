@@ -24,17 +24,17 @@ export const NavigationBar = ({}) => {
             <Image source={darkMode ? require('../img/icon/dark/homepage.png') : require('../img/icon/light/homepage.png')} style={styles.icon} />
           </View>
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => navigation.navigate('Schedule')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <TouchableOpacity onPress={() => navigation.replace('Schedule')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View style={{flex: 1, paddingVertical: 14}}>
             <Image source={darkMode ? require('../img/icon/dark/schedule.png') : require('../img/icon/light/schedule.png')} style={styles.icon} />
           </View>
         </TouchableOpacity>
-        <Pressable onPress={() => navigation.navigate('Drivers')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Pressable onPress={() => navigation.replace('Drivers')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View style={{flex: 1, paddingVertical: 14}}>
             <Image source={darkMode ? require('../img/icon/dark/drivers.png') : require('../img/icon/light/drivers.png')} style={styles.icon} />
           </View>
         </Pressable>
-        <Pressable onPress={() => navigation.navigate('Teams')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
+        <Pressable onPress={() => navigation.replace('Teams')} style={{flex: 1, alignItems: 'center', justifyContent: 'center'}}>
           <View style={{flex: 1, paddingVertical: 14}}>
             <Image source={darkMode ? require('../img/icon/dark/teams.png') : require('../img/icon/light/teams.png')} style={styles.icon} />
           </View>

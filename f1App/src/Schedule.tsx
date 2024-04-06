@@ -71,9 +71,26 @@ function RaceSchedule(props: Props,): React.JSX.Element {
   const month = race.date.slice(5, 7);
   const year = race.date.slice(0, 4);
   const date = day + "/" + month + "/" + year;
+
+  /*================== ANIMAZIONE =================*/
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+  
+  useEffect(() => {
+    fadeIn()
+  }, [])
   
   return (
-      <View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7, }, theme.divisor]}>
+      <Animated.View style={[Styles.raceScheduleContainer, theme.card, {flex: 1, paddingVertical: 7, opacity:fadeAnim}, theme.divisor]}>
         <View>
           <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70,  flex: 1}]}></Image>
         </View>
@@ -83,7 +100,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
           <Text style={[Styles.section14, theme.card]}>{race.Circuit.circuitName}</Text>
         </View>
         <Text style={[{textAlign: 'right', flex: 6, paddingRight: 10},  Styles.section14, styles.highlight, theme.card,]}>{date}</Text>
-    </View>
+    </Animated.View>
   );
 };
 
@@ -138,29 +155,7 @@ function Schedule({route}: any): React.JSX.Element {
     setLoading(false)
   }, [year]);
 
-  /*================== ANIMAZIONE =================*/
   
-  const fadeAnim = useRef(new Animated.Value(0)).current;
-
-  const fadeIn = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 1,
-      duration: 300,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  const fadeOut = () => {
-    Animated.timing(fadeAnim, {
-      toValue: 0,
-      duration: 250,
-      useNativeDriver: true,
-    }).start();
-  };
-
-  useEffect(() => {
-    fadeIn();
-  }, [loading])
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
@@ -174,13 +169,13 @@ function Schedule({route}: any): React.JSX.Element {
           </Pressable>
         </View>
         <View style={[{flex: 10, }]}>
-          <Animated.ScrollView style={{opacity:fadeAnim}}>
+          <ScrollView>
             {race.map( race => <Pressable key={race.round}
               onPress={() => {navigation.navigate("RaceResult", {race: race, season: year})}}
             >
               <RaceSchedule darkMode={darkMode} race={race}></RaceSchedule>
             </Pressable>)}
-          </Animated.ScrollView>
+          </ScrollView>
         </View>
         {search ? <Search 
                     setSearch={setSearch} 

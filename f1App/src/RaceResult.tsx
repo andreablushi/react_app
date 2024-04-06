@@ -8,6 +8,7 @@ import { HomePageNavigationProp } from "./HomePage";
 import { cfg, globalThemeControl, imageSource } from "./App";
 import { NavigationBar } from "./NavigationBar";
 import axios from "axios";
+import { faBoxOpen } from "@fortawesome/free-solid-svg-icons";
 
 type Result = {
   number: number // driver number
@@ -95,7 +96,7 @@ export default function RaceResult ({route}: any) {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 300,
+      duration: 1000,
       useNativeDriver: true,
     }).start();
   };
@@ -143,9 +144,25 @@ function Driver(props: Props) {
   const theme = props.darkMode ? Dark : Light;
   const time = result.status.toLowerCase() === "finished" ? result.Time.time : "DNF (" + result.status + ")";
 
+
+  /*================== ANIMAZIONE =================*/
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 200,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    fadeIn();
+  }, [])
   // render
   return (
-    <View style={[Styles.driverResultWrapper, theme.card, theme.divisor]}>
+    <Animated.View style={[Styles.driverResultWrapper, theme.card, theme.divisor, {opacity: fadeAnim}]}>
       <Text style={[Styles.positionResult, theme.card, {flex:1.5}]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card]}>
@@ -153,6 +170,6 @@ function Driver(props: Props) {
         <Text style={[Styles.teamTextResult, theme.card]}>{team.name}</Text>
       </View>
       <Text style={[Styles.timeResult, theme.card]}>{time}</Text>
-    </View>
+    </Animated.View>
   )
 }

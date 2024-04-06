@@ -82,7 +82,7 @@ function Team_standings({navigation}: any): React.JSX.Element {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 300,
+      duration: 200,
       useNativeDriver: true,
     }).start();
   };
