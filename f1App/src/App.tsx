@@ -128,6 +128,10 @@ export class imageSource {
     const imageObject = ImagesDB['team_car'].find(team => team.team_name.toLowerCase() === team_id.toLowerCase());
     return imageObject ? imageObject.src : ImagesDB.notfound;
   }
+  public static getCircuit(circuitName: string){
+    const imageObject = ImagesDB['circuits'].find(circuit => circuit.name.toLowerCase() === circuitName.toLowerCase());
+    return imageObject ? imageObject.src : ImagesDB.notfound;
+  }
 }
 /**========================================================================
  **                          TYPES

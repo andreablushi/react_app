@@ -29,6 +29,7 @@ export type Race = {
     }
   }
   date: string
+  time: string
 }
 export type Season = {
   season: number,
@@ -79,14 +80,13 @@ function RaceSchedule(props: Props,): React.JSX.Element {
           <Text style={[Styles.section14, theme.card]}>{race.raceName}</Text>
           <Text style={[Styles.section14, theme.card]}>{race.Circuit.circuitName}</Text>
         </View>
-        <Text style={[{textAlign: 'right', flex: 5, paddingRight: 10},  Styles.section14, styles.highlight, theme.card,]}>{date}</Text>
+        <Text style={[{textAlign: 'right', flex: 6, paddingRight: 10},  Styles.section14, styles.highlight, theme.card,]}>{date}</Text>
     </View>
   );
 };
 
   
 function Schedule({route}: any): React.JSX.Element {
-
 
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(cfg.darkMode);
@@ -103,14 +103,13 @@ function Schedule({route}: any): React.JSX.Element {
   const [textInput, setTextInput] = useState("");
   const [search, setSearch] = useState(false);
   const navigation = useNavigation<HomePageNavigationProp>();
-
   
-  // control variables
   let apiUrl = "https://ergast.com/api/f1/"+ year +".json";
-  const seasonUrl = "https://ergast.com/api/f1/seasons.json?limit=75";
+ 
   
   // data fetching
   const getRace = async () => {
+    console.log(year);
     try {
       console.log("retrieving races");
       const response= await axios.get(apiUrl);
@@ -124,64 +123,27 @@ function Schedule({route}: any): React.JSX.Element {
   
 
   useEffect(() => {
-    // getRace();
     const response: any = queryClient.getQueryData(['seasons']);
     setSeason(response.MRData.SeasonTable.Seasons.reverse());
-  }, [])
-
-  //------ valid year check --------------------
-    const verifyAndChange = () => {
-      const pattern = new RegExp("20[0-1][0-9]|19[5-9][0-9]|202[0-4]");
-      pattern.test(textInput) ? (
-        setYear(parseInt(textInput, 10)),
-        setSearch(false)
-      ) : console.log();
-    }
-
-  //--------------------------------------------
-
-  useEffect(() => {
-    getRace();
-  }, [year])
-
+  
+    year !== 2024
+      ? getRace()
+      : (() => {
+          const schedule_data: any = queryClient.getQueryData(['schedule']);
+          setRace(schedule_data.MRData.RaceTable.Races);
+        })();
+  }, [year]);
   
   return (
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 60,  minHeight: 60}, styles.topBar]}>
-          <Text style={[styles.topBarText, {color: theme.title_bar.color, flex: 5}]}>Schedule for {year}</Text>
+          <Text style={[Styles.topBarText, theme.title_bar, {flex: 5, textAlign:'left', paddingLeft:10}]}>Schedule {year}</Text>
           <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
             <Image 
               source={darkMode ? require("../img/icon/dark/magni.png") : require("../img/icon/light/magni.png")}
               style={[{maxHeight: 30, resizeMode: 'contain', maxWidth: 30, flex: 1, alignSelf: 'center'}]}>  
               </Image>
           </Pressable>
-          {/* <View  style={{flex: 1, backgroundColor: theme.card.backgroundColor, marginVertical: 10, borderRadius: 10,}}>
-            <TextInput 
-              keyboardType='numeric'
-              maxLength={4}
-              selectTextOnFocus={true}
-              style={{marginHorizontal: 10, color: theme.card.color, fontSize: 20, flex: 1, textAlign: 'right'}}
-              onChangeText={text => setTextInput(text)}
-              onEndEditing={(() => verifyAndChange())}
-            >{year}</TextInput>
-            <Button onPress={() => setSearch(true)} title='O'></Button>
-          </View>
-          <View style={[theme.card,{flex: .9, flexDirection: 'row'}]}>
-            
-            <Dropdown data={seasons} labelField="season" valueField={"season"} value={year.toString()} 
-            onChange={season => {
-              setYear(season.season);
-            }}
-            placeholder={year.toString()}
-            style={[{flex:1, paddingRight: 20}, theme.title_bar]} 
-            placeholderStyle={[theme.title_bar, {textAlign: 'right'}]}
-            selectedTextStyle={[theme.title_bar, {fontSize: 20, textAlign: 'right', paddingRight: 7, fontWeight: '700'}]}
-            itemContainerStyle={[{}, theme.card]}
-            activeColor={theme.title_bar.backgroundColor}
-            itemTextStyle={[{flex: 1, textAlign: 'center', color: theme.card.color, fontSize: 18, fontWeight: '500'}]}
-            containerStyle={[{borderRadius: 10}, theme.card]}
-            ></Dropdown>
-          </View> */}
         </View>
         <View style={[{flex: 10}]}>
           <ScrollView>
@@ -217,15 +179,7 @@ const styles = StyleSheet.create({
   highlight: {
     fontWeight: '700',
   },
-  topBarText: {
-    flex: 1,
-    fontSize: 30,
-    textAlignVertical: 'center',
-    marginHorizontal: 10,
-    fontWeight: '700',
-    color: 'white'
-    
-  }, topBar: {
+   topBar: {
     height: 70,  
     flex:1,
     flexDirection: 'row'

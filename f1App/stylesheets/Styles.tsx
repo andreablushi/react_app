@@ -37,7 +37,7 @@ const Styles = StyleSheet.create({
     width: 30,
     textAlignVertical: 'center',
     fontSize: 20,
-    fontWeight: '800',
+    fontFamily:'Formula1-Black'
   },
   driverResult: {
     flex: 6,
@@ -59,14 +59,14 @@ const Styles = StyleSheet.create({
   },
   constructorTextResult: { // Style for team standings
     fontSize: 17,
-    fontWeight: '600',
+    fontWeight: '800',
     textAlignVertical: 'center',
     flex: 1
   },
   pointResult:{
     paddingRight: 5,
     textAlignVertical: 'center',
-    fontWeight: '500'
+  
   },
   timeResult: {
     paddingRight: 5,
@@ -87,12 +87,11 @@ const Styles = StyleSheet.create({
   },
   topBarText: {
     flex: 1,
-    fontSize: 30,
+    fontSize: 27,
     fontFamily:'Formula1-Bold-4',
     textAlignVertical: 'center',
     textAlign:'center',
-    color: 'white'
-    
+    color: 'white',
   },
   topBar: {
     height: 70,  
@@ -128,19 +127,6 @@ const Styles = StyleSheet.create({
     textShadowOffset: {height: 1, width: 1},
     paddingVertical: 20
   },
-/*   separator:{ 
-    borderBottomWidth: 4,
-     borderBottomColor: '#5A5A5A', 
-     marginVertical: 10 
-  },
-  light_separator:{ 
-    borderBottomWidth: 4,
-    borderBottomColor: '#5A5A5A',
-    marginTop: 10,
-    marginBottom: 10,
-    marginLeft: 20,
-    marginRight: 20,
-  }, */
   header_arrow:{
     maxHeight: 25,
     maxWidth: 25, 

@@ -103,7 +103,6 @@ export default function Settings (props: Props) {
           </Text>
         </Pressable>
         <View style={[{flex: 2}]}>
-          <Text style={[css.themeText, {textAlign: 'center', fontSize: 18, fontWeight: '400', textAlignVertical: 'top', color: theme.card.color}]}>Current Theme:</Text>
           <View style={[{flexDirection: 'row', justifyContent: 'center'}]}>
             <Text style={[{color: theme.card.color}, css.themeText]}>{darkMode ? 'Dark' : 'Light'}</Text>
             <View style={[{ marginLeft: 5}]}>

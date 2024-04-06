@@ -13,7 +13,7 @@ import {
 
 import { cfg, globalThemeControl, imageSource, queryClient } from './App';
 
-/*Defining the type driverStandings
+/*Defining the type teamStandings
     position: Position, in the driver rankings
     Points: Number of point, in the current season
     Constructor: {
@@ -21,7 +21,7 @@ import { cfg, globalThemeControl, imageSource, queryClient } from './App';
       name: name of the team
     }
 */
-type teamStandings = {
+ export type teamStandings = {
   position: number;
   points: number;
   wins: number;
@@ -31,7 +31,7 @@ type teamStandings = {
   }
 }
 /*Type props, used for passing the parameters to the TeamElement function*/
-type Props = {
+export type Props = {
   darkMode: boolean
   team_standing: teamStandings
 }
@@ -58,38 +58,18 @@ function TeamElement(props: Props): React.JSX.Element {
 
 
 /*Main function of this page*/
-function Team_standings({navigation, route}: any): React.JSX.Element {
+function Team_standings({navigation}: any): React.JSX.Element {
   // -------- THEME -------------------------------------------------------------
   const [darkMode, setDarkMode] = useState(cfg.darkMode);
   const theme = darkMode ? Dark : Light;
   //-----------------------------------------------------------------------------
  
   //Hook for the fetch of the data
-  const [constructorStandings, setConstructorStandings] = useState<teamStandings[]>([]);
-  //Hook for the loading state, setted to true
-  const [loading, setLoading] = useState(true);
-  
-  //Api url, fetching the constructorStanding from the current season
-  const apiUrl = "https://ergast.com/api/f1/current/constructorStandings.json";
-
-  //Fetching the drivers data from the api
-  const getData =  async() => {
-    try {
-      const response = await fetch(apiUrl);
-      const data = await response.json();
-      const standings = data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings;
-      setConstructorStandings(standings);
-      console.log("retrieving data");
-    } catch (error){
-      console.error(error);
-    } finally {
-      //Only once having successufuly completed the fetch instruction, it will set the loading state to false
-      setLoading(false);
-    }
-  };
-  //Fetching the data once the page gets loaded
+  const [constructorStandings, setConstructorStanding] = useState<teamStandings[]>([]);
+  //Fetching the teams data from the api
   useEffect(() => {
-    getData();
+    const constructor_Cached_Data : any = queryClient.getQueryData(['teamStandings']);
+    setConstructorStanding(constructor_Cached_Data.MRData.StandingsTable.StandingsLists[0].ConstructorStandings);
   }, []);
 
   return (
@@ -105,7 +85,7 @@ function Team_standings({navigation, route}: any): React.JSX.Element {
         </View>
         <View style={[{flex: 10}]}>
           {/*Creating the section where the constructor standings will be shown:
-            - For every position, it will call the COnstructorElement funcion, for getting the element (name, image, points...) for the single team
+            - For every position, it will call the ConstructorElement funcion, for getting the element (name, image, points...) for the single team
             - By clicking on the element, the user will get redirected to the single team info
           */}
           <ScrollView>

@@ -187,6 +187,98 @@ const ImagesDB =
     },
   ],
   "circuits": [
+    {
+      "name": "Albert Park Grand Prix Circuit",
+      "src": require("../img/circuits/albert_park.png"),
+    }, 
+    {
+      "name": "Circuit of the Americas",
+      "src": require("../img/circuits/americas.png"),
+    },
+    {
+      "name": "Bahrain International Circuit",
+      "src": require("../img/circuits/bahrain.png"),
+    },
+    {
+      "name": "Baku City Circuit",
+      "src": require("../img/circuits/baku.png"),
+    },
+    {
+      "name": "Circuit de Barcelona-Catalunya",
+      "src": require("../img/circuits/catalunya.png"),
+    },
+    {
+      "name": "Hungaroring",
+      "src": require("../img/circuits/hungaroring.png"),
+    },
+    {
+      "name": "Autodromo Enzo e Dino Ferrari",
+      "src": require("../img/circuits/imola.png"),
+    },
+    {
+      "name": "Autódromo José Carlos Pace",
+      "src": require("../img/circuits/interlagos.png"),
+    },
+    {
+      "name": "Jeddah Corniche Circuit",
+      "src": require("../img/circuits/jeddah.png"),
+    },
+    {
+      "name": "Losail International Circuit",
+      "src": require("../img/circuits/losail.png"),
+    },
+    {
+      "name": "Marina Bay Street Circuit",
+      "src": require("../img/circuits/yas_marina.png"),
+    },
+    {
+      "name": "Miami International Autodrome",
+      "src": require("../img/circuits/miami.png"),
+    },
+    {
+      "name": "Circuit de Monaco",
+      "src": require("../img/circuits/monaco.png"),
+    },
+    {
+      "name": "Autodromo Nazionale di Monza",
+      "src": require("../img/circuits/monza.png"),
+    },
+    {
+      "name": "Red Bull Ring",
+      "src": require("../img/circuits/red_bull_ring.png"),
+    },
+    {
+      "name": "Autódromo Hermanos Rodríguez",
+      "src": require("../img/circuits/rodriguez.png"),
+    },
+    {
+      "name": "Shanghai International Circuit",
+      "src": require("../img/circuits/shanghai.png"),
+    },
+    {
+      "name": "Silverstone Circuit",
+      "src": require("../img/circuits/silverstone.png"),
+    },
+    {
+      "name": "Circuit de Spa-Francorchamps",
+      "src": require("../img/circuits/spa.png"),
+    },
+    {
+      "name": "Suzuka Circuit",
+      "src": require("../img/circuits/suzuka.png"),
+    },
+    {
+      "name": "Las Vegas Strip Street Circuit",
+      "src": require("../img/circuits/vegas.png"),
+    },
+    {
+      "name": "Circuit Gilles Villeneuve",
+      "src": require("../img/circuits/villeneuve.png"),
+    },
+    {
+      "name": "Circuit Park Zandvoort",
+      "src": require("../img/circuits/zandvoort.png"),
+    },
   ],
   "flags": [
     {
