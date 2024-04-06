@@ -152,7 +152,9 @@ const Styles = StyleSheet.create({
     paddingLeft: 8,
     paddingBottom: 0,
     borderWidth: 2,
-    borderRadius: 15
+    borderRadius: 15,
+    alignContent: 'center',
+    justifyContent: 'center'
   }
 });
 

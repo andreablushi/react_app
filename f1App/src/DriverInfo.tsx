@@ -4,7 +4,7 @@ import { Light, Dark } from "../stylesheets/Theme";
 
 //Import used to implement navigation
 import { useNavigation } from "@react-navigation/native";
-import { HomePageNavigationProp } from "./HomePage";
+import { HomePageNavigationProp, addPositionSuffix } from "./HomePage";
 
 import {
   ActivityIndicator,
@@ -116,7 +116,7 @@ function Driver_Season_Results_Component(prop: ResultProps) : React.JSX.Element{
           textAlignVertical: 'bottom'
           }]}>Round: {race.round}</Text>
           <Text style={[Styles.sectionDescription, theme.card, {color: theme.title_bar.color}]}>{race.raceName}</Text>
-          <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'left', flex: 1}]}>Position: {result.position}</Text>
+          <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'left', flex: 1}]}>Position: {addPositionSuffix(result.position)}</Text>
         </View>
         <View style={{flex: 1, flexDirection: 'row'}}>
           <Text style={[Styles.sectionDescription, theme.card, {textAlign: 'left', flex: 2, textAlignVertical: 'center'}]}>Points: </Text>

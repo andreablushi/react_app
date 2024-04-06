@@ -28,6 +28,33 @@ type RaceProp = {
 }
 
 /**========================================================================
+ *                           PSOITION SUFFIX METHOD
+ *========================================================================**/
+export const addPositionSuffix = (position: number) => {
+  let suffix: string;
+  switch (position <= 20) {
+    case position == 1 || (position > 20 && position % 10 == 1): 
+      suffix = 'st';
+      break;
+
+    case position == 2 || (position > 20 && position % 10 == 2): 
+      suffix = 'nd';
+      break;
+
+    case position == 3 || (position > 20 && position % 10 == 3): 
+      suffix = 'rd';
+      break;
+
+    default:
+      suffix = 'th';
+      break;
+  }
+
+  return position.toString() + suffix
+
+}
+
+/**========================================================================
  *                           DATE FORMATTER
  *========================================================================**/
 function formatDate(inputDate: string): string {
@@ -73,7 +100,7 @@ function Next_Race_Element(props: RaceProp): React.JSX.Element {
 }
 
 /**========================================================================
- *                           SCHEDULE COMPONENT
+ *                           NEXT 5 RACES COMPONENT
  *========================================================================**/
 function Race_Element(props: RaceProp): React.JSX.Element {
   const theme = props.darkMode ? Dark : Light;
@@ -81,12 +108,12 @@ function Race_Element(props: RaceProp): React.JSX.Element {
   const country = next_race.Circuit.Location.country
 
   console.log(next_race.Circuit.circuitName)
-  // RENDER _________________________________________________________
+  /*================== RENDER =================*/
   return(
-      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {flex: 1, flexDirection:'row'}]}>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 0, flex: 1, flexDirection:'row'}]}>
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
         <View style = {{flex:3, flexDirection: 'column', padding: 8, justifyContent: 'center'}}>
-          <Text style = {{color: 'red'}}>Round {next_race.round}</Text>
+          <Text style = {{color: 'red', fontSize: 17, fontWeight: '600'}}>Round {next_race.round}</Text>
           <Text style = {theme.minortext}>{next_race.raceName}</Text>
           <Text style = {theme.minortext}>{formatDate(next_race.date)}</Text>
         </View>
@@ -107,19 +134,22 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   
   // RENDER _____________________________________________________________
   return(
-      <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {width: 250, justifyContent: 'center'}]}>
         {/* View containing position, name and team*/}
         
-        <View style = {{flexDirection:'column'}}>
+        <View style = {{flexDirection:'column', flex: 1, justifyContent: 'center'}}>
           <View style = {{flex: 1}}>
-            <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
+            <Text style = {{fontSize: 30, fontWeight: '800', color: 'red'}}>{addPositionSuffix(standing.position)}</Text>
           </View>
-          <View style = {[{flex: 1}, theme.horizontalList_element]}>          
+          <View style = {[{flex: 1.5}, theme.horizontalList_element]}>          
             <Text style = {theme.minortext}>{driver.givenName}</Text>
             <Text style = {{fontSize: 20, fontWeight: '700', color: boldTextColor}}>{driver.familyName}</Text>
           </View>
         </View>
-        <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, height: 110, width: 110, resizeMode: 'contain', alignSelf: 'flex-end'}}></Image>
+        <View style={[{flex: 1}]}>
+          <Image source={imageSource.getDriverSide(driver.familyName)} style = {{flex: 1, flexShrink: 1, width: 110, resizeMode: 'contain'}}></Image>
+        </View>
+        
       </View>
   )
 };
@@ -137,19 +167,19 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
 
   // RENDER ___________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element]}>
-      <View style = {{flexDirection:'column'}}>
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {width: 220}]}>
+      <View style = {{flexDirection:'column', flex: 1}}>
         
         <View style = {{flex: 1}}>
-          <Text style = {{fontSize: 40, fontWeight: '800', color: 'red'}}>{standing.position}</Text>
+          <Text style = {{fontSize: 30, fontWeight: '800', color: 'red'}}>{addPositionSuffix(standing.position)}</Text>
         </View>
         
-        <View style = {{flex: 1}}>
+        <View style = {{flex: 1.5}}>
           <Text style = {{ fontSize: 20, fontWeight: '800', color: boldTextColor}}>{team.name}</Text>
           <Text style = {theme.minortext}>{standing.points} pts</Text>
         </View>
       </View>
-      <View >
+      <View style={[{flex: 1}]}>
         <Image source={imageSource.getTeamBadge(team.constructorId)} style = {{flex: 1, height: 76, width: 76, resizeMode: 'contain', marginLeft:20}}></Image>
       </View>
     </View>
@@ -230,8 +260,8 @@ const HomePage = () => {
         </View>
 
         {/* Next 5 RACES */}
-        <ScrollView style = {{flex: 1}} horizontal={true}>
-          
+        <Text style = {[theme.minortext,{fontFamily:'Formula1-Bold_web', letterSpacing: 0.9, paddingLeft: 10}]}>Next 5 rounds</Text>
+        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
           {season_data.slice(next_race_data[0].round, +next_race_data[0].round + 5).map(
             race_data => <Race_Element key = {race_data.round} darkMode={darkMode} next_race={race_data}/>
         )}
@@ -239,7 +269,7 @@ const HomePage = () => {
         
         {/* DRIVER STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {[theme.minortext,{flex: 1}]}>Driver Standing</Text>
+          <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Driver Standings</Text>
           <Pressable
             style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
             onPress={() => navigation.navigate('Drivers')}
@@ -248,7 +278,7 @@ const HomePage = () => {
           </Pressable>
         </View>
 
-        <ScrollView style = {{flex: 1}} horizontal={true}>
+        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
         {driver_standings_data.slice(0, 5).map( 
           driver_standings_data => 
           <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.navigate('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
@@ -260,7 +290,7 @@ const HomePage = () => {
 
         {/* TEAM STANDINGS */}
         <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {[theme.minortext,{flex: 1}]}>Team Standing</Text>
+          <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Team Standings</Text>
           <Pressable
             style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
             onPress={() => navigation.navigate('Teams')}
@@ -269,7 +299,7 @@ const HomePage = () => {
           </Pressable>
         </View>
 
-        <ScrollView style = {{flex: 1}} horizontal={true}>
+        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
           {team_standings_data.slice(0,3).map( 
             team_standings_data =>
             <Pressable key = {team_standings_data.Constructor.constructorId} onPress={() => navigation.navigate("TeamInfo", {team: team_standings_data.Constructor.constructorId})}> 
