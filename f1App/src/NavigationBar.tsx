@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
       flexDirection: 'row',
       justifyContent: 'space-around',
       alignItems: 'center',
-      backgroundColor: 'red',
+      backgroundColor: '#FF1801',
       height: 50
     },
     icon: {

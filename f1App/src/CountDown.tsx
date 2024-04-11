@@ -115,7 +115,7 @@ function UpcomingRace(props: UpcomingRaceProps): React.JSX.Element {
     return(
       <View>
         {loading ? <Text></Text> :
-          <Text style = {[theme.minortext, {fontSize:28, fontFamily:'Formula1-Bold-4', textAlign: 'center'}]}>
+          <Text style = {[theme.minortext, {fontSize:28, fontFamily:'Formula1-Bold-4', textAlign: 'center', textShadowRadius: 2, elevation: 1, textShadowOffset: {width: 1, height: 1}}]}>
             {countdown?.days != 0 ? countdown!.days + 'd ' : ' '}
             {countdown?.hours != 0 ? countdown!.hours + 'h ' : ' '}
             {countdown?.minutes != 0 ? countdown!.minutes + 'm ' : ' '}  

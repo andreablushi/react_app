@@ -151,10 +151,15 @@ const Styles = StyleSheet.create({
     padding: 5,
     paddingLeft: 8,
     paddingBottom: 0,
-    borderWidth: 2,
+
     borderRadius: 15,
     alignContent: 'center',
     justifyContent: 'center'
+  },
+  boxShadow: {
+    elevation: 2,
+    shadowRadius: 2,
+    shadowOffset: {height: 2, width: 2}
   }
 });
 

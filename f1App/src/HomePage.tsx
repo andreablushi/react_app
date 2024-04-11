@@ -80,14 +80,14 @@ function Next_Race_Element(props: RaceProp): React.JSX.Element {
 
   // RENDER _________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 10, flexDirection:'column'}]}>
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, Styles.boxShadow, {padding: 10, flexDirection:'column',}]}>
       
       {/* View containing circuit info and flag */}
       <View style = {{flex: 2, flexDirection:'row'}}>
         <View style = {{flex:3, flexDirection:'column'}}>
           <Text style = {{color: boldTextColor, fontSize: 21, fontWeight: '900'}} >{next_race.raceName}</Text>
           <Text style={{color: theme.card.color}}>{country}</Text>
-          <Text style = {{color: 'red', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
+          <Text style = {{color: '#FF1801', fontSize: 20, fontWeight: '800'}}>Round {next_race.round}</Text>
         </View>
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
       </View>
@@ -110,10 +110,10 @@ function Race_Element(props: RaceProp): React.JSX.Element {
   console.log(next_race.Circuit.circuitName)
   /*================== RENDER =================*/
   return(
-      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {padding: 0, flex: 1, flexDirection:'row'}]}>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, Styles.boxShadow, {padding: 0, flex: 1, flexDirection:'row', }]}>
         <Image source={imageSource.getFlag(country)} style={[{resizeMode:'contain',  width: 70, height:70, alignSelf: 'center', flex: 1}]}></Image>
         <View style = {{flex:3, flexDirection: 'column', padding: 8, justifyContent: 'center'}}>
-          <Text style = {{color: 'red', fontSize: 17, fontWeight: '600'}}>Round {next_race.round}</Text>
+          <Text style = {{color: '#FF1801', fontSize: 17, fontWeight: '600'}}>Round {next_race.round}</Text>
           <Text style = {theme.minortext}>{next_race.raceName}</Text>
           <Text style = {theme.minortext}>{formatDate(next_race.date)}</Text>
         </View>
@@ -134,12 +134,12 @@ function Driver_Standings_Element (props: DriverProp): React.JSX.Element {
   
   // RENDER _____________________________________________________________
   return(
-      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {width: 250, justifyContent: 'center'}]}>
+      <View style = {[Styles.horizontalListElement, theme.horizontalList_element, Styles.boxShadow, {width: 250, justifyContent: 'center'}]}>
         {/* View containing position, name and team*/}
         
         <View style = {{flexDirection:'column', flex: 1, justifyContent: 'center'}}>
           <View style = {{flex: 1}}>
-            <Text style = {{fontSize: 30, fontWeight: '800', color: 'red'}}>{addPositionSuffix(standing.position)}</Text>
+            <Text style = {{fontSize: 30, fontWeight: '800', color: '#FF1801'}}>{addPositionSuffix(standing.position)}</Text>
           </View>
           <View style = {[{flex: 1.5}, theme.horizontalList_element]}>          
             <Text style = {theme.minortext}>{driver.givenName}</Text>
@@ -167,11 +167,11 @@ function Team_Standings_Element (props: TeamProp): React.JSX.Element {
 
   // RENDER ___________________________________________________________
   return(
-    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, {width: 220}]}>
+    <View style = {[Styles.horizontalListElement, theme.horizontalList_element, Styles.boxShadow, {width: 220}]}>
       <View style = {{flexDirection:'column', flex: 1}}>
         
         <View style = {{flex: 1}}>
-          <Text style = {{fontSize: 30, fontWeight: '800', color: 'red'}}>{addPositionSuffix(standing.position)}</Text>
+          <Text style = {{fontSize: 30, fontWeight: '800', color: '#FF1801'}}>{addPositionSuffix(standing.position)}</Text>
         </View>
         
         <View style = {{flex: 1.5}}>
@@ -249,7 +249,7 @@ const HomePage = () => {
         {/* HEADER COMPONENT */}
         <View style={[theme.title_bar, styles.title_container]}>
           <Image source={require('../img/ic_launcher.png')} style={[styles.icon, {flex: 1}]}/>
-          <Text style={[Styles.topBarText, theme.title_bar, { flex: 10, color:'red', margin: 10}]}>FORMULA 1</Text>
+          <Text style={[Styles.topBarText, theme.title_bar, { flex: 10, color:'#FF1801', margin: 10, textShadowRadius: 2, textShadowOffset: {width: 1, height: 1}}]}>FORMULA 1</Text>
           <Pressable onPress={() => setSettingVisible(true)}>
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
           </Pressable>
