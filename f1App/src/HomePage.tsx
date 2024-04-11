@@ -242,6 +242,7 @@ const HomePage = () => {
   //_________________________________ RENDER ____________________________________________
   if(!isLoading){
     const year: number= parseInt(next_race_data[0].date.slice(0, 4));
+  };
     return (  
       <SafeAreaView style={[styles.safeAreaView, theme.card]}>
 
@@ -253,61 +254,63 @@ const HomePage = () => {
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
           </Pressable>
         </View>
-
-        {/* NEXT RACE */}
-        
-        <View style={{ flex: 1.5 }}>
-          <Next_Race_Element darkMode={darkMode} next_race={next_race_data[0]} />
-        </View>
-
-        {/* Next 5 RACES */}
-        <Text style = {[theme.minortext,{fontFamily:'Formula1-Bold_web', letterSpacing: 0.9, paddingLeft: 10}]}>Next 5 rounds</Text>
-        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
-          {season_data.slice(next_race_data[0].round, +next_race_data[0].round + 5).map(
-            race_data => <Race_Element key = {race_data.round} darkMode={darkMode} next_race={race_data}/>
-        )}
-        </ScrollView>
-        
-        {/* DRIVER STANDINGS */}
-        <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Driver Standings</Text>
-          <Pressable
-            style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
-            onPress={() => navigation.navigate('Drivers')}
-          >
-            <Text style={[theme.minortext, { textDecorationLine: 'underline' }]}>View more:</Text>
-          </Pressable>
-        </View>
-
-        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
-        {driver_standings_data.slice(0, 5).map( 
-          driver_standings_data => 
-          <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.replace('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
-            <Driver_Standings_Element  darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
-          </Pressable>
-        )}
-        </ScrollView>
+        {isLoading ? <View style={{flex: 1}}></View> : <View style={{flex: 1}}>
           
+          {/* NEXT RACE */}
+          
+          <View style={{ flex: 1.5 }}>
+            <Next_Race_Element darkMode={darkMode} next_race={next_race_data[0]} />
+          </View>
 
-        {/* TEAM STANDINGS */}
-        <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
-          <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Team Standings</Text>
-          <Pressable
-            style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
-            onPress={() => navigation.navigate('Teams')}
-          >
-            <Text style={[theme.minortext,{ textDecorationLine: 'underline' }]}>View more:</Text>
-          </Pressable>
-        </View>
+          {/* Next 5 RACES */}
+          <Text style = {[theme.minortext,{fontFamily:'Formula1-Bold_web', letterSpacing: 0.9, paddingLeft: 10}]}>Next 5 rounds</Text>
+          <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
+            {season_data.slice(next_race_data[0].round, +next_race_data[0].round + 5).map(
+              race_data => <Race_Element key = {race_data.round} darkMode={darkMode} next_race={race_data}/>
+          )}
+          </ScrollView>
+          
+          {/* DRIVER STANDINGS */}
+          <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
+            <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Driver Standings</Text>
+            <Pressable
+              style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
+              onPress={() => navigation.navigate('Drivers')}
+            >
+              <Text style={[theme.minortext, { textDecorationLine: 'underline' }]}>View more:</Text>
+            </Pressable>
+          </View>
 
-        <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
-          {team_standings_data.slice(0,3).map( 
-            team_standings_data =>
-            <Pressable key = {team_standings_data.Constructor.constructorId} onPress={() => navigation.navigate("TeamInfo", {team: team_standings_data.Constructor.constructorId})}> 
-              <Team_Standings_Element darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
+          <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
+          {driver_standings_data.slice(0, 5).map( 
+            driver_standings_data => 
+            <Pressable key = {driver_standings_data.Driver.driverId} onPress={() => navigation.replace('DriverInfo', {driver: driver_standings_data.Driver.driverId})}>
+              <Driver_Standings_Element  darkMode={darkMode} driver_standing={driver_standings_data}></Driver_Standings_Element>
             </Pressable>
           )}
-        </ScrollView>
+          </ScrollView>
+            
+
+          {/* TEAM STANDINGS */}
+          <View style ={{flexDirection: 'row', position: 'relative', paddingLeft: 10}}>
+            <Text style = {[theme.minortext,{flex: 1, fontFamily:'Formula1-Bold_web', letterSpacing: 0.9}]}>Team Standings</Text>
+            <Pressable
+              style={{ flex: 1, justifyContent: 'center', position: 'absolute', right: 15 }}
+              onPress={() => navigation.navigate('Teams')}
+            >
+              <Text style={[theme.minortext,{ textDecorationLine: 'underline' }]}>View more:</Text>
+            </Pressable>
+          </View>
+
+          <ScrollView style = {{flex: 1}} horizontal={true} showsHorizontalScrollIndicator={false}>
+            {team_standings_data.slice(0,3).map( 
+              team_standings_data =>
+              <Pressable key = {team_standings_data.Constructor.constructorId} onPress={() => navigation.navigate("TeamInfo", {team: team_standings_data.Constructor.constructorId})}> 
+                <Team_Standings_Element darkMode={darkMode} team_standing={team_standings_data}></Team_Standings_Element>
+              </Pressable>
+            )}
+          </ScrollView>
+        </View>}
 
         {isSettingVisible ? <Settings 
           setSettingsVisible = {setSettingVisible} 
@@ -320,7 +323,7 @@ const HomePage = () => {
       
     );
   }
-};
+
 
 /**========================================================================
  *                           STYLESHEET

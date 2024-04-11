@@ -1,12 +1,13 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigation} from '@react-navigation/native';
 
 import { TouchableOpacity, StyleSheet, Image, Pressable, View } from 'react-native';
-import { RootStackNavigationProp } from './App';
+import { RootStackNavigationProp, cfg } from './App';
 import { globalThemeControl } from './App';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { Dark, Light } from '../stylesheets/Theme';
 import { forVerticalIOS } from '@react-navigation/stack/lib/typescript/src/TransitionConfigs/CardStyleInterpolators';
+import { EventRegister } from 'react-native-event-listeners';
 
 
 //Component which already defines a basic structure for the bottom-bar to export to other components
@@ -15,7 +16,13 @@ export const NavigationBar = ({}) => {
     const navigation = useNavigation<RootStackNavigationProp>();
     //Basic structure of the navigation bar
     //Setting the theme
-    const [darkMode, setDarkMode] = useState(globalThemeControl.getTheme());
+  const [darkMode, setDarkMode] = useState(cfg.darkMode);
+    useEffect(() => {
+      EventRegister.addEventListener('cfg', data => {
+        setDarkMode(data);
+      })
+    }, [])
+    
 
     return (
       <SafeAreaView style={styles.navigationBar}>

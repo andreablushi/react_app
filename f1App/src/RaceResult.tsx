@@ -163,7 +163,7 @@ function Driver(props: Props) {
   // render
   return (
     <Animated.View style={[Styles.driverResultWrapper, theme.card, theme.divisor, {opacity: fadeAnim}]}>
-      <Text style={[Styles.positionResult, theme.card, {flex:1.5}]}>{result.position}</Text>
+      <Text style={[Styles.positionResult, theme.card, { width: 40}]}>{result.position}</Text>
       <Image style={[Styles.driverPictureResult, ]} source={imageSource.getDriverSide(driver.familyName)}></Image>
       <View style={[Styles.driverResult, theme.card]}>
         <Text style={[Styles.driverTextResult, theme.card]}>{driver.givenName} {driver.familyName}</Text>
