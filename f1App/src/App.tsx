@@ -189,7 +189,7 @@ const App = () => {
     }
     
     const initTheme = async() => {
-      await initCfg();
+      await initCfg().catch(e => console.log(e));
       console.log("cfg: " + cfg.darkMode)
       setDarkMode(cfg.darkMode)
       globalThemeControl.setTheme(cfg.darkMode); 
@@ -256,13 +256,13 @@ const App = () => {
         <NavigationContainer theme={MyTheme}>
           <Stack.Navigator>
             <Stack.Screen name="StartingScreen" component={StartingScreen} options={{ headerShown: false, animation: "fade" }} />
-            <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "fade" }} />
-            <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false, animation: "fade"}}/>
-            <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false, animation: "fade"}}/>
-            <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "fade" }}/>
-            <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "fade" }}/>
-            <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "fade"}}/>
-            <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "fade"}}/>
+            <Stack.Screen name='HomePage' component={HomePage} options={{ headerShown: false, animation: "none" }} />
+            <Stack.Screen name='Schedule' component={Schedule} options={{ headerShown: false, animation: "none"}}/>
+            <Stack.Screen name='RaceResult' component={RaceResult} options={{ headerShown: false, animation: "none"}}/>
+            <Stack.Screen name='Drivers' component={Drivers} options={{ headerShown: false, animation: "none" }}/>
+            <Stack.Screen name='DriverInfo' component={DriverInfo} options={{ headerShown: false, animation: "none" }}/>
+            <Stack.Screen name='Teams' component={Teams} options={{headerShown: false, animation: "none"}}/>
+            <Stack.Screen name='TeamInfo' component={TeamInfo} options={{headerShown: false, animation: "none"}}/>
           </Stack.Navigator>
         </NavigationContainer>
         </SafeAreaProvider>
