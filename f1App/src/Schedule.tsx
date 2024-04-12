@@ -8,6 +8,7 @@ import {
   ScrollView,
   StyleSheet,
   Text,
+  TouchableOpacity,
   View,
 } from 'react-native';
 
@@ -80,7 +81,7 @@ function RaceSchedule(props: Props,): React.JSX.Element {
     
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 200,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
@@ -161,12 +162,12 @@ function Schedule({route}: any): React.JSX.Element {
       <SafeAreaView style={[theme.title_bar, {flex: 11}]}>
         <View style={[{backgroundColor: theme.title_bar.backgroundColor, maxHeight: 60,  minHeight: 60}, styles.topBar]}>
           <Text style={[Styles.topBarText, theme.title_bar, {flex: 5, textAlign:'left', paddingLeft:10}]}>Schedule {year}</Text>
-          <Pressable style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
+          <TouchableOpacity style={[{flex: 1, justifyContent: 'center'}]} onPress={() => setSearch(true)}>
             <Image 
               source={darkMode ? require("../img/icon/dark/magni.png") : require("../img/icon/light/magni.png")}
               style={[{maxHeight: 30, resizeMode: 'contain', maxWidth: 30, flex: 1, alignSelf: 'center'}]}>  
               </Image>
-          </Pressable>
+          </TouchableOpacity>
         </View>
         <View style={[{flex: 10, }]}>
           <ScrollView>

@@ -93,7 +93,7 @@ function Driver_standings({navigation, route}: any): React.JSX.Element {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 200,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };

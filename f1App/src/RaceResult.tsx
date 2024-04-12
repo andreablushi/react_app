@@ -152,7 +152,7 @@ function Driver(props: Props) {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 200,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
@@ -160,6 +160,7 @@ function Driver(props: Props) {
   useEffect(() => {
     fadeIn();
   }, [])
+  
   // render
   return (
     <Animated.View style={[Styles.driverResultWrapper, theme.card, theme.divisor, {opacity: fadeAnim}]}>

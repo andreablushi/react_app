@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { Animated, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, View, } from "react-native";
+import { Animated, Dimensions, Image, Pressable, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View, } from "react-native";
 import { Season } from "./Schedule";
 import { Dark, Light } from "../stylesheets/Theme";
 
@@ -99,9 +99,9 @@ function Search(props: Props) {
           onEndEditing={(() => verifyAndChange())}>
           
         </TextInput>
-        <Pressable onPress={() => closeSearch()} style={[{flex: 1, justifyContent: 'center'}]}>
+        <TouchableOpacity onPress={() => closeSearch()} style={[{flex: 1, justifyContent: 'center'}]}>
           <Image source={darkMode ? require("../img/icon/dark/xmark.png") : require("../img/icon/light/xmark.png")} style={[{maxHeight: 40, maxWidth: 40, resizeMode: 'contain', alignSelf: 'center'}]}></Image>
-        </Pressable>
+        </TouchableOpacity>
       </View>
       <View style={[{flex: 12, marginHorizontal: 10}]}>
         <ScrollView contentContainerStyle={{}}>

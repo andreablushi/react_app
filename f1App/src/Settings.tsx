@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from "react";
-import { Animated, Dimensions, StyleSheet, View, Text, Pressable, Image } from "react-native";;
+import { Animated, Dimensions, StyleSheet, View, Text, TouchableOpacity, Image } from "react-native";;
 import { setConfig } from "./App";
 import { EventRegister } from "react-native-event-listeners";
 import { Dark, Light } from "../stylesheets/Theme";
@@ -90,18 +90,18 @@ export default function Settings (props: Props) {
       <View style={[{flex: 1}]}></View>
 
       <View style={[{}, lilBackground, css.lilWIndow, {borderColor: '#8884'}]}>
-        <Pressable onPress={closeSettings} style={[{alignItems: 'flex-end'},]}>
+        <TouchableOpacity onPress={closeSettings} style={[{alignItems: 'flex-end'},]}>
           <Image source={darkMode ? require("../img/icon/dark/xmark.png") : require("../img/icon/light/xmark.png")}
             style={[css.closeIcon]}></Image> 
-        </Pressable>
+        </TouchableOpacity>
         <Text style={[{color: theme.card.color}, css.settingsText]}>
           SETTINGS
         </Text>
-        <Pressable style={[theme.card, css.changeButton]} onPress={switchTheme}>
+        <TouchableOpacity style={[theme.card, css.changeButton]} onPress={switchTheme}>
           <Text style={[css.buttonText]}>
             CHANGE THEME
           </Text>
-        </Pressable>
+        </TouchableOpacity>
         <View style={[{flex: 2}]}>
           <View style={[{flexDirection: 'row', justifyContent: 'center'}]}>
             <Text style={[{color: theme.card.color}, css.themeText]}>{darkMode ? 'Dark' : 'Light'}</Text>

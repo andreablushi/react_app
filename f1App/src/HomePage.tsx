@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { View, Text, StyleSheet, Image, ScrollView, Pressable } from 'react-native';
+import React, { useEffect, useRef, useState } from 'react';
+import { View, Text, StyleSheet, Image, ScrollView, Pressable, Animated, Touchable, TouchableOpacity } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { NativeStackNavigationProp } from '@react-navigation/native-stack';
 import { RootStackParamList, cfg, setConfig} from './App'; // Importa RootParamList da App.tsx
@@ -18,6 +18,8 @@ import Settings from './Settings';
 import { Race } from "./Schedule";
 import { driverStandings, Props as DriverProp } from './DriverStandings';
 import { teamStandings, Props as TeamProp } from './TeamStandings';
+import { loadLocalRawResource } from 'react-native-svg';
+import { get } from 'react-native/Libraries/TurboModule/TurboModuleRegistry';
 
 
 export type HomePageNavigationProp = NativeStackNavigationProp<RootStackParamList>;
@@ -193,16 +195,6 @@ const HomePage = () => {
 
     //_______________________ THEME ________________________________________
     const [darkMode, setDarkMode] = useState(cfg.darkMode);
-    const switchTheme = async() => {
-      const tmp = darkMode ? false : true
-      await setConfig({darkMode: tmp})
-      EventRegister.emit('cfg', tmp)
-      console.log("cfg " + cfg.darkMode)
-      setDarkMode(tmp) 
-      /* globalThemeControl.getTheme() ? setDarkMode(false) : setDarkMode(true);
-      globalThemeControl.changeTheme()
-      EventRegister.emit('theme', globalThemeControl.getTheme()) */
-    }
     const theme = darkMode ? Dark : Light;
     
 
@@ -239,6 +231,22 @@ const HomePage = () => {
       setIsLoading(false);
     }, []);
 
+    /*================== ANIMATION =================*/
+  
+  const fadeAnim = useRef(new Animated.Value(0)).current;
+
+  const fadeIn = () => {
+    Animated.timing(fadeAnim, {
+      toValue: 1,
+      duration: 250,
+      useNativeDriver: true,
+    }).start();
+  };
+
+  useEffect(() => {
+    fadeIn();
+  }, [])
+
   //_________________________________ RENDER ____________________________________________
   if(!isLoading){
     const year: number= parseInt(next_race_data[0].date.slice(0, 4));
@@ -250,11 +258,11 @@ const HomePage = () => {
         <View style={[theme.title_bar, styles.title_container]}>
           <Image source={require('../img/ic_launcher.png')} style={[styles.icon, {flex: 1}]}/>
           <Text style={[Styles.topBarText, theme.title_bar, { flex: 10, color:'#FF1801', margin: 10, textShadowRadius: 2, textShadowOffset: {width: 1, height: 1}}]}>FORMULA 1</Text>
-          <Pressable onPress={() => setSettingVisible(true)}>
+          <TouchableOpacity onPress={() => setSettingVisible(true)}>
             <Image source={darkMode ? require("../img/icon/dark/gear.png") : require("../img/icon/light/gear.png")} style={[styles.gearIcon]}></Image>
-          </Pressable>
+          </TouchableOpacity>
         </View>
-        {isLoading ? <View style={{flex: 1}}></View> : <View style={{flex: 1}}>
+        {isLoading ? <View style={{flex: 1}}></View> : <Animated.View style={{flex: 1, opacity: fadeAnim}}>
           
           {/* NEXT RACE */}
           
@@ -310,7 +318,7 @@ const HomePage = () => {
               </Pressable>
             )}
           </ScrollView>
-        </View>}
+        </Animated.View>}
 
         {isSettingVisible ? <Settings 
           setSettingsVisible = {setSettingVisible} 
