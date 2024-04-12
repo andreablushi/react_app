@@ -109,7 +109,7 @@ function Race_Element(props: RaceProp): React.JSX.Element {
   const next_race = props.next_race;
   const country = next_race.Circuit.Location.country
 
-  console.log(next_race.Circuit.circuitName)
+  
   /*================== RENDER =================*/
   return(
       <View style = {[Styles.horizontalListElement, theme.horizontalList_element, Styles.boxShadow, {padding: 0, flex: 1, flexDirection:'row', }]}>

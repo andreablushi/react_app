@@ -72,11 +72,20 @@ export default function CachedApp() {
 */ 
 export async function fetchData(apiUrl: string) {
   try{
-    const response = await axios.get(apiUrl);
+    let response: any;
+    do{
+      response = await axios.get(apiUrl);
+      if (response.data == undefined) {
+        console.log('request failed, fetch result: ' + response.data)
+        await new Promise(r => setTimeout(r, 100));
+      }
+    } while (response.data == undefined)
+      console.log(response.data)
+      
     return response.data;
   }
   catch(error){
-    console.log(error)
+    console.error(error)
   }
 }
 
@@ -244,13 +253,12 @@ const App = () => {
     ],
   })
 
-  const isLoading = results.some(queryResult => queryResult.isLoading);
-  if(!isLoading){
-    console.log("loading completed")
-  }
-
+  if(results.some(queryResult => queryResult.isLoading)) {
+    <View></View>
+  } else {
+    console.log('cache Ready')
   /*================== RENDER =================*/
-  return (
+    return (
       <View style={[{flex: 1, backgroundColor: theme.card.backgroundColor}]}>
         <SafeAreaProvider style={{backgroundColor: theme.card.backgroundColor}}>
         <NavigationContainer theme={MyTheme}>
@@ -267,8 +275,10 @@ const App = () => {
         </NavigationContainer>
         </SafeAreaProvider>
       </View>
-  );
+    );
+  }
 };
+
 
 /**========================================================================
  * *                          STYLESHEET
