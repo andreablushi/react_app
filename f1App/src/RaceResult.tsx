@@ -96,7 +96,7 @@ export default function RaceResult ({route}: any) {
   const fadeIn = () => {
     Animated.timing(fadeAnim, {
       toValue: 1,
-      duration: 1000,
+      duration: 250,
       useNativeDriver: true,
     }).start();
   };
