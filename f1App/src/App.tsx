@@ -80,7 +80,7 @@ export async function fetchData(apiUrl: string) {
         await new Promise(r => setTimeout(r, 100));
       }
     } while (response.data == undefined)
-      console.log(response.data)
+      // console.log(response.data)
       
     return response.data;
   }
