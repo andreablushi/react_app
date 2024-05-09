@@ -1,10 +1,3 @@
-#PROBLEMI ANDREA:
-
-PROBLEMI DAVIDE:
-
--driverInfo di piloti la cui carriera è terminata, ci mettono di più a renderizzare le info: valutare se spostare la fetch api nel main method
--Prossime gare non hanno alcuna info 
-
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
